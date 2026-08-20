@@ -2,52 +2,67 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { categoryLabels, type Product } from "@/lib/catalog";
+import { useRequestModal } from "@/components/request-modal";
 import { useLanguage } from "@/lib/i18n";
 
 export function ProductCard({ product }: { product: Product }) {
   const { t, tr } = useLanguage();
+  const { open } = useRequestModal();
 
   return (
-    <Link
-      href={`/catalog/${product.slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-1 hover:border-ink/20 hover:shadow-card"
-    >
-      <div className="relative aspect-[4/3] overflow-hidden bg-slate-50">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white transition hover:shadow-card">
+      <Link href={`/catalog/${product.slug}`} className="relative block aspect-[4/3] bg-cream-200/60">
         <Image
           src={product.image}
           alt={tr(product.title)}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 25vw"
-          className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
+          className="object-contain p-7 transition-transform duration-500 group-hover:scale-105"
         />
-        <span className="absolute left-4 top-4 rounded-full bg-ink/90 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-white">
-          {product.code}
-        </span>
-      </div>
-
-      <div className="flex flex-1 flex-col border-t border-slate-100 p-5">
-        <span className="text-[11px] font-black uppercase tracking-[0.18em] text-flame">
+        <span className="absolute left-4 top-4 rounded-md bg-ink/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
           {tr(categoryLabels[product.category])}
         </span>
-        <h3 className="mt-2 text-base font-black leading-snug text-ink">{tr(product.title)}</h3>
-        <p className="mt-2 line-clamp-2 text-sm leading-6 text-steel">{tr(product.usage)}</p>
-
-        <div className="mt-4 grid gap-1.5 border-t border-dashed border-slate-200 pt-4">
-          {product.specs.slice(0, 3).map((spec) => (
-            <div key={tr(spec.label)} className="flex items-baseline justify-between gap-3 text-xs">
-              <span className="font-semibold text-slate-400">{tr(spec.label)}</span>
-              <span className="text-right font-black text-ink">{tr(spec.value)}</span>
-            </div>
-          ))}
-        </div>
-
-        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-black text-ink transition group-hover:text-flame">
-          {t("common.more")}
-          <ArrowUpRight className="h-4 w-4" />
+        <span className="absolute -bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full bg-flame text-white shadow-card transition group-hover:bg-flame-dark">
+          <ArrowUpRight className="h-5 w-5" />
         </span>
+      </Link>
+
+      <div className="flex flex-1 flex-col p-6 pt-7">
+        <p className="text-[11px] font-medium lowercase tracking-wide text-muted/80">
+          {product.code}
+        </p>
+
+        <h3 className="mt-2 text-lg font-bold leading-snug tracking-display text-ink">
+          <Link href={`/catalog/${product.slug}`} className="transition hover:text-flame">
+            {tr(product.title)}
+          </Link>
+        </h3>
+
+        <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[13px] text-muted">
+          {product.specs.slice(0, 3).map((spec) => (
+            <span key={tr(spec.label)}>{tr(spec.value)}</span>
+          ))}
+        </p>
+
+        <div className="mt-6 flex flex-1 items-end gap-5 border-t border-line pt-5">
+          <Link
+            href={`/catalog/${product.slug}`}
+            className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-flame"
+          >
+            {t("common.more")}
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
+          </Link>
+          <button
+            type="button"
+            onClick={() => open(`${product.code} — ${tr(product.title)}`)}
+            className="text-sm font-medium text-muted transition hover:text-ink"
+          >
+            {t("common.request")}
+          </button>
+        </div>
       </div>
-    </Link>
+    </article>
   );
 }

@@ -9,31 +9,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand palette taken from the EXPERT MACHINERY logo
-        ink: "#1B2432",
-        "ink-900": "#141C27",
-        "ink-700": "#27334A",
-        steel: "#5C6A7E",
+        // Warm editorial base with the navy + orange of the EXPERT MACHINERY logo
+        cream: "#F4F1EA",
+        "cream-200": "#EAE6DC",
+        ink: "#161C26",
+        "ink-800": "#1F2734",
+        muted: "#6E7480",
+        line: "#E1DCD1",
         flame: "#F0562A",
         "flame-dark": "#D2431B",
-        "flame-soft": "#FFF1EA",
-        sand: "#F4F6F9",
+        "flame-soft": "#FDEDE6",
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
       },
+      letterSpacing: {
+        display: "-0.03em",
+      },
       boxShadow: {
-        card: "0 18px 50px -24px rgba(20, 28, 39, 0.45)",
-        lift: "0 30px 90px -40px rgba(20, 28, 39, 0.65)",
-      },
-      keyframes: {
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(14px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-      },
-      animation: {
-        "fade-up": "fade-up 0.5s ease-out both",
+        card: "0 24px 60px -40px rgba(22, 28, 38, 0.55)",
+        lift: "0 40px 90px -50px rgba(22, 28, 38, 0.7)",
       },
     },
   },

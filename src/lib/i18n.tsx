@@ -51,6 +51,39 @@ const dictionary = {
     "common.catalog": "Открыть каталог",
     "common.call": "Позвонить",
     "common.telegram": "Написать в Telegram",
+    "common.viewAll": "Смотреть все",
+    "common.viewCatalog": "Смотреть каталог",
+    "common.home": "Главная",
+
+    "home.slide1.title": "Промышленные приводы для надёжного производства",
+    "home.slide1.text":
+      "Подбираем и поставляем редукторы, мотор-редукторы, насосы и муфты под фактический режим работы вашей линии.",
+    "home.slide2.title": "Насосы для воды, тепла и технологических линий",
+    "home.slide2.text":
+      "25 серий центробежных, вертикальных, многоступенчатых и циркуляционных насосов под давление, напор и температуру объекта.",
+    "home.slide3.title": "Замена импортных редукторов без простоя линии",
+    "home.slide3.text":
+      "Подбираем аналоги SEW, Flender, Nord и Bonfiglioli по посадочным размерам, моменту и типу монтажа.",
+
+    "home.why.eyebrow": "Почему мы",
+    "home.why.title": "Почему выбирают нас",
+    "home.why.display": "Инженерия, которой доверяют производства",
+
+    "form.modalTitle": "Оставить заявку",
+    "form.modalText": "Оставьте контакты — вернёмся с точным предложением.",
+    "form.company": "Компания",
+    "form.email": "E-mail",
+    "form.message": "Сообщение",
+    "form.messagePlaceholder": "Опишите вашу задачу",
+
+    "catalog.filters": "Фильтры",
+    "catalog.filter.type": "Тип оборудования",
+    "catalog.filter.brand": "Производитель",
+    "catalog.sort": "Сортировка",
+    "catalog.sort.default": "По умолчанию",
+    "catalog.sort.az": "Название: А–Я",
+    "catalog.sort.za": "Название: Я–А",
+    "catalog.results": "оборудования",
 
     "home.hero.badge": "Редукторы · Насосы · Мотор-редукторы · Муфты",
     "home.hero.title": "Промышленные приводы",
@@ -200,6 +233,39 @@ const dictionary = {
     "common.catalog": "Каталогты ашу",
     "common.call": "Қоңырау шалу",
     "common.telegram": "Telegram-ға жазу",
+    "common.viewAll": "Барлығын көру",
+    "common.viewCatalog": "Каталогты көру",
+    "common.home": "Басты бет",
+
+    "home.slide1.title": "Сенімді өндіріске арналған өнеркәсіптік жетектер",
+    "home.slide1.text":
+      "Редукторларды, мотор-редукторларды, сорғылар мен муфталарды желіңіздің нақты жұмыс режиміне қарап таңдап, жеткіземіз.",
+    "home.slide2.title": "Су, жылу және технологиялық желілерге арналған сорғылар",
+    "home.slide2.text":
+      "Нысанның қысымына, арынына және температурасына сай ортадан тепкіш, тік, көп сатылы және циркуляциялық сорғылардың 25 сериясы.",
+    "home.slide3.title": "Импорттық редукторларды желіні тоқтатпай ауыстыру",
+    "home.slide3.text":
+      "SEW, Flender, Nord және Bonfiglioli аналогтарын отырғызу өлшемдері, моменті және орнату түрі бойынша таңдаймыз.",
+
+    "home.why.eyebrow": "Неге біз",
+    "home.why.title": "Неліктен бізді таңдайды",
+    "home.why.display": "Өндірістер сенетін инженерия",
+
+    "form.modalTitle": "Өтінім қалдыру",
+    "form.modalText": "Байланысыңызды қалдырыңыз — нақты ұсыныспен ораламыз.",
+    "form.company": "Компания",
+    "form.email": "E-mail",
+    "form.message": "Хабарлама",
+    "form.messagePlaceholder": "Міндетіңізді сипаттаңыз",
+
+    "catalog.filters": "Сүзгілер",
+    "catalog.filter.type": "Жабдық түрі",
+    "catalog.filter.brand": "Өндіруші",
+    "catalog.sort": "Сұрыптау",
+    "catalog.sort.default": "Әдепкі бойынша",
+    "catalog.sort.az": "Атауы: А–Я",
+    "catalog.sort.za": "Атауы: Я–А",
+    "catalog.results": "жабдық",
 
     "home.hero.badge": "Редукторлар · Сорғылар · Мотор-редукторлар · Муфталар",
     "home.hero.title": "Өнеркәсіптік жетектер",
@@ -350,6 +416,39 @@ const dictionary = {
     "common.catalog": "Open catalog",
     "common.call": "Call us",
     "common.telegram": "Message on Telegram",
+    "common.viewAll": "View all",
+    "common.viewCatalog": "View catalog",
+    "common.home": "Home",
+
+    "home.slide1.title": "Industrial drives for dependable production",
+    "home.slide1.text":
+      "We select and supply gearboxes, gear motors, pumps and couplings matched to the real duty cycle of your line.",
+    "home.slide2.title": "Pumps for water, heating and process lines",
+    "home.slide2.text":
+      "25 series of centrifugal, vertical, multistage and circulation pumps matched to the pressure, head and temperature on site.",
+    "home.slide3.title": "Replace imported gearboxes without stopping the line",
+    "home.slide3.text":
+      "We match SEW, Flender, Nord and Bonfiglioli units by mounting dimensions, torque and mounting type.",
+
+    "home.why.eyebrow": "Why us",
+    "home.why.title": "Why customers choose us",
+    "home.why.display": "Engineering that production floors rely on",
+
+    "form.modalTitle": "Send a request",
+    "form.modalText": "Leave your contacts — we will come back with a precise offer.",
+    "form.company": "Company",
+    "form.email": "E-mail",
+    "form.message": "Message",
+    "form.messagePlaceholder": "Describe your task",
+
+    "catalog.filters": "Filters",
+    "catalog.filter.type": "Equipment type",
+    "catalog.filter.brand": "Manufacturer",
+    "catalog.sort": "Sort",
+    "catalog.sort.default": "Default",
+    "catalog.sort.az": "Name: A–Z",
+    "catalog.sort.za": "Name: Z–A",
+    "catalog.results": "items",
 
     "home.hero.badge": "Gearboxes · Pumps · Gear motors · Couplings",
     "home.hero.title": "Industrial drives",

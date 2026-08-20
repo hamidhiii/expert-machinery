@@ -3,36 +3,38 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, Phone, X } from "lucide-react";
+import { ArrowRight, Menu, Phone, X } from "lucide-react";
 import { company, navItems } from "@/lib/catalog";
 import { LogoLockup } from "@/components/logo";
+import { useRequestModal } from "@/components/request-modal";
 import { localeLabels, locales, useLanguage } from "@/lib/i18n";
 
 export function SiteHeader() {
   const { locale, setLocale, t } = useLanguage();
-  const [open, setOpen] = useState(false);
+  const { open } = useRequestModal();
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    setOpen(false);
+    setMenuOpen(false);
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" aria-label="EXPERT MACHINERY">
+    <header className="sticky top-0 z-50 border-b border-line bg-cream/95 backdrop-blur">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+        <Link href="/" aria-label={company.name}>
           <LogoLockup />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {navItems.map((item) => {
             const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`rounded-full px-4 py-2 text-sm font-bold transition ${
-                  active ? "bg-ink text-white" : "text-slate-600 hover:bg-slate-100 hover:text-ink"
+                className={`text-sm font-medium transition ${
+                  active ? "text-flame" : "text-ink/70 hover:text-ink"
                 }`}
               >
                 {t(item.key)}
@@ -41,9 +43,9 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <div
-            className="hidden items-center rounded-full border border-slate-200 bg-slate-50 p-1 sm:flex"
+            className="hidden items-center gap-2 sm:flex"
             role="group"
             aria-label={t("header.lang")}
           >
@@ -53,8 +55,8 @@ export function SiteHeader() {
                 type="button"
                 onClick={() => setLocale(code)}
                 aria-pressed={locale === code}
-                className={`rounded-full px-2.5 py-1.5 text-xs font-black transition ${
-                  locale === code ? "bg-ink text-white" : "text-slate-500 hover:text-ink"
+                className={`text-xs font-bold uppercase transition ${
+                  locale === code ? "text-ink" : "text-muted/60 hover:text-ink"
                 }`}
               >
                 {localeLabels[code]}
@@ -64,49 +66,69 @@ export function SiteHeader() {
 
           <Link
             href={company.phoneHref}
-            className="inline-flex h-11 items-center gap-2 rounded-full bg-flame px-4 text-sm font-black text-white transition hover:bg-flame-dark"
+            className="hidden items-center gap-2 text-sm font-medium text-ink transition hover:text-flame xl:flex"
           >
-            <Phone className="h-4 w-4" />
-            <span className="hidden xl:inline">{company.phone}</span>
+            <Phone className="h-4 w-4 text-flame" />
+            {company.phone}
           </Link>
 
           <button
             type="button"
-            onClick={() => setOpen((prev) => !prev)}
-            aria-label={open ? t("header.close") : t("header.menu")}
-            aria-expanded={open}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-ink lg:hidden"
+            onClick={() => open()}
+            className="group hidden h-11 items-center gap-2.5 rounded-lg bg-flame px-5 text-sm font-semibold text-white transition hover:bg-flame-dark sm:inline-flex"
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {t("common.request")}
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label={menuOpen ? t("header.close") : t("header.menu")}
+            aria-expanded={menuOpen}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-line text-ink lg:hidden"
+          >
+            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {open ? (
-        <div className="border-t border-slate-200 bg-white lg:hidden">
+      {menuOpen ? (
+        <div className="border-t border-line bg-cream lg:hidden">
           <div className="mx-auto grid max-w-7xl gap-1 px-4 py-4 sm:px-6">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-xl px-4 py-3 text-base font-bold text-ink hover:bg-slate-100"
+                className="rounded-lg px-3 py-3 text-base font-medium text-ink hover:bg-cream-200"
               >
                 {t(item.key)}
               </Link>
             ))}
-            <div className="mt-2 flex items-center gap-2 px-4 pb-2 sm:hidden">
-              {locales.map((code) => (
-                <button
-                  key={code}
-                  type="button"
-                  onClick={() => setLocale(code)}
-                  className={`rounded-full px-3 py-2 text-xs font-black ${
-                    locale === code ? "bg-ink text-white" : "bg-slate-100 text-slate-500"
-                  }`}
-                >
-                  {localeLabels[code]}
-                </button>
-              ))}
+
+            <div className="mt-3 flex items-center justify-between border-t border-line px-3 pt-4">
+              <div className="flex items-center gap-3">
+                {locales.map((code) => (
+                  <button
+                    key={code}
+                    type="button"
+                    onClick={() => setLocale(code)}
+                    className={`text-xs font-bold uppercase ${
+                      locale === code ? "text-ink" : "text-muted/60"
+                    }`}
+                  >
+                    {localeLabels[code]}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => open()}
+                className="inline-flex h-10 items-center gap-2 rounded-lg bg-flame px-4 text-sm font-semibold text-white"
+              >
+                {t("common.request")}
+                <ArrowRight className="h-4 w-4" />
+              </button>
             </div>
           </div>
         </div>

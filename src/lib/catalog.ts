@@ -1153,3 +1153,34 @@ export function relatedProducts(current: Product, limit = 4) {
   );
   return [...sameCategory, ...rest].slice(0, limit);
 }
+
+/** Manufacturer is derivable from the image host of each catalogue item. */
+export const brands = ["AOKMAN", "Standart Pompa"] as const;
+export type Brand = (typeof brands)[number];
+
+export function productBrand(product: Product): Brand {
+  return product.image.includes("standartpompa") ? "Standart Pompa" : "AOKMAN";
+}
+
+/** Full-bleed hero slider on the home page. */
+export const heroSlides: {
+  image: string;
+  titleKey: TranslationKey;
+  textKey: TranslationKey;
+}[] = [
+  {
+    image: siteImages.heroPlant,
+    titleKey: "home.slide1.title",
+    textKey: "home.slide1.text",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=1800&q=70",
+    titleKey: "home.slide2.title",
+    textKey: "home.slide2.text",
+  },
+  {
+    image: siteImages.welding,
+    titleKey: "home.slide3.title",
+    textKey: "home.slide3.text",
+  },
+];

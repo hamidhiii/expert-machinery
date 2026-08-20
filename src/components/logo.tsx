@@ -7,9 +7,9 @@ import Image from "next/image";
  * the wordmark is rendered as live text in the lockup instead. Swap in a
  * trimmed SVG/PNG export when the client provides one.
  */
-export function LogoMark({ className = "h-11" }: { className?: string }) {
+export function LogoMark({ className = "h-10" }: { className?: string }) {
   return (
-    <span className={`relative block aspect-[1.48] overflow-hidden ${className}`}>
+    <span className={`relative block aspect-[1.48] overflow-hidden rounded ${className}`}>
       <Image
         src="/expert-machinery-logo.jpg"
         alt="EXPERT MACHINERY"
@@ -26,20 +26,20 @@ export function LogoMark({ className = "h-11" }: { className?: string }) {
 export function LogoLockup({ dark = false }: { dark?: boolean }) {
   return (
     <span className="flex items-center gap-3">
-      <span className="rounded-lg bg-white p-1">
-        <LogoMark className="h-9" />
+      <span className="rounded-md bg-white p-1.5">
+        <LogoMark className="h-7" />
       </span>
       <span className="leading-none">
         <span
-          className={`block text-[17px] font-black uppercase tracking-[0.12em] ${
+          className={`block text-[15px] font-bold uppercase tracking-[0.08em] ${
             dark ? "text-white" : "text-ink"
           }`}
         >
-          Expert<span className="text-flame">&nbsp;Machinery</span>
+          Expert Machinery
         </span>
         <span
-          className={`mt-1 block text-[10px] font-bold uppercase tracking-[0.28em] ${
-            dark ? "text-slate-400" : "text-steel"
+          className={`mt-1.5 block text-[9px] font-semibold uppercase tracking-[0.26em] ${
+            dark ? "text-white/40" : "text-muted"
           }`}
         >
           Industrial drive

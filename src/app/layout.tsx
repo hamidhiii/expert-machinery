@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n";
+import { RequestModalProvider } from "@/components/request-modal";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -26,9 +27,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ru">
       <body className="min-h-screen antialiased">
         <LanguageProvider>
-          <SiteHeader />
-          <main>{children}</main>
-          <SiteFooter />
+          <RequestModalProvider>
+            <SiteHeader />
+            <main>{children}</main>
+            <SiteFooter />
+          </RequestModalProvider>
         </LanguageProvider>
       </body>
     </html>

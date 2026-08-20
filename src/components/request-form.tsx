@@ -1,20 +1,17 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CheckCircle2, Send } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
-export function RequestForm({
-  defaultType = "",
-  compact = false,
-}: {
-  defaultType?: string;
-  compact?: boolean;
-}) {
+const fieldClass =
+  "h-12 w-full rounded-lg border border-line bg-cream/50 px-4 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white";
+
+export function RequestForm({ defaultType = "" }: { defaultType?: string }) {
   const { t } = useLanguage();
   const [sent, setSent] = useState(false);
 
-  // Prototype: no backend yet, the submit only shows the success state.
+  // Prototype: no backend yet, submitting only switches to the success state.
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSent(true);
@@ -22,13 +19,13 @@ export function RequestForm({
 
   if (sent) {
     return (
-      <div className="flex h-full flex-col items-start justify-center gap-4 rounded-2xl border border-flame/30 bg-flame-soft p-8">
-        <CheckCircle2 className="h-10 w-10 text-flame" />
-        <p className="text-lg font-black text-ink">{t("form.success")}</p>
+      <div className="flex h-full flex-col items-start justify-center gap-4 rounded-2xl bg-white p-10">
+        <CheckCircle2 className="h-11 w-11 text-flame" />
+        <p className="display text-2xl text-ink">{t("form.success")}</p>
         <button
           type="button"
           onClick={() => setSent(false)}
-          className="text-sm font-black text-flame underline underline-offset-4"
+          className="text-sm font-semibold text-flame underline underline-offset-4"
         >
           {t("form.submit")}
         </button>
@@ -37,54 +34,50 @@ export function RequestForm({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="rounded-2xl border border-slate-200 bg-white p-6 shadow-card sm:p-8"
-    >
-      {!compact ? (
-        <>
-          <h3 className="text-xl font-black uppercase tracking-tight text-ink">{t("form.title")}</h3>
-          <p className="mt-2 text-sm leading-6 text-steel">{t("form.text")}</p>
-        </>
-      ) : null}
+    <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-6 sm:p-9">
+      <h3 className="display text-2xl text-ink">{t("form.title")}</h3>
+      <p className="mt-3 text-sm leading-6 text-muted">{t("form.text")}</p>
 
-      <div className={`grid gap-4 ${compact ? "" : "mt-6"}`}>
+      <div className="mt-8 grid gap-4">
         <div className="grid gap-4 sm:grid-cols-2">
-          <input
-            required
-            name="name"
-            placeholder={t("form.name")}
-            className="h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold text-ink outline-none transition placeholder:text-slate-400 focus:border-flame focus:bg-white"
-          />
-          <input
-            required
-            name="phone"
-            placeholder={t("form.phone")}
-            className="h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold text-ink outline-none transition placeholder:text-slate-400 focus:border-flame focus:bg-white"
-          />
+          <label className="grid gap-2">
+            <span className="text-xs font-semibold text-ink/70">{t("form.name")}</span>
+            <input required name="name" placeholder={t("form.name")} className={fieldClass} />
+          </label>
+          <label className="grid gap-2">
+            <span className="text-xs font-semibold text-ink/70">{t("form.phone")}</span>
+            <input required name="phone" placeholder="+998 00 000 00 00" className={fieldClass} />
+          </label>
+          <label className="grid gap-2">
+            <span className="text-xs font-semibold text-ink/70">{t("form.company")}</span>
+            <input name="company" placeholder={t("form.company")} className={fieldClass} />
+          </label>
+          <label className="grid gap-2">
+            <span className="text-xs font-semibold text-ink/70">{t("form.email")}</span>
+            <input type="email" name="email" placeholder="name@company.com" className={fieldClass} />
+          </label>
         </div>
-        <input
-          name="type"
-          defaultValue={defaultType}
-          placeholder={t("form.typePlaceholder")}
-          className="h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold text-ink outline-none transition placeholder:text-slate-400 focus:border-flame focus:bg-white"
-        />
-        <textarea
-          name="details"
-          rows={4}
-          placeholder={t("form.details")}
-          className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-ink outline-none transition placeholder:text-slate-400 focus:border-flame focus:bg-white"
-        />
+
+        <label className="grid gap-2">
+          <span className="text-xs font-semibold text-ink/70">{t("form.message")}</span>
+          <textarea
+            name="details"
+            rows={4}
+            defaultValue={defaultType}
+            placeholder={t("form.details")}
+            className="w-full rounded-lg border border-line bg-cream/50 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white"
+          />
+        </label>
       </div>
 
       <button
         type="submit"
-        className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-flame px-6 text-sm font-black uppercase tracking-wide text-white transition hover:bg-flame-dark"
+        className="group mt-6 inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg bg-flame text-sm font-semibold text-white transition hover:bg-flame-dark"
       >
-        <Send className="h-4 w-4" />
         {t("form.submit")}
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
       </button>
-      <p className="mt-3 text-center text-[11px] font-semibold text-slate-400">{t("form.note")}</p>
+      <p className="mt-3 text-center text-[11px] text-muted/80">{t("form.note")}</p>
     </form>
   );
 }

@@ -19,8 +19,8 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: var(--font-sans);
-  color: #1b2432;
-  background-color: #f4f6f9;
+  color: #161c26;
+  background-color: #f4f1ea;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -36,46 +36,24 @@ textarea {
   font: inherit;
 }
 
-/* Blueprint grid used behind light sections. */
-.blueprint {
-  background-image:
-    linear-gradient(rgba(27, 36, 50, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(27, 36, 50, 0.05) 1px, transparent 1px);
-  background-size: 32px 32px;
+/* Display headings: sentence case, tight tracking, large sizes. */
+.display {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
 }
 
-.blueprint-dark {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-
-/* Angular wedge that echoes the orange triangle in the logo. */
-.wedge {
-  clip-path: polygon(100% 0, 100% 100%, 0 100%);
-}
-
-.wedge-tl {
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-}
-
-.diag-cut {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
-}
-
-.hero-mask {
-  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
-}
-
-.duotone {
-  filter: grayscale(1) contrast(1.05);
+/* Small red/orange label above a heading: "04 / INDUSTRIES". */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
 
 .scroll-thin {
   scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
+  scrollbar-color: #d6d0c4 transparent;
 }
 
 .scroll-thin::-webkit-scrollbar {
@@ -84,7 +62,7 @@ textarea {
 }
 
 .scroll-thin::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #d6d0c4;
   border-radius: 999px;
 }
 

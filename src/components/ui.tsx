@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 export function Reveal({
   children,
@@ -18,59 +18,56 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 }
 
-export function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
+/** Small orange label above a heading, e.g. "04 / INDUSTRIES". */
+export function Eyebrow({ index, children }: { index?: string; children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.24em] text-flame">
-      <span className="h-px w-8 bg-flame" aria-hidden />
-      <span className={light ? "text-flame" : "text-flame"}>{children}</span>
-    </span>
+    <p className="eyebrow text-flame">
+      {index ? <span className="text-flame/60">{index} / </span> : null}
+      {children}
+    </p>
   );
 }
 
 export function SectionHeading({
+  index,
   eyebrow,
   title,
   text,
   light = false,
-  align = "left",
   action,
 }: {
+  index?: string;
   eyebrow?: string;
   title: string;
   text?: string;
   light?: boolean;
-  align?: "left" | "center";
   action?: ReactNode;
 }) {
   return (
-    <div
-      className={`flex flex-col gap-6 ${
-        align === "center"
-          ? "items-center text-center"
-          : "md:flex-row md:items-end md:justify-between"
-      }`}
-    >
-      <div className={align === "center" ? "max-w-3xl" : "max-w-2xl"}>
-        {eyebrow ? <Eyebrow light={light}>{eyebrow}</Eyebrow> : null}
+    <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div className="max-w-3xl">
+        {eyebrow ? <Eyebrow index={index}>{eyebrow}</Eyebrow> : null}
         <h2
-          className={`mt-4 text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl lg:text-[42px] ${
-            light ? "text-white" : "text-ink"
-          }`}
+          className={`display mt-5 text-4xl sm:text-5xl ${light ? "text-white" : "text-ink"}`}
         >
           {title}
         </h2>
         {text ? (
-          <p className={`mt-4 text-base leading-7 ${light ? "text-slate-300" : "text-steel"}`}>
+          <p
+            className={`mt-5 max-w-2xl text-[15px] leading-7 ${
+              light ? "text-white/60" : "text-muted"
+            }`}
+          >
             {text}
           </p>
         ) : null}
@@ -85,90 +82,166 @@ export function ButtonLink({
   children,
   variant = "primary",
   target,
+  onClick,
 }: {
-  href: string;
+  href?: string;
   children: ReactNode;
-  variant?: "primary" | "dark" | "ghost" | "light";
+  variant?: "primary" | "outline" | "outline-light" | "dark";
   target?: string;
+  onClick?: () => void;
 }) {
   const styles = {
     primary: "bg-flame text-white hover:bg-flame-dark",
-    dark: "bg-ink text-white hover:bg-ink-700",
-    ghost: "border border-slate-300 text-ink hover:border-ink hover:bg-white",
-    light: "bg-white text-ink hover:bg-slate-100",
+    dark: "bg-ink text-white hover:bg-ink-800",
+    outline: "border border-ink/20 text-ink hover:border-ink hover:bg-ink hover:text-white",
+    "outline-light": "border border-white/40 text-white hover:bg-white hover:text-ink",
   }[variant];
+
+  const className = `group inline-flex h-12 items-center gap-2.5 rounded-lg px-6 text-sm font-semibold transition ${styles}`;
+
+  const inner = (
+    <>
+      {children}
+      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </>
+  );
+
+  if (!href) {
+    return (
+      <button type="button" onClick={onClick} className={className}>
+        {inner}
+      </button>
+    );
+  }
 
   return (
     <Link
       href={href}
       target={target}
       rel={target === "_blank" ? "noreferrer" : undefined}
-      className={`inline-flex h-12 items-center gap-2 rounded-full px-6 text-sm font-black uppercase tracking-wide transition ${styles}`}
+      className={className}
     >
-      {children}
+      {inner}
     </Link>
   );
 }
 
-export function PageHero({
+/** Underlined text link with an arrow, used inside cards and section headers. */
+export function ArrowLink({
+  href,
+  children,
+  light = false,
+}: {
+  href: string;
+  children: ReactNode;
+  light?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={`group inline-flex items-center gap-2 text-sm font-semibold transition ${
+        light ? "text-white hover:text-flame" : "text-flame hover:text-flame-dark"
+      }`}
+    >
+      {children}
+      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </Link>
+  );
+}
+
+export function Breadcrumbs({ items }: { items: { label: string; href?: string }[] }) {
+  return (
+    <nav className="flex flex-wrap items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+      {items.map((item, index) => (
+        <span key={item.label} className="flex items-center gap-1.5">
+          {index > 0 ? <ChevronRight className="h-3 w-3 text-muted/60" /> : null}
+          {item.href ? (
+            <Link href={item.href} className="transition hover:text-flame">
+              {item.label}
+            </Link>
+          ) : (
+            <span className="text-ink/70">{item.label}</span>
+          )}
+        </span>
+      ))}
+    </nav>
+  );
+}
+
+/**
+ * Inner-page hero: breadcrumbs, oversized sentence-case heading and an optional
+ * portrait photo on the right — the layout used across the reference site.
+ */
+export function InnerHero({
+  breadcrumbs,
   eyebrow,
   title,
   text,
   image,
-  stats,
+  action,
+  counter,
 }: {
+  breadcrumbs: { label: string; href?: string }[];
   eyebrow: string;
   title: string;
   text: string;
-  image: string;
-  stats?: { value: string; label: string }[];
+  image?: string;
+  action?: ReactNode;
+  counter?: string;
 }) {
   return (
-    <section className="relative overflow-hidden bg-ink text-white">
-      <Image
-        src={image}
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover opacity-25 duotone"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/95 to-ink/60" aria-hidden />
-      <div className="blueprint-dark absolute inset-0 opacity-50" aria-hidden />
-      <div
-        className="absolute -bottom-10 right-0 h-56 w-72 rotate-6 bg-flame/25 wedge blur-2xl"
-        aria-hidden
-      />
+    <section className="border-b border-line bg-cream">
+      <div className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-20">
+        <Breadcrumbs items={breadcrumbs} />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="mt-5 max-w-4xl text-4xl font-black uppercase leading-[1.03] tracking-tight sm:text-5xl lg:text-6xl">
-          {title}
-        </h1>
-        <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">{text}</p>
-
-        {stats?.length ? (
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((stat) => (
-              <div key={stat.label} className="bg-ink/80 px-6 py-5">
-                <p className="text-3xl font-black text-flame">{stat.value}</p>
-                <p className="mt-1 text-xs font-bold uppercase tracking-wide text-slate-400">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
+        <div
+          className={`mt-12 grid gap-12 ${image ? "lg:grid-cols-[1.05fr_0.95fr] lg:items-center" : ""}`}
+        >
+          <div>
+            <Eyebrow>{eyebrow}</Eyebrow>
+            <h1 className="display mt-5 max-w-3xl text-4xl sm:text-5xl lg:text-[64px]">{title}</h1>
+            <p className="mt-6 max-w-xl text-[15px] leading-8 text-muted">{text}</p>
+            {action ? <div className="mt-9 flex flex-wrap gap-3">{action}</div> : null}
           </div>
+
+          {image ? (
+            <Reveal delay={0.1}>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl lg:aspect-[5/6]">
+                <Image
+                  src={image}
+                  alt=""
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="object-cover"
+                />
+              </div>
+            </Reveal>
+          ) : null}
+        </div>
+
+        {counter && !image ? (
+          <p className="mt-8 text-right text-xs font-semibold text-muted/70">{counter}</p>
         ) : null}
       </div>
     </section>
   );
 }
 
-export function ArrowPill({ children }: { children: ReactNode }) {
+/** Dark band of key figures, mirroring the reference layout under the hero. */
+export function StatsBand({ stats }: { stats: { value: string; label: string }[] }) {
   return (
-    <span className="inline-flex items-center gap-2 text-sm font-black text-flame">
-      {children}
-      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-    </span>
+    <section className="bg-ink">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-white/10 px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
+        {stats.map((stat) => (
+          <div key={stat.label} className="bg-ink px-2 py-10 sm:px-8">
+            <p className="text-3xl font-bold tracking-display text-white sm:text-4xl">
+              {stat.value}
+            </p>
+            <p className="mt-2 text-xs leading-5 text-white/50">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
