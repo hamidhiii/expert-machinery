@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: #1b2432;
+  background-color: #f4f6f9;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Blueprint grid used behind light sections. */
+.blueprint {
+  background-image:
+    linear-gradient(rgba(27, 36, 50, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(27, 36, 50, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.blueprint-dark {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Angular wedge that echoes the orange triangle in the logo. */
+.wedge {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.wedge-tl {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.diag-cut {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
+}
+
+.hero-mask {
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+
+.duotone {
+  filter: grayscale(1) contrast(1.05);
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.scroll-thin::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
