@@ -31,6 +31,24 @@ export function pick(locale: Locale, value: Localized): string {
 
 const STORAGE_KEY = "expert-machinery-locale";
 
+const itemForms: Record<Locale, [string, string, string]> = {
+  ru: ["позиция", "позиции", "позиций"],
+  kk: ["позиция", "позиция", "позиция"],
+  en: ["item", "items", "items"],
+};
+
+/** "1 позиция / 2 позиции / 25 позиций" — Russian needs all three forms. */
+export function pluralItems(locale: Locale, count: number): string {
+  const forms = itemForms[locale];
+  if (locale !== "ru") return count === 1 ? forms[0] : forms[1];
+
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return forms[0];
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return forms[1];
+  return forms[2];
+}
+
 const dictionary = {
   ru: {
     "nav.catalog": "Каталог",
@@ -54,6 +72,23 @@ const dictionary = {
     "common.viewAll": "Смотреть все",
     "common.viewCatalog": "Смотреть каталог",
     "common.home": "Главная",
+    "common.whatsapp": "Написать в WhatsApp",
+
+    "stats.projects": "выполненных проектов",
+    "stats.staff": "инженеров и мастеров",
+    "stats.years": "лет на рынке",
+    "stats.support": "приём заявок",
+
+    "partners.eyebrow": "Казахстан",
+    "partners.title": "Работаем с предприятиями Казахстана",
+    "partners.text":
+      "Горнодобыча, энергетика, переработка и логистика — от Астаны и Караганды до Актобе и Шымкента.",
+
+    "catalog.groups.title": "Каталог оборудования",
+    "catalog.groups.text":
+      "Выберите тип оборудования — внутри собраны серии и конкретные позиции с характеристиками.",
+    "catalog.group.soon": "Раздел в наполнении",
+    "catalog.group.soonText": "Позиции добавляются — отправьте запрос, подберём вручную.",
 
     "home.slide1.title": "Промышленные приводы для надёжного производства",
     "home.slide1.text":
@@ -89,7 +124,7 @@ const dictionary = {
     "home.hero.title": "Промышленные приводы",
     "home.hero.titleAccent": "под вашу нагрузку",
     "home.hero.text":
-      "EXPERT MACHINERY поставляет редукторы, мотор-редукторы, насосы, муфты и электродвигатели для заводов Узбекистана. Подбираем по фактическому режиму работы, а не по картинке из каталога.",
+      "EXPERT MACHINERY поставляет редукторы, мотор-редукторы, насосы, муфты и электродвигатели для заводов Казахстана. Подбираем по фактическому режиму работы, а не по картинке из каталога.",
     "home.hero.point1": "Подбор по шильдику и чертежу",
     "home.hero.point2": "Замена SEW, Flender, Nord, Bonfiglioli",
     "home.hero.point3": "Ответ по заявке в течение 24 часов",
@@ -209,7 +244,7 @@ const dictionary = {
     "form.note": "Прототип: форма пока не отправляет данные на сервер.",
 
     "footer.about":
-      "Поставка промышленных редукторов, мотор-редукторов, насосов, муфт и приводных решений для предприятий Узбекистана и Центральной Азии.",
+      "Поставка промышленных редукторов, мотор-редукторов, насосов, муфт и приводных решений для предприятий Казахстана.",
     "footer.sections": "Разделы",
     "footer.contacts": "Контакты",
     "footer.rights": "Все права защищены.",
@@ -236,6 +271,23 @@ const dictionary = {
     "common.viewAll": "Барлығын көру",
     "common.viewCatalog": "Каталогты көру",
     "common.home": "Басты бет",
+    "common.whatsapp": "WhatsApp-қа жазу",
+
+    "stats.projects": "орындалған жоба",
+    "stats.staff": "инженер мен шебер",
+    "stats.years": "жыл нарықта",
+    "stats.support": "өтінім қабылдау",
+
+    "partners.eyebrow": "Қазақстан",
+    "partners.title": "Қазақстан кәсіпорындарымен жұмыс істейміз",
+    "partners.text":
+      "Тау-кен, энергетика, өңдеу және логистика — Астана мен Қарағандыдан Ақтөбе мен Шымкентке дейін.",
+
+    "catalog.groups.title": "Жабдық каталогы",
+    "catalog.groups.text":
+      "Жабдық түрін таңдаңыз — ішінде сериялар мен нақты позициялар сипаттамасымен жинақталған.",
+    "catalog.group.soon": "Бөлім толықтырылуда",
+    "catalog.group.soonText": "Позициялар қосылып жатыр — өтінім жіберіңіз, қолмен таңдаймыз.",
 
     "home.slide1.title": "Сенімді өндіріске арналған өнеркәсіптік жетектер",
     "home.slide1.text":
@@ -392,7 +444,7 @@ const dictionary = {
     "form.note": "Прототип: форма әзірге серверге деректер жібермейді.",
 
     "footer.about":
-      "Өзбекстан және Орталық Азия кәсіпорындарына өнеркәсіптік редукторлар, мотор-редукторлар, сорғылар, муфталар мен жетек шешімдерін жеткізу.",
+      "Қазақстан кәсіпорындарына өнеркәсіптік редукторлар, мотор-редукторлар, сорғылар, муфталар мен жетек шешімдерін жеткізу.",
     "footer.sections": "Бөлімдер",
     "footer.contacts": "Байланыс",
     "footer.rights": "Барлық құқықтар қорғалған.",
@@ -419,6 +471,23 @@ const dictionary = {
     "common.viewAll": "View all",
     "common.viewCatalog": "View catalog",
     "common.home": "Home",
+    "common.whatsapp": "Message on WhatsApp",
+
+    "stats.projects": "completed projects",
+    "stats.staff": "engineers and technicians",
+    "stats.years": "years on the market",
+    "stats.support": "request intake",
+
+    "partners.eyebrow": "Kazakhstan",
+    "partners.title": "Working with plants across Kazakhstan",
+    "partners.text":
+      "Mining, energy, processing and logistics — from Astana and Karaganda to Aktobe and Shymkent.",
+
+    "catalog.groups.title": "Equipment catalog",
+    "catalog.groups.text":
+      "Pick an equipment type — each one holds the series and the individual items with their specs.",
+    "catalog.group.soon": "Section in progress",
+    "catalog.group.soonText": "Items are being added — send a request and we will select manually.",
 
     "home.slide1.title": "Industrial drives for dependable production",
     "home.slide1.text":
@@ -454,7 +523,7 @@ const dictionary = {
     "home.hero.title": "Industrial drives",
     "home.hero.titleAccent": "sized for your load",
     "home.hero.text":
-      "EXPERT MACHINERY supplies gearboxes, gear motors, pumps, couplings and electric motors to plants across Uzbekistan. We size equipment by the actual duty cycle, not by a catalog picture.",
+      "EXPERT MACHINERY supplies gearboxes, gear motors, pumps, couplings and electric motors to plants across Kazakhstan. We size equipment by the actual duty cycle, not by a catalog picture.",
     "home.hero.point1": "Selection by nameplate and drawing",
     "home.hero.point2": "Replacement for SEW, Flender, Nord, Bonfiglioli",
     "home.hero.point3": "First response within 24 hours",
@@ -572,7 +641,7 @@ const dictionary = {
     "form.note": "Prototype: the form does not submit data to a server yet.",
 
     "footer.about":
-      "Supply of industrial gearboxes, gear motors, pumps, couplings and drive solutions for plants in Uzbekistan and Central Asia.",
+      "Supply of industrial gearboxes, gear motors, pumps, couplings and drive solutions for plants in Kazakhstan.",
     "footer.sections": "Sections",
     "footer.contacts": "Contacts",
     "footer.rights": "All rights reserved.",

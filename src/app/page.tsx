@@ -6,17 +6,15 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import {
-  categoryLabels,
-  categoryMeta,
-  countByCategory,
+  advantages,
+  companyStats,
+  groupProducts,
+  groups,
   heroSlides,
   industries,
-  popularProducts,
-  products,
-  services,
-  type CategoryKey,
+  partnerPlaceholders,
+  type GroupKey,
 } from "@/lib/catalog";
-import { ProductCard } from "@/components/product-card";
 import { CtaBand } from "@/components/cta-band";
 import { useRequestModal } from "@/components/request-modal";
 import {
@@ -29,13 +27,12 @@ import {
 } from "@/components/ui";
 import { useLanguage } from "@/lib/i18n";
 
-const categoryOrder = Object.keys(categoryMeta) as Exclude<CategoryKey, "all">[];
-
 export default function HomePage() {
   const { t, tr } = useLanguage();
   const { open } = useRequestModal();
   const [slide, setSlide] = useState(0);
-  const [activeCategory, setActiveCategory] = useState<Exclude<CategoryKey, "all">>("helical");
+  const [activeGroup, setActiveGroup] = useState<GroupKey>("gear");
+  const active = groups.find((group) => group.key === activeGroup)!;
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -44,12 +41,7 @@ export default function HomePage() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const stats = [
-    { value: `${products.length}`, label: t("home.stats.items") },
-    { value: "9", label: t("home.stats.series") },
-    { value: `${industries.length}`, label: t("home.stats.industries") },
-    { value: "24ч", label: t("home.stats.response") },
-  ];
+  const stats = companyStats.map((stat) => ({ value: stat.value, label: t(stat.key) }));
 
   const current = heroSlides[slide];
 
@@ -135,7 +127,7 @@ export default function HomePage() {
       <StatsBand stats={stats} />
 
       {/* ------------------------------------------------------ categories */}
-      <section className="bg-cream py-20 lg:py-24">
+      <section className="bg-paper py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             index="01"
@@ -148,12 +140,12 @@ export default function HomePage() {
           <div className="mt-14 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <Reveal>
               <Link
-                href="/catalog"
+                href={`/catalog/${active.key}`}
                 className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-ink"
               >
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={activeCategory}
+                    key={active.key}
                     className="absolute inset-0"
                     initial={{ opacity: 0, scale: 1.04 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -161,11 +153,15 @@ export default function HomePage() {
                     transition={{ duration: 0.45 }}
                   >
                     <Image
-                      src={categoryMeta[activeCategory].image}
-                      alt={tr(categoryLabels[activeCategory])}
+                      src={active.image}
+                      alt={tr(active.title)}
                       fill
                       sizes="(max-width: 1024px) 100vw, 40vw"
-                      className="bg-cream-200 object-contain p-12"
+                      className={
+                        active.categories.length
+                          ? "bg-surface object-contain p-12"
+                          : "object-cover opacity-70"
+                      }
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -176,11 +172,11 @@ export default function HomePage() {
                 />
                 <div className="absolute inset-x-0 bottom-0 p-8">
                   <p className="eyebrow text-flame">
-                    {countByCategory(activeCategory)} {t("home.categories.count")}
+                    {active.categories.length
+                      ? `${groupProducts(active.key).length} ${t("home.categories.count")}`
+                      : t("catalog.group.soon")}
                   </p>
-                  <p className="display mt-3 text-3xl text-white">
-                    {tr(categoryLabels[activeCategory])}
-                  </p>
+                  <p className="display mt-3 text-3xl text-white">{tr(active.title)}</p>
                   <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white/80">
                     {t("common.more")}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -190,34 +186,35 @@ export default function HomePage() {
             </Reveal>
 
             <div className="divide-y divide-line border-y border-line">
-              {categoryOrder.map((key, index) => (
+              {groups.map((group, index) => (
                 <Link
-                  key={key}
-                  href="/catalog"
-                  onMouseEnter={() => setActiveCategory(key)}
-                  onFocus={() => setActiveCategory(key)}
+                  key={group.key}
+                  href={`/catalog/${group.key}`}
+                  onMouseEnter={() => setActiveGroup(group.key)}
+                  onFocus={() => setActiveGroup(group.key)}
                   className={`group flex items-center gap-6 py-6 transition ${
-                    activeCategory === key ? "text-ink" : "text-ink/70 hover:text-ink"
+                    activeGroup === group.key ? "text-ink" : "text-ink/70 hover:text-ink"
                   }`}
                 >
                   <span
                     className={`text-xs font-semibold transition ${
-                      activeCategory === key ? "text-flame" : "text-muted/50"
+                      activeGroup === group.key ? "text-flame" : "text-muted/50"
                     }`}
                   >
                     0{index + 1}
                   </span>
                   <span className="flex-1">
-                    <span className="text-xl font-semibold tracking-display">
-                      {tr(categoryLabels[key])}
-                    </span>
+                    <span className="text-xl font-semibold tracking-display">{tr(group.title)}</span>
                     <span className="mt-1 block max-w-lg text-sm leading-6 text-muted">
-                      {tr(categoryMeta[key].text)}
+                      {tr(group.text)}
                     </span>
+                  </span>
+                  <span className="hidden text-xs font-semibold text-muted/60 sm:block">
+                    {group.categories.length ? groupProducts(group.key).length : "—"}
                   </span>
                   <ArrowRight
                     className={`h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1 ${
-                      activeCategory === key ? "text-flame" : "text-muted/50"
+                      activeGroup === group.key ? "text-flame" : "text-muted/50"
                     }`}
                   />
                 </Link>
@@ -227,22 +224,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --------------------------------------------------------- popular */}
-      <section className="border-t border-line bg-cream py-20 lg:py-24">
+      {/* -------------------------------------------------------- partners */}
+      <section className="border-t border-line bg-surface py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             index="02"
-            eyebrow="Equipment"
-            title={t("home.popular.title")}
-            text={t("home.popular.text")}
-            action={<ArrowLink href="/catalog">{t("common.viewAll")}</ArrowLink>}
+            eyebrow={t("partners.eyebrow")}
+            title={t("partners.title")}
+            text={t("partners.text")}
           />
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {popularProducts.slice(0, 4).map((product, index) => (
-              <Reveal key={product.slug} delay={index * 0.05}>
-                <ProductCard product={product} />
-              </Reveal>
+          {/* TODO (prototype): swap the placeholder tiles for the real logos and
+              links the client will supply. */}
+          <div className="scroll-thin mt-14 flex gap-4 overflow-x-auto pb-2">
+            {partnerPlaceholders.map((partner) => (
+              <div
+                key={partner.id}
+                className="flex h-24 w-44 shrink-0 items-center justify-center rounded-xl border border-dashed border-line bg-paper text-sm font-semibold text-muted/50"
+              >
+                {partner.label}
+              </div>
             ))}
           </div>
         </div>
@@ -256,17 +257,15 @@ export default function HomePage() {
           <p className="display mt-3 text-4xl text-white/25 sm:text-5xl">{t("home.why.display")}</p>
 
           <div className="mt-16 grid gap-x-16 gap-y-px lg:grid-cols-2">
-            {services.map((service, index) => (
-              <Reveal key={tr(service.title)} delay={(index % 2) * 0.05}>
+            {advantages.map((item, index) => (
+              <Reveal key={tr(item.title)} delay={(index % 2) * 0.05}>
                 <div className="flex gap-6 border-t border-white/10 py-7">
                   <span className="text-xs font-semibold text-flame">0{index + 1}</span>
                   <div>
                     <h3 className="text-lg font-semibold tracking-display text-white">
-                      {tr(service.title)}
+                      {tr(item.title)}
                     </h3>
-                    <p className="mt-2 max-w-md text-sm leading-7 text-white/50">
-                      {tr(service.text)}
-                    </p>
+                    <p className="mt-2 max-w-md text-sm leading-7 text-white/50">{tr(item.text)}</p>
                   </div>
                 </div>
               </Reveal>
@@ -282,7 +281,7 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------------------------------ industries */}
-      <section className="bg-cream py-20 lg:py-24">
+      <section className="bg-paper py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             index="04"

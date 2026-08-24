@@ -6,14 +6,16 @@ import {
   brands,
   categories,
   categoryLabels,
-  countByCategory,
+  getGroup,
+  groupProducts,
   productBrand,
   products,
   type Brand,
   type CategoryKey,
+  type GroupKey,
 } from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
-import { useLanguage } from "@/lib/i18n";
+import { pluralItems, useLanguage } from "@/lib/i18n";
 
 type SortKey = "default" | "az" | "za";
 
@@ -46,8 +48,16 @@ function FilterGroup({
   );
 }
 
-export function CatalogExplorer() {
+export function CatalogExplorer({ group }: { group?: GroupKey } = {}) {
   const { locale, t, tr } = useLanguage();
+
+  // Inside a group page only that group's items and sub-types are offered.
+  const scope = useMemo(() => (group ? groupProducts(group) : products), [group]);
+  const scopeCategories: CategoryKey[] = group
+    ? ["all", ...(getGroup(group)?.categories ?? [])]
+    : categories;
+  const countIn = (key: CategoryKey) =>
+    key === "all" ? scope.length : scope.filter((item) => item.category === key).length;
   const [category, setCategory] = useState<CategoryKey>("all");
   const [selectedBrands, setSelectedBrands] = useState<Brand[]>([]);
   const [query, setQuery] = useState("");
@@ -56,7 +66,7 @@ export function CatalogExplorer() {
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
 
-    const list = products.filter((product) => {
+    const list = scope.filter((product) => {
       if (category !== "all" && product.category !== category) return false;
       if (selectedBrands.length && !selectedBrands.includes(productBrand(product))) return false;
       if (!needle) return true;
@@ -83,7 +93,7 @@ export function CatalogExplorer() {
       const result = tr(a.title).localeCompare(tr(b.title));
       return sort === "az" ? result : -result;
     });
-  }, [category, selectedBrands, query, sort, tr]);
+  }, [scope, category, selectedBrands, query, sort, tr]);
 
   function toggleBrand(brand: Brand) {
     setSelectedBrands((prev) =>
@@ -106,7 +116,7 @@ export function CatalogExplorer() {
         </label>
 
         <div className="scroll-thin flex gap-2 overflow-x-auto pb-1">
-          {categories.map((key) => (
+          {scopeCategories.map((key) => (
             <button
               key={key}
               type="button"
@@ -130,7 +140,7 @@ export function CatalogExplorer() {
 
           <div className="mt-6 border-t border-line">
             <FilterGroup title={t("catalog.filter.type")}>
-              {categories.map((key) => (
+              {scopeCategories.map((key) => (
                 <label
                   key={key}
                   className="flex cursor-pointer items-center justify-between gap-3 text-sm text-muted transition hover:text-ink"
@@ -145,7 +155,7 @@ export function CatalogExplorer() {
                     />
                     {tr(categoryLabels[key])}
                   </span>
-                  <span className="text-xs text-muted/60">{countByCategory(key)}</span>
+                  <span className="text-xs text-muted/60">{countIn(key)}</span>
                 </label>
               ))}
             </FilterGroup>
@@ -166,7 +176,7 @@ export function CatalogExplorer() {
                     {brand}
                   </span>
                   <span className="text-xs text-muted/60">
-                    {products.filter((product) => productBrand(product) === brand).length}
+                    {scope.filter((product) => productBrand(product) === brand).length}
                   </span>
                 </label>
               ))}
@@ -192,7 +202,8 @@ export function CatalogExplorer() {
         <div>
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
             <p className="text-sm text-muted">
-              <span className="font-semibold text-ink">{filtered.length}</span> {t("catalog.results")}
+              <span className="font-semibold text-ink">{filtered.length}</span>{" "}
+              {pluralItems(locale, filtered.length)}
             </p>
 
             <label className="flex items-center gap-2 text-sm text-muted">

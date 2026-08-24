@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { CtaBand } from "@/components/cta-band";
 import { Eyebrow, InnerHero, Reveal, SectionHeading, StatsBand } from "@/components/ui";
-import { company, industries, products, siteImages } from "@/lib/catalog";
+import { company, companyStats, siteImages } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
 
 export default function AboutPage() {
@@ -34,16 +34,9 @@ export default function AboutPage() {
         image={siteImages.meeting}
       />
 
-      <StatsBand
-        stats={[
-          { value: `${products.length}`, label: t("home.stats.items") },
-          { value: "9", label: t("home.stats.series") },
-          { value: `${industries.length}`, label: t("home.stats.industries") },
-          { value: "24ч", label: t("home.stats.response") },
-        ]}
-      />
+      <StatsBand stats={companyStats.map((stat) => ({ value: stat.value, label: t(stat.key) }))} />
 
-      <section className="bg-cream py-20 lg:py-24">
+      <section className="bg-paper py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading index="01" eyebrow="Values" title={t("about.values.title")} />
 
@@ -61,7 +54,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-t border-line bg-cream py-20 lg:py-24">
+      <section className="border-t border-line bg-paper py-20 lg:py-24">
         <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">

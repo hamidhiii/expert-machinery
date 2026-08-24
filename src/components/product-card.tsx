@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { categoryLabels, type Product } from "@/lib/catalog";
+import { categoryLabels, productHref, type Product } from "@/lib/catalog";
 import { useRequestModal } from "@/components/request-modal";
 import { useLanguage } from "@/lib/i18n";
 
@@ -13,7 +13,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white transition hover:shadow-card">
-      <Link href={`/catalog/${product.slug}`} className="relative block aspect-[4/3] bg-cream-200/60">
+      <Link href={productHref(product)} className="relative block aspect-[4/3] bg-surface/60">
         <Image
           src={product.image}
           alt={tr(product.title)}
@@ -35,7 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
         </p>
 
         <h3 className="mt-2 text-lg font-bold leading-snug tracking-display text-ink">
-          <Link href={`/catalog/${product.slug}`} className="transition hover:text-flame">
+          <Link href={productHref(product)} className="transition hover:text-flame">
             {tr(product.title)}
           </Link>
         </h3>
@@ -48,7 +48,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         <div className="mt-6 flex flex-1 items-end gap-5 border-t border-line pt-5">
           <Link
-            href={`/catalog/${product.slug}`}
+            href={productHref(product)}
             className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-flame"
           >
             {t("common.more")}

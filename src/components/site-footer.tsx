@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Instagram, MessageCircle } from "lucide-react";
 import { company, navItems } from "@/lib/catalog";
 import { LogoLockup } from "@/components/logo";
 import { useRequestModal } from "@/components/request-modal";
@@ -63,9 +63,26 @@ export function SiteFooter() {
           <span>
             © {new Date().getFullYear()} {company.legalName}. {t("footer.rights")}
           </span>
-          <Link href={company.telegramHref} target="_blank" rel="noreferrer" className="hover:text-flame">
-            Telegram
-          </Link>
+          <span className="flex items-center gap-5">
+            <Link
+              href={company.whatsappHref}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 transition hover:text-flame"
+            >
+              <MessageCircle className="h-4 w-4" />
+              WhatsApp
+            </Link>
+            <Link
+              href={company.instagramHref}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 transition hover:text-flame"
+            >
+              <Instagram className="h-4 w-4" />
+              Instagram
+            </Link>
+          </span>
         </div>
       </div>
     </footer>

@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Clock, Mail, MapPin, Phone, Send } from "lucide-react";
+import { Clock, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { RequestForm } from "@/components/request-form";
 import { InnerHero, Reveal } from "@/components/ui";
-import { company } from "@/lib/catalog";
+import { company, siteImages } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
 
 export default function ContactsPage() {
@@ -12,7 +12,18 @@ export default function ContactsPage() {
 
   const cards = [
     { icon: Phone, label: t("contacts.phone"), value: company.phone, href: company.phoneHref },
-    { icon: Send, label: "Telegram", value: company.phone, href: company.telegramHref },
+    {
+      icon: MessageCircle,
+      label: "WhatsApp",
+      value: company.phone,
+      href: company.whatsappHref,
+    },
+    {
+      icon: Instagram,
+      label: "Instagram",
+      value: "@expertmachinery.kz",
+      href: company.instagramHref,
+    },
     { icon: Mail, label: t("contacts.email"), value: company.email, href: `mailto:${company.email}` },
     { icon: MapPin, label: t("contacts.address"), value: tr(company.address), href: undefined },
     { icon: Clock, label: t("contacts.hours"), value: t("contacts.hoursValue"), href: undefined },
@@ -25,9 +36,10 @@ export default function ContactsPage() {
         eyebrow={`Contact / ${company.name}`}
         title={t("contacts.hero.title")}
         text={t("contacts.hero.text")}
+        image={siteImages.meeting}
       />
 
-      <section className="bg-cream py-16 lg:py-20">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
           <div className="divide-y divide-line border-y border-line">
             {cards.map((card, index) => {

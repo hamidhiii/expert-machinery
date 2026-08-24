@@ -5,7 +5,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
 const fieldClass =
-  "h-12 w-full rounded-lg border border-line bg-cream/50 px-4 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white";
+  "h-12 w-full rounded-lg border border-line bg-paper/50 px-4 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white";
 
 export function RequestForm({ defaultType = "" }: { defaultType?: string }) {
   const { t } = useLanguage();
@@ -46,7 +46,7 @@ export function RequestForm({ defaultType = "" }: { defaultType?: string }) {
           </label>
           <label className="grid gap-2">
             <span className="text-xs font-semibold text-ink/70">{t("form.phone")}</span>
-            <input required name="phone" placeholder="+998 00 000 00 00" className={fieldClass} />
+            <input required name="phone" placeholder="+7 700 000 00 00" className={fieldClass} />
           </label>
           <label className="grid gap-2">
             <span className="text-xs font-semibold text-ink/70">{t("form.company")}</span>
@@ -65,7 +65,7 @@ export function RequestForm({ defaultType = "" }: { defaultType?: string }) {
             rows={4}
             defaultValue={defaultType}
             placeholder={t("form.details")}
-            className="w-full rounded-lg border border-line bg-cream/50 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white"
+            className="w-full rounded-lg border border-line bg-paper/50 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white"
           />
         </label>
       </div>

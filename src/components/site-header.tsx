@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ArrowRight, Menu, Phone, X } from "lucide-react";
+import { ArrowRight, Instagram, Menu, Phone, X } from "lucide-react";
 import { company, navItems } from "@/lib/catalog";
 import { LogoLockup } from "@/components/logo";
 import { useRequestModal } from "@/components/request-modal";
@@ -20,7 +20,7 @@ export function SiteHeader() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-cream/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-line bg-paper/95 backdrop-blur">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
         <Link href="/" aria-label={company.name}>
           <LogoLockup />
@@ -65,6 +65,16 @@ export function SiteHeader() {
           </div>
 
           <Link
+            href={company.instagramHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Instagram"
+            className="hidden h-9 w-9 items-center justify-center rounded-lg border border-line text-ink transition hover:border-flame hover:text-flame sm:inline-flex"
+          >
+            <Instagram className="h-4 w-4" />
+          </Link>
+
+          <Link
             href={company.phoneHref}
             className="hidden items-center gap-2 text-sm font-medium text-ink transition hover:text-flame xl:flex"
           >
@@ -94,13 +104,13 @@ export function SiteHeader() {
       </div>
 
       {menuOpen ? (
-        <div className="border-t border-line bg-cream lg:hidden">
+        <div className="border-t border-line bg-paper lg:hidden">
           <div className="mx-auto grid max-w-7xl gap-1 px-4 py-4 sm:px-6">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-3 py-3 text-base font-medium text-ink hover:bg-cream-200"
+                className="rounded-lg px-3 py-3 text-base font-medium text-ink hover:bg-surface"
               >
                 {t(item.key)}
               </Link>

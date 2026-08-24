@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import { company } from "@/lib/catalog";
 import { ButtonLink, Eyebrow, Reveal } from "@/components/ui";
 import { useRequestModal } from "@/components/request-modal";
@@ -12,7 +12,7 @@ export function CtaBand() {
   const { open } = useRequestModal();
 
   return (
-    <section className="border-t border-line bg-cream">
+    <section className="border-t border-line bg-paper">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:px-8">
         <Reveal>
           <Eyebrow>{company.name}</Eyebrow>
@@ -22,6 +22,15 @@ export function CtaBand() {
 
         <Reveal delay={0.1} className="flex flex-wrap items-center gap-3 lg:justify-end">
           <ButtonLink onClick={() => open()}>{t("common.request")}</ButtonLink>
+          <Link
+            href={company.whatsappHref}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-12 items-center gap-2.5 rounded-lg border border-ink/20 px-6 text-sm font-semibold text-ink transition hover:border-ink"
+          >
+            <MessageCircle className="h-4 w-4 text-flame" />
+            WhatsApp
+          </Link>
           <Link
             href={company.phoneHref}
             className="inline-flex h-12 items-center gap-2.5 rounded-lg border border-ink/20 px-6 text-sm font-semibold text-ink transition hover:border-ink"

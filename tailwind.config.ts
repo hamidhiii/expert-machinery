@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Warm editorial base with the navy + orange of the EXPERT MACHINERY logo
-        cream: "#F4F1EA",
-        "cream-200": "#EAE6DC",
-        ink: "#161C26",
-        "ink-800": "#1F2734",
-        muted: "#6E7480",
-        line: "#E1DCD1",
+        // White base with the navy + orange of the EXPERT MACHINERY logo
+        paper: "#FFFFFF",
+        surface: "#F5F7FA",
+        ink: "#1B2432",
+        "ink-800": "#27334A",
+        muted: "#5C6A7E",
+        line: "#E4E7EC",
         flame: "#F0562A",
         "flame-dark": "#D2431B",
         "flame-soft": "#FDEDE6",

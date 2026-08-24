@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, X } from "lucide-react";
+import { CheckCircle2, MessageCircle, X } from "lucide-react";
 import { company } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
 
@@ -30,7 +30,7 @@ export function useRequestModal() {
 }
 
 const fieldClass =
-  "h-12 w-full rounded-lg border border-line bg-cream/60 px-4 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white";
+  "h-12 w-full rounded-lg border border-line bg-paper/60 px-4 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white";
 
 export function RequestModalProvider({ children }: { children: ReactNode }) {
   const { t } = useLanguage();
@@ -93,7 +93,7 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
                 type="button"
                 onClick={close}
                 aria-label={t("header.close")}
-                className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full text-muted transition hover:bg-cream hover:text-ink"
+                className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full text-muted transition hover:bg-paper hover:text-ink"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -127,7 +127,7 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
                       </label>
                       <label className="grid gap-2">
                         <span className="text-xs font-semibold text-ink/70">{t("form.phone")}</span>
-                        <input required name="phone" placeholder="+998 00 000 00 00" className={fieldClass} />
+                        <input required name="phone" placeholder="+7 700 000 00 00" className={fieldClass} />
                       </label>
                       <label className="grid gap-2">
                         <span className="text-xs font-semibold text-ink/70">{t("form.company")}</span>
@@ -151,7 +151,7 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
                         rows={4}
                         defaultValue={subject}
                         placeholder={t("form.messagePlaceholder")}
-                        className="w-full rounded-lg border border-line bg-cream/60 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white"
+                        className="w-full rounded-lg border border-line bg-paper/60 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white"
                       />
                     </label>
 
@@ -161,6 +161,15 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
                     >
                       {t("form.submit")}
                     </button>
+                    <a
+                      href={company.whatsappHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border border-line text-sm font-semibold text-ink transition hover:border-ink"
+                    >
+                      <MessageCircle className="h-4 w-4 text-flame" />
+                      {t("common.whatsapp")}
+                    </a>
                     <p className="text-center text-[11px] text-muted/80">{t("form.note")}</p>
                   </form>
                 </>

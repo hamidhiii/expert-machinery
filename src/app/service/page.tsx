@@ -25,11 +25,11 @@ export default function ServicePage() {
         eyebrow="Service / engineering"
         title={t("service.hero.title")}
         text={t("service.hero.text")}
-        image={siteImages.welding}
+        image={siteImages.service}
         action={<ButtonLink onClick={() => open()}>{t("common.request")}</ButtonLink>}
       />
 
-      <section className="bg-cream py-20 lg:py-24">
+      <section className="bg-paper py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading index="01" eyebrow="Capabilities" title={t("service.hero.eyebrow")} />
 

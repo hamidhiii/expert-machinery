@@ -169,8 +169,9 @@ export function Breadcrumbs({ items }: { items: { label: string; href?: string }
 }
 
 /**
- * Inner-page hero: breadcrumbs, oversized sentence-case heading and an optional
- * portrait photo on the right — the layout used across the reference site.
+ * Inner-page hero. Every section page uses the same band: a stretched
+ * background photo under a translucent white panel, so the site stays on a
+ * white base while the photography still shows through.
  */
 export function InnerHero({
   breadcrumbs,
@@ -185,42 +186,36 @@ export function InnerHero({
   eyebrow: string;
   title: string;
   text: string;
-  image?: string;
+  image: string;
   action?: ReactNode;
   counter?: string;
 }) {
   return (
-    <section className="border-b border-line bg-cream">
-      <div className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-20">
+    <section className="relative isolate border-b border-line bg-paper">
+      <Image
+        src={image}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-white via-white/92 to-white/70"
+        aria-hidden
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-24">
         <Breadcrumbs items={breadcrumbs} />
 
-        <div
-          className={`mt-12 grid gap-12 ${image ? "lg:grid-cols-[1.05fr_0.95fr] lg:items-center" : ""}`}
-        >
-          <div>
-            <Eyebrow>{eyebrow}</Eyebrow>
-            <h1 className="display mt-5 max-w-3xl text-4xl sm:text-5xl lg:text-[64px]">{title}</h1>
-            <p className="mt-6 max-w-xl text-[15px] leading-8 text-muted">{text}</p>
-            {action ? <div className="mt-9 flex flex-wrap gap-3">{action}</div> : null}
-          </div>
-
-          {image ? (
-            <Reveal delay={0.1}>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl lg:aspect-[5/6]">
-                <Image
-                  src={image}
-                  alt=""
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover"
-                />
-              </div>
-            </Reveal>
-          ) : null}
+        <div className="mt-12 max-w-3xl rounded-2xl bg-white/70 p-6 backdrop-blur-sm sm:p-9">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h1 className="display mt-5 text-4xl sm:text-5xl lg:text-[60px]">{title}</h1>
+          <p className="mt-6 max-w-xl text-[15px] leading-8 text-muted">{text}</p>
+          {action ? <div className="mt-9 flex flex-wrap gap-3">{action}</div> : null}
         </div>
 
-        {counter && !image ? (
+        {counter ? (
           <p className="mt-8 text-right text-xs font-semibold text-muted/70">{counter}</p>
         ) : null}
       </div>

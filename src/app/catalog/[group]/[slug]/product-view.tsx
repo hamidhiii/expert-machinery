@@ -3,7 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Check, Phone } from "lucide-react";
-import { categoryLabels, company, productBrand, relatedProducts, type Product } from "@/lib/catalog";
+import {
+  categoryLabels,
+  company,
+  getGroup,
+  productBrand,
+  productGroup,
+  relatedProducts,
+  type Product,
+} from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
 import { useRequestModal } from "@/components/request-modal";
 import { Breadcrumbs, ButtonLink, Eyebrow, Reveal, SectionHeading } from "@/components/ui";
@@ -13,15 +21,17 @@ export function ProductView({ product }: { product: Product }) {
   const { t, tr } = useLanguage();
   const { open } = useRequestModal();
   const related = relatedProducts(product);
+  const group = getGroup(productGroup(product))!;
 
   return (
     <>
-      <section className="bg-cream">
+      <section className="bg-paper">
         <div className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
               { label: t("common.home"), href: "/" },
               { label: t("nav.catalog"), href: "/catalog" },
+              { label: tr(group.title), href: `/catalog/${group.key}` },
               { label: tr(product.title) },
             ]}
           />
@@ -83,7 +93,7 @@ export function ProductView({ product }: { product: Product }) {
       </section>
 
       {/* advantages + what to send */}
-      <section className="border-t border-line bg-cream py-20">
+      <section className="border-t border-line bg-paper py-20">
         <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
             <Eyebrow index="01">Advantages</Eyebrow>
@@ -115,7 +125,7 @@ export function ProductView({ product }: { product: Product }) {
       </section>
 
       {/* related */}
-      <section className="border-t border-line bg-cream py-20">
+      <section className="border-t border-line bg-paper py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading index="03" eyebrow="Related / equipment" title={t("product.related")} />
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

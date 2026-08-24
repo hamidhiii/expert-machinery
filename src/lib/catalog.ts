@@ -1,6 +1,12 @@
 import {
+  Activity,
   Boxes,
+  Cog,
+  Droplets,
   Factory,
+  Hammer,
+  Search,
+  Timer,
   Gauge,
   HardHat,
   Recycle,
@@ -13,20 +19,35 @@ import {
 import type { Localized } from "@/lib/i18n";
 import type { TranslationKey } from "@/lib/i18n";
 
-// TODO (prototype): address and e-mail are placeholders — confirm with the client.
+// The site targets Kazakhstan only (.kz).
+// TODO (prototype): the client still has to provide the Kazakhstan phone number,
+// the WhatsApp group link, the legal address in Astana and the Instagram account.
 export const company = {
   name: "EXPERT MACHINERY",
-  legalName: "OOO «EXPERT MACHINERY»",
+  legalName: "TOO «EXPERT MACHINERY»",
   address: {
-    ru: "г. Ташкент, Узбекистан",
-    kk: "Ташкент қ., Өзбекстан",
-    en: "Tashkent, Uzbekistan",
+    ru: "г. Астана, Казахстан",
+    kk: "Астана қ., Қазақстан",
+    en: "Astana, Kazakhstan",
   } satisfies Localized,
-  phone: "+998 99 198 51 98",
-  phoneHref: "tel:+998991985198",
-  telegramHref: "https://t.me/+998991985198",
-  email: "info@expertmachinery.uz",
+  phone: "+7 700 000 00 00",
+  phoneHref: "tel:+77000000000",
+  whatsappHref: "https://wa.me/77000000000",
+  instagramHref: "https://instagram.com/expertmachinery.kz",
+  email: "info@expertmachinery.kz",
 };
+
+/**
+ * Figures for the band under the hero — the client asked for company facts
+ * instead of catalogue counters.
+ * TODO (prototype): replace every value with the real one before launch.
+ */
+export const companyStats: { value: string; key: TranslationKey }[] = [
+  { value: "120+", key: "stats.projects" },
+  { value: "25", key: "stats.staff" },
+  { value: "8", key: "stats.years" },
+  { value: "24/7", key: "stats.support" },
+];
 
 export const navItems: { href: string; key: TranslationKey }[] = [
   { href: "/catalog", key: "nav.catalog" },
@@ -1044,71 +1065,6 @@ export const industries = [
   },
 ];
 
-export const services = [
-  {
-    icon: Gauge,
-    title: { ru: "Инженерный подбор", kk: "Инженерлік таңдау", en: "Engineering selection" },
-    text: {
-      ru: "Расчет по моменту, мощности, режиму S1-S6, коэффициенту сервиса, температуре и циклам пуска.",
-      kk: "Момент, қуат, S1-S6 режимі, сервис коэффициенті, температура және іске қосу циклдері бойынша есеп.",
-      en: "Sizing by torque, power, S1-S6 duty, service factor, temperature and starting cycles.",
-    },
-  },
-  {
-    icon: RotateCcw,
-    title: {
-      ru: "Замена импортных аналогов",
-      kk: "Импорттық аналогтарды ауыстыру",
-      en: "Imported analog replacement",
-    },
-    text: {
-      ru: "Подбор по шильдику, чертежу, посадочным размерам или модели Flender, SEW, Nord, Bonfiglioli.",
-      kk: "Тақтайша, сызба, отырғызу өлшемдері немесе Flender, SEW, Nord, Bonfiglioli моделі бойынша таңдау.",
-      en: "Selection by nameplate, drawing, mounting dimensions or a Flender, SEW, Nord, Bonfiglioli model.",
-    },
-  },
-  {
-    icon: Boxes,
-    title: {
-      ru: "Комплектация приводного узла",
-      kk: "Жетек торабын жинақтау",
-      en: "Drive unit configuration",
-    },
-    text: {
-      ru: "Редуктор, электродвигатель, муфта, тормоз, датчики, рама, защита и аксессуары.",
-      kk: "Редуктор, электр қозғалтқыш, муфта, тежегіш, датчиктер, рама, қорғаныс және керек-жарақ.",
-      en: "Gearbox, electric motor, coupling, brake, sensors, frame, guard and accessories.",
-    },
-  },
-  {
-    icon: Wrench,
-    title: { ru: "Сервис и диагностика", kk: "Сервис және диагностика", en: "Service and diagnostics" },
-    text: {
-      ru: "Помощь с дефектовкой, рекомендациями по маслу, охлаждению, монтажу и регламенту обслуживания.",
-      kk: "Ақауды анықтау, май, салқындату, орнату және қызмет көрсету регламенті бойынша көмек.",
-      en: "Help with fault diagnosis, oil recommendations, cooling, mounting and maintenance schedule.",
-    },
-  },
-  {
-    icon: ShieldCheck,
-    title: { ru: "Контроль поставки", kk: "Жеткізуді бақылау", en: "Delivery control" },
-    text: {
-      ru: "Проверка спецификации, фото-отчеты, маркировка, упаковка и подготовка документов.",
-      kk: "Спецификацияны тексеру, фотоесеп, таңбалау, қаптама және құжаттарды дайындау.",
-      en: "Specification check, photo reports, marking, packaging and document preparation.",
-    },
-  },
-  {
-    icon: Factory,
-    title: { ru: "Проектные поставки", kk: "Жобалық жеткізілім", en: "Project supply" },
-    text: {
-      ru: "Сборные заявки для заводов, строительных объектов и производственных модернизаций.",
-      kk: "Зауыттарға, құрылыс нысандарына және өндірісті жаңғыртуға арналған жиынтық өтінімдер.",
-      en: "Bundled orders for plants, construction sites and production upgrades.",
-    },
-  },
-];
-
 export function getProduct(slug: string) {
   return products.find((product) => product.slug === slug);
 }
@@ -1116,7 +1072,7 @@ export function getProduct(slug: string) {
 /** Photography used across marketing sections (industrial stock shots). */
 export const siteImages = {
   heroPlant: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?w=1600&q=70",
-  welding: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1600&q=70",
+  service: "https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=1600&q=70",
   drawings: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&q=70",
   texture: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1600&q=60",
   meeting: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=70",
@@ -1179,8 +1135,257 @@ export const heroSlides: {
     textKey: "home.slide2.text",
   },
   {
-    image: siteImages.welding,
+    image: siteImages.service,
     titleKey: "home.slide3.title",
     textKey: "home.slide3.text",
   },
 ];
+
+/**
+ * "Почему выбирают нас" — six criteria agreed with the client:
+ * delivery time and sourcing of original parts replaced the drive-unit
+ * configuration and project-supply items.
+ */
+export const advantages = [
+  {
+    icon: Gauge,
+    title: { ru: "Инженерный подбор", kk: "Инженерлік таңдау", en: "Engineering selection" },
+    text: {
+      ru: "Расчёт по моменту, мощности, режиму работы, температуре и циклам пуска — до того, как назвать цену.",
+      kk: "Бағаны айтпас бұрын момент, қуат, жұмыс режимі, температура және іске қосу циклдері бойынша есеп.",
+      en: "Sizing by torque, power, duty cycle, temperature and starting cycles — before we quote a price.",
+    },
+  },
+  {
+    icon: Timer,
+    title: { ru: "Короткие сроки поставки", kk: "Қысқа жеткізу мерзімі", en: "Short lead times" },
+    text: {
+      ru: "Держим складские позиции и заранее согласовываем срок изготовления, чтобы линия не стояла.",
+      kk: "Қойма қорын ұстаймыз және желі тұрып қалмауы үшін дайындау мерзімін алдын ала келісеміз.",
+      en: "We keep stock positions and agree the manufacturing time up front so the line keeps running.",
+    },
+  },
+  {
+    icon: Search,
+    title: {
+      ru: "Поиск оригинальных запчастей",
+      kk: "Түпнұсқа қосалқы бөлшектерді табу",
+      en: "Sourcing original spare parts",
+    },
+    text: {
+      ru: "Находим оригинальные узлы и запчасти по номеру, шильдику или чертежу — включая редкие позиции.",
+      kk: "Түпнұсқа тораптар мен бөлшектерді нөмірі, тақтайшасы немесе сызбасы бойынша табамыз.",
+      en: "We find original units and spare parts by part number, nameplate or drawing — rare items included.",
+    },
+  },
+  {
+    icon: Activity,
+    title: { ru: "Сервис и диагностика", kk: "Сервис және диагностика", en: "Service and diagnostics" },
+    text: {
+      ru: "Диагностика двигателей и приводов, дефектовка, рекомендации по маслу, монтажу и регламенту.",
+      kk: "Қозғалтқыштар мен жетектерді диагностикалау, ақауды анықтау, май мен орнату бойынша ұсыныстар.",
+      en: "Engine and drive diagnostics, fault assessment, oil, mounting and maintenance recommendations.",
+    },
+  },
+  {
+    icon: Hammer,
+    title: { ru: "Капитальный ремонт", kk: "Күрделі жөндеу", en: "Overhaul" },
+    text: {
+      ru: "Капитальный ремонт ДВС и моторов спецтехники с проверкой на стенде и гарантией на работы.",
+      kk: "Арнайы техника қозғалтқыштарын стендте тексеріп, кепілдікпен күрделі жөндеу.",
+      en: "Overhaul of engines and heavy-machinery motors with bench testing and a warranty on the work.",
+    },
+  },
+  {
+    icon: ShieldCheck,
+    title: { ru: "Контроль поставки", kk: "Жеткізуді бақылау", en: "Delivery control" },
+    text: {
+      ru: "Проверка спецификации, фото-отчёты, маркировка, упаковка и подготовка документов.",
+      kk: "Спецификацияны тексеру, фотоесеп, таңбалау, қаптама және құжаттарды дайындау.",
+      en: "Specification check, photo reports, marking, packaging and document preparation.",
+    },
+  },
+];
+
+/**
+ * Services live outside the catalogue, as a separate section.
+ * TODO (prototype): the client will send their own service presentation — check
+ * the exact wording and add the works that are missing here.
+ */
+export const services = [
+  {
+    icon: Hammer,
+    title: {
+      ru: "Капитальный ремонт ДВС",
+      kk: "ІЖҚ күрделі жөндеу",
+      en: "Engine overhaul",
+    },
+    text: {
+      ru: "Полная разборка, дефектовка, замена изношенных узлов и сборка двигателя с проверкой параметров.",
+      kk: "Толық бөлшектеу, ақауды анықтау, тозған тораптарды ауыстыру және параметрлерін тексеріп жинау.",
+      en: "Full teardown, fault assessment, replacement of worn parts and reassembly with parameter checks.",
+    },
+  },
+  {
+    icon: Cog,
+    title: {
+      ru: "Ремонт моторов спецтехники",
+      kk: "Арнайы техника қозғалтқыштарын жөндеу",
+      en: "Heavy machinery motor repair",
+    },
+    text: {
+      ru: "Ремонт двигателей экскаваторов, погрузчиков и карьерной техники, включая гидравлические узлы.",
+      kk: "Экскаваторлар, тиегіштер мен карьер техникасының қозғалтқыштарын жөндеу.",
+      en: "Repair of excavator, loader and quarry machinery engines, hydraulic units included.",
+    },
+  },
+  {
+    icon: Droplets,
+    title: { ru: "Замена масел и ТО", kk: "Май ауыстыру және ТҚ", en: "Oil change and maintenance" },
+    text: {
+      ru: "Подбор и замена масел, фильтров и расходников, регламентное обслуживание по наработке.",
+      kk: "Май, сүзгі және шығын материалдарын таңдау мен ауыстыру, жұмыс уақыты бойынша ТҚ.",
+      en: "Selection and replacement of oils, filters and consumables, scheduled service by running hours.",
+    },
+  },
+  {
+    icon: Activity,
+    title: { ru: "Диагностика двигателей", kk: "Қозғалтқыш диагностикасы", en: "Engine diagnostics" },
+    text: {
+      ru: "Замер параметров, компьютерная диагностика и заключение о состоянии узла до начала ремонта.",
+      kk: "Параметрлерді өлшеу, компьютерлік диагностика және жөндеуге дейінгі қорытынды.",
+      en: "Parameter measurement, computer diagnostics and a condition report before any repair starts.",
+    },
+  },
+  {
+    icon: Wrench,
+    title: { ru: "Инженерные услуги", kk: "Инженерлік қызметтер", en: "Engineering services" },
+    text: {
+      ru: "Подбор привода под нагрузку, комплектация узла, шеф-монтаж и консультации инженера.",
+      kk: "Жүктемеге сай жетек таңдау, торапты жинақтау, бас-монтаж және инженер кеңесі.",
+      en: "Drive sizing for the load, unit configuration, supervised installation and engineering advice.",
+    },
+  },
+  {
+    icon: Truck,
+    title: { ru: "Поставка запчастей", kk: "Қосалқы бөлшек жеткізу", en: "Spare parts supply" },
+    text: {
+      ru: "Оригинальные запчасти и расходники под заказ, с проверкой по номеру и срокам поставки.",
+      kk: "Тапсырыс бойынша түпнұсқа бөлшектер мен шығын материалдары, нөмірі мен мерзімі тексеріліп.",
+      en: "Original spare parts and consumables to order, verified by part number and lead time.",
+    },
+  },
+];
+
+/**
+ * Catalogue is three levels deep: group -> category -> product.
+ * Filters, oils and engines are agreed with the client but have no data yet.
+ */
+export const groupKeys = ["gear", "pumps", "couplings", "filters", "oils", "engines"] as const;
+export type GroupKey = (typeof groupKeys)[number];
+
+export const groups: {
+  key: GroupKey;
+  title: Localized;
+  text: Localized;
+  image: string;
+  categories: Exclude<CategoryKey, "all">[];
+}[] = [
+  {
+    key: "gear",
+    title: { ru: "Мотор-редукторы", kk: "Мотор-редукторлар", en: "Gear motors" },
+    text: {
+      ru: "Вальные, цилиндрические, червячные, планетарные и промышленные редукторы.",
+      kk: "Білікті, цилиндрлік, червякты, планетарлық және өнеркәсіптік редукторлар.",
+      en: "Shaft-mounted, helical, worm, planetary and industrial gear units.",
+    },
+    image: "https://www.aokman-gearbox.com/d/pic/standard-gearbox/r-series-helical-gearbox.png",
+    categories: ["shaft", "helical", "worm", "planetary", "industrial"],
+  },
+  {
+    key: "pumps",
+    title: { ru: "Насосы", kk: "Сорғылар", en: "Pumps" },
+    text: {
+      ru: "Центробежные, вертикальные, многоступенчатые и циркуляционные насосы.",
+      kk: "Ортадан тепкіш, тік, көп сатылы және циркуляциялық сорғылар.",
+      en: "Centrifugal, vertical, multistage and circulation pumps.",
+    },
+    image: "https://product.standartpompa.com/AppRepo/Image/List/20240628082757-1415.png",
+    categories: ["pumps"],
+  },
+  {
+    key: "couplings",
+    title: { ru: "Муфты", kk: "Муфталар", en: "Couplings" },
+    text: {
+      ru: "Гидромуфты для мягкого пуска и защиты привода от перегрузки.",
+      kk: "Жұмсақ іске қосуға және жетекті қорғауға арналған гидромуфталар.",
+      en: "Fluid couplings for soft start and drive overload protection.",
+    },
+    image: "https://www.aokman-gearbox.com/d/pic/gearbox-accessories/yoxd-fluid-coupling-1.jpg",
+    categories: ["couplings"],
+  },
+  {
+    key: "filters",
+    title: { ru: "Фильтры", kk: "Сүзгілер", en: "Filters" },
+    text: {
+      ru: "Масляные, топливные, воздушные и гидравлические фильтры для техники и линий.",
+      kk: "Техника мен желілерге арналған май, отын, ауа және гидравлика сүзгілері.",
+      en: "Oil, fuel, air and hydraulic filters for machinery and process lines.",
+    },
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=70",
+    categories: [],
+  },
+  {
+    key: "oils",
+    title: { ru: "Масла и смазки", kk: "Майлар мен майлау", en: "Oils and lubricants" },
+    text: {
+      ru: "Моторные, трансмиссионные и гидравлические масла, консистентные смазки.",
+      kk: "Мотор, трансмиссия және гидравлика майлары, консистентті майлар.",
+      en: "Engine, transmission and hydraulic oils, greases.",
+    },
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&q=70",
+    categories: [],
+  },
+  {
+    key: "engines",
+    title: { ru: "ДВС и запчасти", kk: "ІЖҚ және бөлшектер", en: "Engines and spare parts" },
+    text: {
+      ru: "Двигатели внутреннего сгорания, узлы и оригинальные запчасти для спецтехники.",
+      kk: "Іштен жанатын қозғалтқыштар, тораптар және арнайы техникаға түпнұсқа бөлшектер.",
+      en: "Internal combustion engines, assemblies and original spare parts for heavy machinery.",
+    },
+    image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1200&q=70",
+    categories: [],
+  },
+];
+
+export function getGroup(key: string) {
+  return groups.find((group) => group.key === key);
+}
+
+export function productGroup(product: Product): GroupKey {
+  return groups.find((group) => group.categories.includes(product.category as Exclude<CategoryKey, "all">))?.key ?? "gear";
+}
+
+export function productHref(product: Product) {
+  return `/catalog/${productGroup(product)}/${product.slug}`;
+}
+
+export function groupProducts(key: GroupKey) {
+  const group = getGroup(key);
+  if (!group) return [];
+  return products.filter((product) =>
+    group.categories.includes(product.category as Exclude<CategoryKey, "all">),
+  );
+}
+
+/**
+ * Logo strip of large Kazakhstan companies, shown instead of the previous
+ * "most requested" block. The client will supply the list and the logo files;
+ * until then the strip renders neutral placeholder tiles.
+ * TODO (prototype): replace with real logos and links agreed with the client.
+ */
+export const partnerPlaceholders = Array.from({ length: 12 }, (_, index) => ({
+  id: index + 1,
+  label: `KZ ${String(index + 1).padStart(2, "0")}`,
+}));
