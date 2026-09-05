@@ -57,13 +57,13 @@ export default function AboutPage() {
       <section className="border-t border-line bg-paper py-20 lg:py-24">
         <div className="mx-auto grid max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8 2xl:px-12">
           <Reveal>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-surface">
               <Image
-                src={siteImages.line}
-                alt=""
+                src="/expert-machinery-logo.jpg"
+                alt={company.name}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
+                className="object-contain p-10 sm:p-14"
               />
             </div>
           </Reveal>
