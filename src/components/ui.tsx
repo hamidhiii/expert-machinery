@@ -149,18 +149,33 @@ export function ArrowLink({
   );
 }
 
-export function Breadcrumbs({ items }: { items: { label: string; href?: string }[] }) {
+export function Breadcrumbs({
+  items,
+  light = false,
+}: {
+  items: { label: string; href?: string }[];
+  light?: boolean;
+}) {
   return (
-    <nav className="flex flex-wrap items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+    <nav
+      className={`flex flex-wrap items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] ${
+        light ? "text-white/55" : "text-muted"
+      }`}
+    >
       {items.map((item, index) => (
         <span key={item.label} className="flex items-center gap-1.5">
-          {index > 0 ? <ChevronRight className="h-3 w-3 text-muted/60" /> : null}
+          {index > 0 ? (
+            <ChevronRight className={`h-3 w-3 ${light ? "text-white/35" : "text-muted/60"}`} />
+          ) : null}
           {item.href ? (
-            <Link href={item.href} className="transition hover:text-flame">
+            <Link
+              href={item.href}
+              className={`transition ${light ? "hover:text-white" : "hover:text-flame"}`}
+            >
               {item.label}
             </Link>
           ) : (
-            <span className="text-ink/70">{item.label}</span>
+            <span className={light ? "text-white/85" : "text-ink/70"}>{item.label}</span>
           )}
         </span>
       ))}
@@ -169,9 +184,11 @@ export function Breadcrumbs({ items }: { items: { label: string; href?: string }
 }
 
 /**
- * Inner-page hero. Every section page uses the same band: a stretched
- * background photo under a translucent white panel, so the site stays on a
- * white base while the photography still shows through.
+ * Inner-page hero. Same dark, full-bleed treatment as the home hero (photo +
+ * ink scrim, white text straight on the image) minus the slider — one static
+ * photo per page. Mobile gets its own layout: shorter band, content pinned to
+ * the bottom against a vertical scrim, instead of the desktop's centered,
+ * horizontally-scrimmed block.
  */
 export function InnerHero({
   breadcrumbs,
@@ -191,32 +208,36 @@ export function InnerHero({
   counter?: string;
 }) {
   return (
-    <section className="relative isolate border-b border-line bg-paper">
-      <Image
-        src={image}
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-      />
+    <section className="relative isolate flex min-h-[340px] items-end overflow-hidden bg-ink sm:min-h-[440px] sm:items-center md:min-h-[500px] lg:min-h-[560px]">
+      <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
+
+      {/* Mobile: content sits at the bottom, so the scrim is bottom-weighted. */}
       <div
-        className="absolute inset-0 bg-gradient-to-r from-white via-white/92 to-white/70"
+        className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 to-ink/10 sm:hidden"
+        aria-hidden
+      />
+      {/* sm and up: content is vertically centered on the left, so the scrim runs left to right. */}
+      <div
+        className="absolute inset-0 hidden bg-gradient-to-r from-ink via-ink/85 to-ink/25 sm:block"
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-24">
-        <Breadcrumbs items={breadcrumbs} />
+      <div className="relative mx-auto w-full max-w-7xl px-4 pb-7 pt-16 sm:px-6 sm:py-16 md:py-20 lg:px-8 lg:py-24">
+        <Breadcrumbs items={breadcrumbs} light />
 
-        <div className="mt-12 max-w-3xl rounded-2xl bg-white/70 p-6 backdrop-blur-sm sm:p-9">
-          <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="display mt-5 text-4xl sm:text-5xl lg:text-[60px]">{title}</h1>
-          <p className="mt-6 max-w-xl text-[15px] leading-8 text-muted">{text}</p>
-          {action ? <div className="mt-9 flex flex-wrap gap-3">{action}</div> : null}
-        </div>
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <h1 className="display mt-3 max-w-xl text-[28px] text-white sm:mt-5 sm:text-4xl md:text-5xl lg:text-[56px]">
+          {title}
+        </h1>
+        <p className="mt-3 max-w-lg text-sm leading-7 text-white/70 sm:mt-6 sm:text-[15px] sm:leading-8">
+          {text}
+        </p>
+        {action ? <div className="mt-5 flex flex-wrap gap-3 sm:mt-8">{action}</div> : null}
 
         {counter ? (
-          <p className="mt-8 text-right text-xs font-semibold text-muted/70">{counter}</p>
+          <p className="mt-5 text-xs font-semibold text-white/50 sm:mt-10 sm:text-right">
+            {counter}
+          </p>
         ) : null}
       </div>
     </section>
