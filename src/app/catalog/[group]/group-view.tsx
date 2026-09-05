@@ -35,7 +35,7 @@ export function GroupView({ groupKey }: { groupKey: GroupKey }) {
 
       {empty ? (
         <section className="bg-paper py-20 lg:py-24">
-          <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8 2xl:px-12">
             <p className="display text-3xl text-ink">{t("catalog.group.soon")}</p>
             <p className="mt-4 text-[15px] leading-8 text-muted">{t("catalog.group.soonText")}</p>
             <div className="mt-8 flex justify-center">
@@ -45,7 +45,7 @@ export function GroupView({ groupKey }: { groupKey: GroupKey }) {
         </section>
       ) : (
         <section className="bg-paper py-14 lg:py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
             <CatalogExplorer group={groupKey} />
           </div>
         </section>

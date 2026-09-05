@@ -20,7 +20,7 @@ export default function IndustriesPage() {
       />
 
       <section className="bg-paper py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="grid gap-6 lg:grid-cols-2">
             {industries.map((industry, index) => (
               <Reveal key={industry.slug} delay={index * 0.04}>

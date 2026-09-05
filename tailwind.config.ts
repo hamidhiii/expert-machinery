@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Default Tailwind tops out at 2xl (1536px) and the site never designed
+      // past lg (1024px), so anything wider just centered the same 1280px
+      // column with growing blank margins. 3xl targets 24"+ / large monitors.
+      screens: {
+        "3xl": "1920px",
+      },
       colors: {
         // White base with the navy + orange of the EXPERT MACHINERY logo
         paper: "#FFFFFF",

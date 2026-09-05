@@ -23,7 +23,7 @@ export default function CatalogPage() {
       />
 
       <section className="bg-paper py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {groups.map((group, index) => {
               const count = groupProducts(group.key).length;

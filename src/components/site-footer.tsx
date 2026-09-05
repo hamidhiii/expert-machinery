@@ -13,7 +13,7 @@ export function SiteFooter() {
 
   return (
     <footer className="bg-ink text-white">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.3fr_0.7fr_1fr_1fr] lg:px-8">
+      <div className="mx-auto grid max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.3fr_0.7fr_1fr_1fr] lg:px-8 2xl:px-12">
         <div>
           <LogoLockup dark />
           <p className="mt-6 max-w-xs text-sm leading-7 text-white/50">{t("footer.about")}</p>
@@ -59,7 +59,7 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] flex-col gap-2 px-4 py-6 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8 2xl:px-12">
           <span>
             © {new Date().getFullYear()} {company.legalName}. {t("footer.rights")}
           </span>

@@ -37,7 +37,7 @@ export default function AboutPage() {
       <StatsBand stats={companyStats.map((stat) => ({ value: stat.value, label: t(stat.key) }))} />
 
       <section className="bg-paper py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <SectionHeading index="01" eyebrow="Values" title={t("about.values.title")} />
 
           <div className="mt-12 divide-y divide-line border-y border-line">
@@ -55,7 +55,7 @@ export default function AboutPage() {
       </section>
 
       <section className="border-t border-line bg-paper py-20 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
+        <div className="mx-auto grid max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8 2xl:px-12">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image

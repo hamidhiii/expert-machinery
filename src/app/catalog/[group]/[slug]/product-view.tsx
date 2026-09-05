@@ -26,7 +26,7 @@ export function ProductView({ product }: { product: Product }) {
   return (
     <>
       <section className="bg-paper">
-        <div className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 pb-16 pt-8 sm:px-6 lg:px-8 2xl:px-12">
           <Breadcrumbs
             items={[
               { label: t("common.home"), href: "/" },
@@ -94,7 +94,7 @@ export function ProductView({ product }: { product: Product }) {
 
       {/* advantages + what to send */}
       <section className="border-t border-line bg-paper py-20">
-        <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+        <div className="mx-auto grid max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8 2xl:px-12">
           <div>
             <Eyebrow index="01">Advantages</Eyebrow>
             <h2 className="display mt-5 text-3xl sm:text-4xl">{t("product.advantages")}</h2>
@@ -126,7 +126,7 @@ export function ProductView({ product }: { product: Product }) {
 
       {/* related */}
       <section className="border-t border-line bg-paper py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <SectionHeading index="03" eyebrow="Related / equipment" title={t("product.related")} />
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((item) => (

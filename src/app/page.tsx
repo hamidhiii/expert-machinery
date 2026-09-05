@@ -48,7 +48,7 @@ export default function HomePage() {
   return (
     <>
       {/* ------------------------------------------------------------ hero */}
-      <section className="relative isolate flex min-h-[620px] items-center overflow-hidden bg-ink lg:min-h-[680px]">
+      <section className="relative isolate flex min-h-[620px] items-center overflow-hidden bg-ink lg:min-h-[680px] 2xl:min-h-[800px]">
         <AnimatePresence mode="sync">
           <motion.div
             key={slide}
@@ -71,7 +71,7 @@ export default function HomePage() {
 
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/30" aria-hidden />
 
-        <div className="relative mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="relative mx-auto w-full max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 py-20 sm:px-6 lg:px-8 2xl:px-12">
           <Eyebrow>{t("home.hero.badge")}</Eyebrow>
 
           <AnimatePresence mode="wait">
@@ -82,10 +82,10 @@ export default function HomePage() {
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
-              <h1 className="display mt-6 max-w-4xl text-[40px] text-white sm:text-6xl lg:text-[72px]">
+              <h1 className="display mt-6 max-w-4xl text-[40px] text-white sm:text-6xl lg:text-[72px] 2xl:max-w-[52rem] 2xl:text-[88px]">
                 {t(current.titleKey)}
               </h1>
-              <p className="mt-7 max-w-xl text-[15px] leading-8 text-white/70">
+              <p className="mt-7 max-w-xl text-[15px] leading-8 text-white/70 2xl:max-w-2xl 2xl:text-base 2xl:leading-8">
                 {t(current.textKey)}
               </p>
             </motion.div>
@@ -128,7 +128,7 @@ export default function HomePage() {
 
       {/* ------------------------------------------------------ categories */}
       <section className="bg-paper py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <SectionHeading
             index="01"
             eyebrow="Catalog"
@@ -226,7 +226,7 @@ export default function HomePage() {
 
       {/* -------------------------------------------------------- partners */}
       <section className="border-t border-line bg-surface py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <SectionHeading
             index="02"
             eyebrow={t("partners.eyebrow")}
@@ -251,7 +251,7 @@ export default function HomePage() {
 
       {/* ---------------------------------------------------------- why us */}
       <section className="bg-ink py-20 text-white lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <Eyebrow index="03">Engineering</Eyebrow>
           <h2 className="display mt-5 text-4xl sm:text-5xl">{t("home.why.title")}</h2>
           <p className="display mt-3 text-4xl text-white/25 sm:text-5xl">{t("home.why.display")}</p>
@@ -282,7 +282,7 @@ export default function HomePage() {
 
       {/* ------------------------------------------------------ industries */}
       <section className="bg-paper py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <SectionHeading
             index="04"
             eyebrow="Industries"

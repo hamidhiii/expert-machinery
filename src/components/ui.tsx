@@ -208,7 +208,7 @@ export function InnerHero({
   counter?: string;
 }) {
   return (
-    <section className="relative isolate flex min-h-[340px] items-end overflow-hidden bg-ink sm:min-h-[440px] sm:items-center md:min-h-[500px] lg:min-h-[560px]">
+    <section className="relative isolate flex min-h-[340px] items-end overflow-hidden bg-ink sm:min-h-[440px] sm:items-center md:min-h-[500px] lg:min-h-[560px] 2xl:min-h-[660px]">
       <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
 
       {/* Mobile: content sits at the bottom, so the scrim is bottom-weighted. */}
@@ -222,14 +222,14 @@ export function InnerHero({
         aria-hidden
       />
 
-      <div className="relative mx-auto w-full max-w-7xl px-4 pb-7 pt-16 sm:px-6 sm:py-16 md:py-20 lg:px-8 lg:py-24">
+      <div className="relative mx-auto w-full max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 pb-7 pt-16 sm:px-6 sm:py-16 md:py-20 lg:px-8 2xl:px-12 lg:py-24">
         <Breadcrumbs items={breadcrumbs} light />
 
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="display mt-3 max-w-xl text-[28px] text-white sm:mt-5 sm:text-4xl md:text-5xl lg:text-[56px]">
+        <h1 className="display mt-3 max-w-xl text-[28px] text-white sm:mt-5 sm:text-4xl md:text-5xl lg:text-[56px] 2xl:max-w-2xl 2xl:text-[68px]">
           {title}
         </h1>
-        <p className="mt-3 max-w-lg text-sm leading-7 text-white/70 sm:mt-6 sm:text-[15px] sm:leading-8">
+        <p className="mt-3 max-w-lg text-sm leading-7 text-white/70 sm:mt-6 sm:text-[15px] sm:leading-8 2xl:max-w-xl 2xl:text-base">
           {text}
         </p>
         {action ? <div className="mt-5 flex flex-wrap gap-3 sm:mt-8">{action}</div> : null}
@@ -248,13 +248,13 @@ export function InnerHero({
 export function StatsBand({ stats }: { stats: { value: string; label: string }[] }) {
   return (
     <section className="bg-ink">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-white/10 px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
+      <div className="mx-auto grid max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] grid-cols-2 gap-px bg-white/10 px-4 sm:px-6 lg:grid-cols-4 lg:px-8 2xl:px-12">
         {stats.map((stat) => (
-          <div key={stat.label} className="bg-ink px-2 py-10 sm:px-8">
-            <p className="text-3xl font-bold tracking-display text-white sm:text-4xl">
+          <div key={stat.label} className="bg-ink px-2 py-10 sm:px-8 2xl:py-14">
+            <p className="text-3xl font-bold tracking-display text-white sm:text-4xl 2xl:text-5xl">
               {stat.value}
             </p>
-            <p className="mt-2 text-xs leading-5 text-white/50">{stat.label}</p>
+            <p className="mt-2 text-xs leading-5 text-white/50 2xl:text-sm">{stat.label}</p>
           </div>
         ))}
       </div>

@@ -13,7 +13,7 @@ export function CtaBand() {
 
   return (
     <section className="border-t border-line bg-paper">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:px-8">
+      <div className="mx-auto grid max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:px-8 2xl:px-12">
         <Reveal>
           <Eyebrow>{company.name}</Eyebrow>
           <h2 className="display mt-5 max-w-2xl text-4xl sm:text-5xl">{t("home.cta.title")}</h2>

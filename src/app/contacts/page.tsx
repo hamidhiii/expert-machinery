@@ -40,7 +40,7 @@ export default function ContactsPage() {
       />
 
       <section className="bg-paper py-16 lg:py-20">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
+        <div className="mx-auto grid max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] gap-12 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8 2xl:px-12">
           <div className="divide-y divide-line border-y border-line">
             {cards.map((card, index) => {
               const content = (
