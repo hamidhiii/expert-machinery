@@ -177,6 +177,7 @@ const L = {
   speed: { ru: "Частота вращения", kk: "Айналу жиілігі", en: "Speed" } satisfies Localized,
   connection: { ru: "Присоединение", kk: "Жалғауы", en: "Connection" } satisfies Localized,
   voltage: { ru: "Напряжение", kk: "Кернеуі", en: "Voltage" } satisfies Localized,
+  load: { ru: "Грузоподъёмность", kk: "Жүк көтергіштігі", en: "Load capacity" } satisfies Localized,
 };
 
 // Gearboxes, gear motors, industrial gear units and couplings (AOKMAN range).
@@ -370,6 +371,289 @@ const gearboxProducts: Product[] = [
       { ru: "Защита от перегрузки", en: "Overload protection" },
       { ru: "Меньше ударов", en: "Reduced shock loads" },
       { ru: "Для тяжелого пуска", en: "For heavy starting duty" },
+    ],
+  },
+
+  // Yilmaz Redüktör range (Turkey). Specs from the ELERIS GROUP catalogue the
+  // client sent; product photos from yilmazuk.co.uk (the brand's UK distributor —
+  // the manufacturer's own domain was unreachable). V series has no dedicated
+  // product photo on that site, so it borrows the B series image as a stand-in.
+  {
+    slug: "yilmaz-n-series-helical-gearbox",
+    code: "N Series",
+    title: { ru: "Flange Mounted Helical Gearbox", en: "Flange Mounted Helical Gearbox" },
+    category: "helical",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/c388e9c1-312b-452e-93dd-a401a97a0b7f.png",
+    specs: [
+      { label: L.torque, value: { ru: "50-18 000 Нм", en: "50-18,000 Nm" } },
+      { label: L.power, value: { ru: "0.12-160 кВт", en: "0.12-160 kW" } },
+      { label: L.speed, value: { ru: "0.1-780 об/мин", en: "0.1-780 rpm" } },
+    ],
+    usage: { ru: "конвейеры, насосы, вентиляторы", en: "conveyors, pumps, fans" },
+    summary: {
+      ru: "Фланцевый цилиндрический редуктор Yilmaz с монолитным корпусом — высокая жёсткость, минимальные протечки масла и низкий уровень шума.",
+      en: "A Yilmaz flange-mounted helical gearbox with a monolithic housing for high rigidity, minimal oil leakage and low noise.",
+    },
+    highlights: [
+      { ru: "Монолитный корпус", en: "Monolithic housing" },
+      { ru: "Входной и выходной вал параллельны", en: "Parallel input and output shafts" },
+      { ru: "Низкий уровень шума", en: "Low noise level" },
+      { ru: "Широкий ряд типоразмеров", en: "Wide range of sizes" },
+    ],
+  },
+  {
+    slug: "yilmaz-m-series-helical-gearbox",
+    code: "M Series",
+    title: { ru: "Foot-Mounted Helical Gearbox", en: "Foot-Mounted Helical Gearbox" },
+    category: "helical",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/8be59345-31b2-4129-91cc-644a78f42ba5.png",
+    specs: [
+      { label: L.torque, value: { ru: "50-18 000 Нм", en: "50-18,000 Nm" } },
+      { label: L.power, value: { ru: "0.12-160 кВт", en: "0.12-160 kW" } },
+      { label: L.speed, value: { ru: "0.1-780 об/мин", en: "0.1-780 rpm" } },
+    ],
+    usage: { ru: "конвейеры, насосные агрегаты", en: "conveyors, pump sets" },
+    summary: {
+      ru: "Редуктор Yilmaz с монтажом на лапах — та же монолитная платформа N-серии в исполнении для напольной установки.",
+      en: "A Yilmaz foot-mounted gearbox — the same monolithic N-series platform built for floor mounting.",
+    },
+    highlights: [
+      { ru: "Монтаж на лапах", en: "Foot mounting" },
+      { ru: "Монолитный корпус", en: "Monolithic housing" },
+      { ru: "Простой доступ для обслуживания", en: "Easy service access" },
+      { ru: "Широкий ряд типоразмеров", en: "Wide range of sizes" },
+    ],
+  },
+  {
+    slug: "yilmaz-d-series-helical-gearbox",
+    code: "D Series",
+    title: { ru: "Parallel Shaft Helical Gearbox", en: "Parallel Shaft Helical Gearbox" },
+    category: "helical",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/d79a8bd5-0a59-4fe3-bcca-dce1d9100915.png",
+    specs: [
+      { label: L.torque, value: { ru: "130-18 000 Нм", en: "130-18,000 Nm" } },
+      { label: L.power, value: { ru: "0.12-160 кВт", en: "0.12-160 kW" } },
+      { label: L.speed, value: { ru: "0.1-580 об/мин", en: "0.1-580 rpm" } },
+    ],
+    usage: { ru: "компактные приводы линий", en: "compact line drives" },
+    summary: {
+      ru: "Цилиндрический редуктор Yilmaz с параллельными входным и выходным валами для компактных приводных узлов.",
+      en: "A Yilmaz helical gearbox with parallel input and output shafts for compact drive units.",
+    },
+    highlights: [
+      { ru: "Параллельные валы", en: "Parallel shafts" },
+      { ru: "Компактная установка", en: "Compact footprint" },
+      { ru: "Монолитный корпус", en: "Monolithic housing" },
+      { ru: "Широкий ряд типоразмеров", en: "Wide range of sizes" },
+    ],
+  },
+  {
+    slug: "yilmaz-k-series-bevel-helical-gearbox",
+    code: "K Series",
+    title: { ru: "Bevel-Helical Gearbox", en: "Bevel-Helical Gearbox" },
+    category: "helical",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/0fa8ae5d-7bab-4a71-a479-92419d9f6bf9.png",
+    specs: [
+      { label: L.torque, value: { ru: "80-20 000 Нм", en: "80-20,000 Nm" } },
+      { label: L.power, value: { ru: "0.12-160 кВт", en: "0.12-160 kW" } },
+      { label: L.speed, value: { ru: "0.1-460 об/мин", en: "0.1-460 rpm" } },
+    ],
+    usage: { ru: "конвейеры с угловым приводом, смесители", en: "angled conveyor drives, mixers" },
+    summary: {
+      ru: "Коническо-цилиндрический редуктор Yilmaz с перпендикулярными валами для узлов с угловой передачей момента.",
+      en: "A Yilmaz bevel-helical gearbox with perpendicular shafts for right-angle torque transmission.",
+    },
+    highlights: [
+      { ru: "Перпендикулярные валы", en: "Perpendicular shafts" },
+      { ru: "Монолитный корпус", en: "Monolithic housing" },
+      { ru: "Высокий крутящий момент", en: "High torque capacity" },
+      { ru: "Широкий ряд типоразмеров", en: "Wide range of sizes" },
+    ],
+  },
+  {
+    slug: "yilmaz-e-series-worm-gearbox",
+    code: "E Series",
+    title: { ru: "Worm Gearbox", en: "Worm Gearbox" },
+    category: "worm",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/fd335098-9d39-4aa6-baa0-15cdd113e072.png",
+    specs: [
+      { label: L.torque, value: { ru: "5-1 000 Нм", en: "5-1,000 Nm" } },
+      { label: L.power, value: { ru: "0.06-7.5 кВт", en: "0.06-7.5 kW" } },
+      { label: L.speed, value: { ru: "0.1-260 об/мин", en: "0.1-260 rpm" } },
+    ],
+    usage: { ru: "дозаторы, упаковка, малые приводы", en: "dosing, packaging, small drives" },
+    summary: {
+      ru: "Компактный червячный редуктор Yilmaz с перпендикулярными валами для малых и средних приводов.",
+      en: "A compact Yilmaz worm gearbox with perpendicular shafts for small and medium drives.",
+    },
+    highlights: [
+      { ru: "Компактный корпус", en: "Compact housing" },
+      { ru: "Перпендикулярные валы", en: "Perpendicular shafts" },
+      { ru: "Плавный ход", en: "Smooth running" },
+      { ru: "Простой монтаж", en: "Simple mounting" },
+    ],
+  },
+  {
+    slug: "yilmaz-p-series-planetary-gearbox",
+    code: "P Series",
+    title: { ru: "Planetary Gearbox, Flange Mounted", en: "Planetary Gearbox, Flange Mounted" },
+    category: "planetary",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/d1194ef0-20cb-4843-b402-f728e06c400f.png",
+    specs: [
+      { label: L.torque, value: { ru: "1 000-135 000 Нм", en: "1,000-135,000 Nm" } },
+      { label: L.power, value: { ru: "0.37-90 кВт", en: "0.37-90 kW" } },
+      { label: L.speed, value: { ru: "0.1-410 об/мин", en: "0.1-410 rpm" } },
+    ],
+    usage: { ru: "краны, экструдеры, тяжёлые конвейеры", en: "cranes, extruders, heavy conveyors" },
+    summary: {
+      ru: "Планетарный редуктор Yilmaz с фланцевым монтажом для высоких моментов при ограниченных габаритах.",
+      en: "A flange-mounted Yilmaz planetary gearbox delivering high torque within a limited footprint.",
+    },
+    highlights: [
+      { ru: "Модульная конструкция", en: "Modular design" },
+      { ru: "Фланцевый монтаж", en: "Flange mounting" },
+      { ru: "Высокий крутящий момент", en: "High torque capacity" },
+      { ru: "Компактные габариты", en: "Compact dimensions" },
+    ],
+  },
+  {
+    slug: "yilmaz-r-series-planetary-gearbox",
+    code: "R Series",
+    title: { ru: "Planetary Gearbox, Foot Mounted", en: "Planetary Gearbox, Foot Mounted" },
+    category: "planetary",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/1c7117a3-a7dd-493d-98b0-7d8c97308dcb.png",
+    specs: [
+      { label: L.torque, value: { ru: "1 000-135 000 Нм", en: "1,000-135,000 Nm" } },
+      { label: L.power, value: { ru: "0.97-90 кВт", en: "0.97-90 kW" } },
+      { label: L.speed, value: { ru: "0.1-410 об/мин", en: "0.1-410 rpm" } },
+    ],
+    usage: { ru: "тяжёлые промышленные приводы", en: "heavy industrial drives" },
+    summary: {
+      ru: "Планетарный редуктор Yilmaz с монтажом на опоре для тяжёлых промышленных приводных узлов.",
+      en: "A foot-mounted Yilmaz planetary gearbox for heavy-duty industrial drive units.",
+    },
+    highlights: [
+      { ru: "Модульная конструкция", en: "Modular design" },
+      { ru: "Монтаж на опоре", en: "Foot mounting" },
+      { ru: "Высокий крутящий момент", en: "High torque capacity" },
+      { ru: "Компактные габариты", en: "Compact dimensions" },
+    ],
+  },
+  {
+    slug: "yilmaz-h-series-industrial-gearbox",
+    code: "H Series",
+    title: { ru: "Industrial Parallel Shaft Gearbox", en: "Industrial Parallel Shaft Gearbox" },
+    category: "industrial",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/cdb117ca-c4cc-4d30-95d4-4e77459d868e.png",
+    specs: [
+      { label: L.ratio, value: { ru: "i 5.33-420", en: "i 5.33-420" } },
+      { label: L.torque, value: { ru: "до 470 кНм", en: "up to 470 kNm" } },
+      { label: L.speed, value: { ru: "0.1-263 об/мин", en: "0.1-263 rpm" } },
+    ],
+    usage: { ru: "мельницы, дробилки, тяжёлые конвейеры", en: "mills, crushers, heavy conveyors" },
+    summary: {
+      ru: "Тяжёлый промышленный редуктор Yilmaz с параллельными валами для крупных производственных линий.",
+      en: "A heavy-duty Yilmaz industrial gearbox with parallel shafts for large production lines.",
+    },
+    highlights: [
+      { ru: "Параллельные валы", en: "Parallel shafts" },
+      { ru: "Момент до 470 кНм", en: "Torque up to 470 kNm" },
+      { ru: "Монолитный корпус", en: "Monolithic housing" },
+      { ru: "Сервисные опции", en: "Service options" },
+    ],
+  },
+  {
+    slug: "yilmaz-b-series-industrial-gearbox",
+    code: "B Series",
+    title: { ru: "Industrial Right Angle Gearbox", en: "Industrial Right Angle Gearbox" },
+    category: "industrial",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/74ec8357-5eae-4602-ac9f-0b49aab39b94.png",
+    specs: [
+      { label: L.ratio, value: { ru: "i 9.78-430", en: "i 9.78-430" } },
+      { label: L.torque, value: { ru: "до 345 кНм", en: "up to 345 kNm" } },
+      { label: L.speed, value: { ru: "0.1-140 об/мин", en: "0.1-140 rpm" } },
+    ],
+    usage: { ru: "мельницы, смесители, конвейеры под углом", en: "mills, mixers, angled conveyors" },
+    summary: {
+      ru: "Тяжёлый промышленный редуктор Yilmaz с перпендикулярными валами для узлов с угловой передачей момента.",
+      en: "A heavy-duty Yilmaz industrial gearbox with perpendicular shafts for right-angle torque transmission.",
+    },
+    highlights: [
+      { ru: "Перпендикулярные валы", en: "Perpendicular shafts" },
+      { ru: "Момент до 345 кНм", en: "Torque up to 345 kNm" },
+      { ru: "Монолитный корпус", en: "Monolithic housing" },
+      { ru: "Сервисные опции", en: "Service options" },
+    ],
+  },
+  {
+    slug: "yilmaz-v-series-crane-gearbox",
+    code: "V Series",
+    title: { ru: "Crane Gearbox", en: "Crane Gearbox" },
+    category: "industrial",
+    // TODO (prototype): placeholder photo (B series) — Yilmaz UK's site has no
+    // dedicated V-series product image; swap in the real one when available.
+    image: "https://www.yilmazuk.co.uk/upload/products/images/74ec8357-5eae-4602-ac9f-0b49aab39b94.png",
+    specs: [
+      { label: L.ratio, value: { ru: "i 23.58-233.77", en: "i 23.58-233.77" } },
+      { label: L.load, value: { ru: "0.5-75 т", en: "0.5-75 t" } },
+      { label: L.power, value: { ru: "0.37-90 кВт", en: "0.37-90 kW" } },
+    ],
+    usage: { ru: "краны, лебёдки, подъёмные механизмы", en: "cranes, winches, lifting gear" },
+    summary: {
+      ru: "Редуктор Yilmaz для крановых механизмов и лебёдок с высокой стойкостью к ударным нагрузкам.",
+      en: "A Yilmaz gearbox for crane mechanisms and winches, built to withstand heavy shock loads.",
+    },
+    highlights: [
+      { ru: "Грузоподъёмность до 75 т", en: "Load capacity up to 75 t" },
+      { ru: "Стойкость к ударным нагрузкам", en: "Shock-load resistant" },
+      { ru: "Монолитный корпус", en: "Monolithic housing" },
+      { ru: "Компактная установка", en: "Compact footprint" },
+    ],
+  },
+  {
+    slug: "yilmaz-t-series-conveyor-gearbox",
+    code: "T Series",
+    title: { ru: "Two-Stage Conveyor Gearbox", en: "Two-Stage Conveyor Gearbox" },
+    category: "helical",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/e7bb9d7e-b1d9-4ec9-a36a-216ee59007dc.png",
+    specs: [
+      { label: L.ratio, value: { ru: "i 5-30", en: "i 5-30" } },
+      { label: L.torque, value: { ru: "200-18 000 Нм", en: "200-18,000 Nm" } },
+      { label: L.speed, value: { ru: "30-600 об/мин", en: "30-600 rpm" } },
+    ],
+    usage: { ru: "конвейеры, элеваторы", en: "conveyors, elevators" },
+    summary: {
+      ru: "Компактный двухступенчатый редуктор Yilmaz без электродвигателя для приводов конвейеров и элеваторов.",
+      en: "A compact two-stage Yilmaz gearbox without a motor, built for conveyor and elevator drives.",
+    },
+    highlights: [
+      { ru: "Двухступенчатая передача", en: "Two-stage gearing" },
+      { ru: "Компактная установка", en: "Compact footprint" },
+      { ru: "Монолитный корпус", en: "Monolithic housing" },
+      { ru: "Простой монтаж", en: "Simple mounting" },
+    ],
+  },
+  {
+    slug: "yilmaz-drb-series-mixer-gearbox",
+    code: "DRB",
+    title: { ru: "Mixer Gearbox, Dry Well", en: "Mixer Gearbox, Dry Well" },
+    category: "industrial",
+    image: "https://www.yilmazuk.co.uk/upload/products/images/f63e3049-eaf8-4be1-a2c8-5ba0eb842a7f.png",
+    specs: [
+      { label: L.torque, value: { ru: "600-18 000 Нм", en: "600-18,000 Nm" } },
+      { label: L.power, value: { ru: "0.37-160 кВт", en: "0.37-160 kW" } },
+      { label: L.speed, value: { ru: "0.1-580 об/мин", en: "0.1-580 rpm" } },
+    ],
+    usage: { ru: "смесители, мешалки, сухие колодцы", en: "mixers, agitators, dry-well installations" },
+    summary: {
+      ru: "Редуктор Yilmaz для смесителей с сухим колодцем — усиленные подшипники выходного вала и защита от протечек масла.",
+      en: "A Yilmaz mixer gearbox for dry-well installations, with reinforced output shaft bearings and leak protection.",
+    },
+    highlights: [
+      { ru: "Усиленные подшипники выходного вала", en: "Reinforced output shaft bearings" },
+      { ru: "Защита от протечек масла", en: "Oil leakage protection" },
+      { ru: "Опция датчика утечки", en: "Optional leak sensor" },
+      { ru: "Для пищевой и водной отрасли", en: "Suited to food and water treatment duty" },
     ],
   },
 ];
@@ -1111,11 +1395,13 @@ export function relatedProducts(current: Product, limit = 4) {
 }
 
 /** Manufacturer is derivable from the image host of each catalogue item. */
-export const brands = ["AOKMAN", "Standart Pompa"] as const;
+export const brands = ["AOKMAN", "Standart Pompa", "YILMAZ"] as const;
 export type Brand = (typeof brands)[number];
 
 export function productBrand(product: Product): Brand {
-  return product.image.includes("standartpompa") ? "Standart Pompa" : "AOKMAN";
+  if (product.image.includes("standartpompa")) return "Standart Pompa";
+  if (product.image.includes("yilmazuk")) return "YILMAZ";
+  return "AOKMAN";
 }
 
 /** Full-bleed hero slider on the home page. */
