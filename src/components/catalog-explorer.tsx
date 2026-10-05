@@ -71,15 +71,14 @@ export function CatalogExplorer({ group }: { group?: GroupKey } = {}) {
       if (selectedBrands.length && !selectedBrands.includes(productBrand(product))) return false;
       if (!needle) return true;
 
+      const texts = [product.title, product.summary, product.subtitle, product.usage].filter(
+        (value): value is NonNullable<typeof value> => Boolean(value),
+      );
       const haystack = [
         product.code,
-        product.title.ru,
-        product.title.en,
-        product.usage.ru,
-        product.usage.en,
-        product.summary.ru,
-        product.summary.en,
-        ...product.specs.flatMap((spec) => [spec.value.ru, spec.value.en]),
+        ...texts.flatMap((value) => [value.ru, value.en, value.kk ?? ""]),
+        ...product.specs.flatMap((spec) => [spec.value.ru, spec.value.en, spec.value.kk ?? ""]),
+        ...(product.crossRef ?? []).map((ref) => ref.value),
       ]
         .join(" ")
         .toLowerCase();
@@ -161,7 +160,9 @@ export function CatalogExplorer({ group }: { group?: GroupKey } = {}) {
             </FilterGroup>
 
             <FilterGroup title={t("catalog.filter.brand")}>
-              {brands.map((brand) => (
+              {brands
+                .filter((brand) => scope.some((product) => productBrand(product) === brand))
+                .map((brand) => (
                 <label
                   key={brand}
                   className="flex cursor-pointer items-center justify-between gap-3 text-sm text-muted transition hover:text-ink"

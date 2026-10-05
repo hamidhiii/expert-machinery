@@ -12,7 +12,6 @@ import {
   groups,
   heroSlides,
   industries,
-  partnerPlaceholders,
   type GroupKey,
 } from "@/lib/catalog";
 import { CtaBand } from "@/components/cta-band";
@@ -224,35 +223,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* -------------------------------------------------------- partners */}
-      <section className="border-t border-line bg-surface py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
-          <SectionHeading
-            index="02"
-            eyebrow={t("partners.eyebrow")}
-            title={t("partners.title")}
-            text={t("partners.text")}
-          />
-
-          {/* TODO (prototype): swap the placeholder tiles for the real logos and
-              links the client will supply. */}
-          <div className="scroll-thin mt-14 flex gap-4 overflow-x-auto pb-2">
-            {partnerPlaceholders.map((partner) => (
-              <div
-                key={partner.id}
-                className="flex h-24 w-44 shrink-0 items-center justify-center rounded-xl border border-dashed border-line bg-paper text-sm font-semibold text-muted/50"
-              >
-                {partner.label}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ---------------------------------------------------------- why us */}
       <section className="bg-ink py-20 text-white lg:py-24">
         <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
-          <Eyebrow index="03">Engineering</Eyebrow>
+          <Eyebrow index="02">Engineering</Eyebrow>
           <h2 className="display mt-5 text-4xl sm:text-5xl">{t("home.why.title")}</h2>
           <p className="display mt-3 text-4xl text-white/25 sm:text-5xl">{t("home.why.display")}</p>
 
@@ -284,7 +258,7 @@ export default function HomePage() {
       <section className="bg-paper py-20 lg:py-24">
         <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <SectionHeading
-            index="04"
+            index="03"
             eyebrow="Industries"
             title={t("home.industries.title")}
             text={t("home.industries.text")}

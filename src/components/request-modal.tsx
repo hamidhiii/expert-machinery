@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, MessageCircle, X } from "lucide-react";
 import { company } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
+import { useRequestSubmit } from "@/lib/submit-request";
 
 type RequestModalContextValue = {
   open: (subject?: string) => void;
@@ -36,13 +37,16 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
   const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [subject, setSubject] = useState("");
-  const [sent, setSent] = useState(false);
+  const { status, onSubmit, reset } = useRequestSubmit();
 
-  const open = useCallback((nextSubject?: string) => {
-    setSubject(nextSubject ?? "");
-    setSent(false);
-    setIsOpen(true);
-  }, []);
+  const open = useCallback(
+    (nextSubject?: string) => {
+      setSubject(nextSubject ?? "");
+      reset();
+      setIsOpen(true);
+    },
+    [reset],
+  );
 
   const close = useCallback(() => setIsOpen(false), []);
 
@@ -98,7 +102,7 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
                 <X className="h-5 w-5" />
               </button>
 
-              {sent ? (
+              {status === "sent" ? (
                 <div className="flex flex-col items-center gap-4 py-10 text-center">
                   <CheckCircle2 className="h-12 w-12 text-flame" />
                   <p className="display text-2xl text-ink">{t("form.success")}</p>
@@ -113,13 +117,15 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
                   <h2 className="display mt-4 text-3xl text-ink">{t("form.modalTitle")}</h2>
                   <p className="mt-3 text-sm leading-6 text-muted">{t("form.modalText")}</p>
 
-                  <form
-                    className="mt-8 grid gap-4"
-                    onSubmit={(event) => {
-                      event.preventDefault();
-                      setSent(true);
-                    }}
-                  >
+                  <form className="mt-8 grid gap-4" onSubmit={onSubmit}>
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden
+                      className="hidden"
+                    />
                     <div className="grid gap-4 sm:grid-cols-2">
                       <label className="grid gap-2">
                         <span className="text-xs font-semibold text-ink/70">{t("form.name")}</span>
@@ -157,10 +163,16 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
 
                     <button
                       type="submit"
-                      className="mt-2 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-flame text-sm font-semibold text-white transition hover:bg-flame-dark"
+                      disabled={status === "sending"}
+                      className="mt-2 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-flame text-sm font-semibold text-white transition hover:bg-flame-dark disabled:cursor-wait disabled:opacity-70"
                     >
-                      {t("form.submit")}
+                      {status === "sending" ? t("form.sending") : t("form.submit")}
                     </button>
+                    {status === "error" ? (
+                      <p role="alert" className="text-center text-sm text-flame-dark">
+                        {t("form.error")}
+                      </p>
+                    ) : null}
                     <a
                       href={company.whatsappHref}
                       target="_blank"
@@ -170,7 +182,6 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
                       <MessageCircle className="h-4 w-4 text-flame" />
                       {t("common.whatsapp")}
                     </a>
-                    <p className="text-center text-[11px] text-muted/80">{t("form.note")}</p>
                   </form>
                 </>
               )}

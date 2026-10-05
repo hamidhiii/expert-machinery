@@ -79,10 +79,6 @@ const dictionary = {
     "stats.years": "лет на рынке",
     "stats.support": "приём заявок",
 
-    "partners.eyebrow": "Казахстан",
-    "partners.title": "Работаем с предприятиями Казахстана",
-    "partners.text":
-      "Горнодобыча, энергетика, переработка и логистика — от Астаны и Караганды до Актобе и Шымкента.",
 
     "catalog.groups.title": "Каталог оборудования",
     "catalog.groups.text":
@@ -187,6 +183,17 @@ const dictionary = {
     "product.usage": "Применение",
     "product.description": "Описание",
     "product.related": "Похожие позиции",
+    "product.notes": "Примечания производителя",
+    "product.crossRef": "Связанные артикулы",
+    "product.crossRefNote": "Замены, аналоги и сопутствующие детали по данным производителя.",
+    "product.properties": "Физико-химические показатели",
+    "product.propertiesNote": "Типичные значения по данным технического листа производителя.",
+    "product.properties.indicator": "Показатель",
+    "product.properties.value": "Значение",
+    "product.properties.method": "Метод",
+    "product.approvals": "Спецификации и допуски",
+    "product.whatToSend.filters": "Артикул старого фильтра (Fleetguard, Cummins или другого производителя), марку и модель двигателя или техники, либо фото фильтра с маркировкой — подберём оригинал или аналог.",
+    "product.whatToSend.oils": "Марку и модель техники или двигателя, требуемый класс вязкости и допуски производителя, а также нужный объём — подберём масло и фасовку.",
     "product.whatToSend.title": "Что прислать для точного подбора",
     "product.whatToSend.text":
       "Мощность двигателя, входные и выходные обороты, режим работы, тип монтажа, коэффициент нагрузки и фото шильдика существующего узла.",
@@ -230,6 +237,7 @@ const dictionary = {
     "contacts.address": "Адрес",
     "contacts.hours": "График работы",
     "contacts.hoursValue": "Пн–Сб, 09:00 – 18:00",
+    "contacts.instagramSoon": "Скоро",
     "contacts.email": "E-mail",
 
     "form.title": "Заявка на подбор",
@@ -241,7 +249,8 @@ const dictionary = {
     "form.details": "Мощность, обороты, передаточное число, модель аналога",
     "form.submit": "Отправить заявку",
     "form.success": "Заявка принята. Инженер свяжется с вами в ближайшее время.",
-    "form.note": "Прототип: форма пока не отправляет данные на сервер.",
+    "form.sending": "Отправляем…",
+    "form.error": "Не удалось отправить заявку. Напишите нам в WhatsApp или позвоните — ответим сразу.",
 
     "footer.about":
       "Поставка промышленных редукторов, мотор-редукторов, насосов, муфт и приводных решений для предприятий Казахстана.",
@@ -278,10 +287,6 @@ const dictionary = {
     "stats.years": "жыл нарықта",
     "stats.support": "өтінім қабылдау",
 
-    "partners.eyebrow": "Қазақстан",
-    "partners.title": "Қазақстан кәсіпорындарымен жұмыс істейміз",
-    "partners.text":
-      "Тау-кен, энергетика, өңдеу және логистика — Астана мен Қарағандыдан Ақтөбе мен Шымкентке дейін.",
 
     "catalog.groups.title": "Жабдық каталогы",
     "catalog.groups.text":
@@ -386,6 +391,17 @@ const dictionary = {
     "product.usage": "Қолданылуы",
     "product.description": "Сипаттамасы",
     "product.related": "Ұқсас позициялар",
+    "product.notes": "Өндіруші ескертпелері",
+    "product.crossRef": "Байланысты артикулдар",
+    "product.crossRefNote": "Өндіруші деректері бойынша ауыстырулар, аналогтар және қосалқы бөлшектер.",
+    "product.properties": "Физика-химиялық көрсеткіштер",
+    "product.propertiesNote": "Өндірушінің техникалық парағы бойынша типтік мәндер.",
+    "product.properties.indicator": "Көрсеткіш",
+    "product.properties.value": "Мәні",
+    "product.properties.method": "Әдіс",
+    "product.approvals": "Спецификациялар мен рұқсаттар",
+    "product.whatToSend.filters": "Ескі сүзгінің артикулы (Fleetguard, Cummins немесе басқа өндіруші), қозғалтқыштың не техниканың маркасы мен моделі немесе таңбасы бар сүзгінің фотосы — түпнұсқасын не аналогын таңдаймыз.",
+    "product.whatToSend.oils": "Техниканың немесе қозғалтқыштың маркасы мен моделі, қажетті тұтқырлық класы мен өндіруші рұқсаттары және керекті көлем — майды және қаптаманы таңдаймыз.",
     "product.whatToSend.title": "Дәл таңдау үшін не жіберу керек",
     "product.whatToSend.text":
       "Қозғалтқыш қуаты, кіріс және шығыс айналымы, жұмыс режимі, орнату түрі, жүктеме коэффициенті және қолданыстағы тораптың тақтайша суреті.",
@@ -430,6 +446,7 @@ const dictionary = {
     "contacts.address": "Мекенжай",
     "contacts.hours": "Жұмыс кестесі",
     "contacts.hoursValue": "Дс–Сб, 09:00 – 18:00",
+    "contacts.instagramSoon": "Жақында",
     "contacts.email": "E-mail",
 
     "form.title": "Таңдауға өтінім",
@@ -441,7 +458,8 @@ const dictionary = {
     "form.details": "Қуаты, айналымы, беріліс саны, аналог моделі",
     "form.submit": "Өтінім жіберу",
     "form.success": "Өтінім қабылданды. Инженер жақын арада хабарласады.",
-    "form.note": "Прототип: форма әзірге серверге деректер жібермейді.",
+    "form.sending": "Жіберілуде…",
+    "form.error": "Өтінімді жіберу мүмкін болмады. WhatsApp-қа жазыңыз немесе қоңырау шалыңыз — бірден жауап береміз.",
 
     "footer.about":
       "Қазақстан кәсіпорындарына өнеркәсіптік редукторлар, мотор-редукторлар, сорғылар, муфталар мен жетек шешімдерін жеткізу.",
@@ -478,10 +496,6 @@ const dictionary = {
     "stats.years": "years on the market",
     "stats.support": "request intake",
 
-    "partners.eyebrow": "Kazakhstan",
-    "partners.title": "Working with plants across Kazakhstan",
-    "partners.text":
-      "Mining, energy, processing and logistics — from Astana and Karaganda to Aktobe and Shymkent.",
 
     "catalog.groups.title": "Equipment catalog",
     "catalog.groups.text":
@@ -585,6 +599,17 @@ const dictionary = {
     "product.usage": "Application",
     "product.description": "Description",
     "product.related": "Similar items",
+    "product.notes": "Manufacturer notes",
+    "product.crossRef": "Related part numbers",
+    "product.crossRefNote": "Replacements, equivalents and related parts per the manufacturer.",
+    "product.properties": "Typical properties",
+    "product.propertiesNote": "Typical values from the manufacturer's technical data sheet.",
+    "product.properties.indicator": "Property",
+    "product.properties.value": "Value",
+    "product.properties.method": "Method",
+    "product.approvals": "Specifications and approvals",
+    "product.whatToSend.filters": "The part number of the old filter (Fleetguard, Cummins or another brand), the engine or machine make and model, or a photo of the filter with its markings — we will match the original or an equivalent.",
+    "product.whatToSend.oils": "The machine or engine make and model, the required viscosity grade and OEM approvals, and the volume you need — we will match the oil and pack size.",
     "product.whatToSend.title": "What to send for an accurate selection",
     "product.whatToSend.text":
       "Motor power, input and output speed, duty cycle, mounting type, load factor and a nameplate photo of the existing unit.",
@@ -627,6 +652,7 @@ const dictionary = {
     "contacts.address": "Address",
     "contacts.hours": "Working hours",
     "contacts.hoursValue": "Mon–Sat, 09:00 – 18:00",
+    "contacts.instagramSoon": "Coming soon",
     "contacts.email": "E-mail",
 
     "form.title": "Selection request",
@@ -638,7 +664,8 @@ const dictionary = {
     "form.details": "Power, speed, gear ratio, analog model",
     "form.submit": "Send request",
     "form.success": "Request received. An engineer will contact you shortly.",
-    "form.note": "Prototype: the form does not submit data to a server yet.",
+    "form.sending": "Sending…",
+    "form.error": "We could not send your request. Message us on WhatsApp or call — we will reply right away.",
 
     "footer.about":
       "Supply of industrial gearboxes, gear motors, pumps, couplings and drive solutions for plants in Kazakhstan.",

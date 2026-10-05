@@ -21,7 +21,7 @@ export default function ContactsPage() {
     {
       icon: Instagram,
       label: "Instagram",
-      value: "@expertmachinery.kz",
+      value: t("contacts.instagramSoon"),
       href: company.instagramHref,
     },
     { icon: Mail, label: t("contacts.email"), value: company.email, href: `mailto:${company.email}` },
