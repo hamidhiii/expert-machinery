@@ -29,7 +29,7 @@ export function LogoLockup({ dark = false }: { dark?: boolean }) {
       <span className="rounded-md bg-white p-1.5">
         <LogoMark className="h-7" />
       </span>
-      <span className="leading-none">
+      <span className="whitespace-nowrap leading-none">
         <span
           className={`block text-[15px] font-bold uppercase tracking-[0.08em] ${
             dark ? "text-white" : "text-ink"

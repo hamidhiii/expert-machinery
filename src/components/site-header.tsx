@@ -21,19 +21,19 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-paper/95 backdrop-blur">
-      <div className="mx-auto flex h-[72px] max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] items-center justify-between gap-6 px-4 sm:px-6 lg:px-8 2xl:px-12">
-        <Link href="/" aria-label={company.name}>
+      <div className="mx-auto flex h-[72px] max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] items-center justify-between gap-4 xl:gap-6 px-4 sm:px-6 lg:px-8 2xl:px-12">
+        <Link href="/" aria-label={company.name} className="shrink-0">
           <LogoLockup />
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-7">
           {navItems.map((item) => {
             const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition ${
+                className={`whitespace-nowrap text-sm font-medium transition ${
                   active ? "text-flame" : "text-ink/70 hover:text-ink"
                 }`}
               >
@@ -43,7 +43,7 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex shrink-0 items-center gap-3 xl:gap-4">
           <div
             className="hidden items-center gap-2 sm:flex"
             role="group"
@@ -69,14 +69,14 @@ export function SiteHeader() {
             target="_blank"
             rel="noreferrer"
             aria-label="Instagram"
-            className="hidden h-9 w-9 items-center justify-center rounded-lg border border-line text-ink transition hover:border-flame hover:text-flame sm:inline-flex"
+            className="hidden h-9 w-9 items-center justify-center rounded-lg border border-line text-ink transition hover:border-flame hover:text-flame sm:inline-flex lg:hidden xl:inline-flex"
           >
             <Instagram className="h-4 w-4" />
           </Link>
 
           <Link
             href={company.phoneHref}
-            className="hidden items-center gap-2 text-sm font-medium text-ink transition hover:text-flame xl:flex"
+            className="hidden items-center gap-2 whitespace-nowrap text-sm font-medium text-ink transition hover:text-flame 2xl:flex"
           >
             <Phone className="h-4 w-4 text-flame" />
             {company.phone}
@@ -85,7 +85,7 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={() => open()}
-            className="group hidden h-11 items-center gap-2.5 rounded-lg bg-flame px-5 text-sm font-semibold text-white transition hover:bg-flame-dark sm:inline-flex"
+            className="group hidden h-11 items-center gap-2.5 whitespace-nowrap rounded-lg bg-flame px-4 xl:px-5 text-sm font-semibold text-white transition hover:bg-flame-dark sm:inline-flex"
           >
             {t("common.request")}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
