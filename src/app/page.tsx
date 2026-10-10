@@ -136,28 +136,33 @@ export default function HomePage() {
                 href={`/catalog/${active.key}`}
                 className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-ink"
               >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={active.key}
-                    className={`absolute inset-0 ${active.categories.length ? "bg-surface" : ""}`}
-                    initial={{ opacity: 0, scale: 1.04 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.45 }}
-                  >
-                    <Image
-                      src={active.image}
-                      alt={tr(active.title)}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 40vw"
-                      className={
-                        active.categories.length
-                          ? "object-contain p-12 mix-blend-multiply"
-                          : "object-cover opacity-70"
-                      }
-                    />
-                  </motion.div>
-                </AnimatePresence>
+                {/* Every group photo is mounted up front and cross-faded, so hovering
+                    a row never waits for an image to start downloading. */}
+                {groups.map((group) => {
+                  const isActive = group.key === active.key;
+                  return (
+                    <motion.div
+                      key={group.key}
+                      className={`absolute inset-0 ${group.categories.length ? "bg-surface" : ""}`}
+                      initial={false}
+                      animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 1.04 }}
+                      transition={{ duration: 0.45 }}
+                      aria-hidden={!isActive}
+                    >
+                      <Image
+                        src={group.image}
+                        alt={isActive ? tr(group.title) : ""}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 40vw"
+                        className={
+                          group.categories.length
+                            ? "object-contain p-12 mix-blend-multiply"
+                            : "object-cover opacity-70"
+                        }
+                      />
+                    </motion.div>
+                  );
+                })}
 
                 <div
                   className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-ink to-transparent"
