@@ -23,7 +23,8 @@ export default function ContactsPage() {
     {
       icon: Instagram,
       label: "Instagram",
-      value: t("contacts.instagramSoon"),
+      // "@expertmachinery.kz" from the profile URL set in the admin.
+      value: `@${company.instagramHref.replace(/\/+$/, "").split("/").pop()}`,
       href: company.instagramHref,
     },
     { icon: Mail, label: t("contacts.email"), value: company.email, href: `mailto:${company.email}` },

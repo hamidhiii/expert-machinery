@@ -57,8 +57,6 @@ function fromDictionary(key: TranslationKey): Localized {
 }
 
 // The site targets Kazakhstan only (.kz). Contact details confirmed by the client.
-// Instagram doesn't exist yet: per the client the link stays as a placeholder
-// until the account is created.
 export type Company = {
   name: string;
   legalName: string;
