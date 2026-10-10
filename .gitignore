@@ -6,3 +6,6 @@ out
 next-env.d.ts
 .DS_Store
 .idea/
+
+# Internal notes for the backend team, not part of the site
+docs/backend-requests.md
