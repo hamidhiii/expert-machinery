@@ -79,7 +79,7 @@ export function ProductView({
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-contain p-12"
+                  className="object-contain p-12 mix-blend-multiply"
                 />
                 {category ? (
                   <span className="absolute left-6 top-6 rounded-md bg-ink/85 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-white">

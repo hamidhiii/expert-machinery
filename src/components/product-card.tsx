@@ -21,7 +21,8 @@ export function ProductCard({ product }: { product: Product }) {
           alt={tr(product.title)}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 25vw"
-          className="object-contain p-7 transition-transform duration-500 group-hover:scale-105"
+          // Supplier photos come on white; multiply drops the white box onto the card tint.
+          className="object-contain p-7 mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
         />
         {category ? (
           <span className="absolute left-4 top-4 rounded-md bg-ink/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">

@@ -46,7 +46,7 @@ export default function CatalogPage() {
                         className={
                           empty
                             ? "object-cover opacity-80 transition duration-500 group-hover:scale-105"
-                            : "object-contain p-8 transition duration-500 group-hover:scale-105"
+                            : "object-contain p-8 mix-blend-multiply transition duration-500 group-hover:scale-105"
                         }
                       />
                       <span className="absolute left-4 top-4 rounded-md bg-ink/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">

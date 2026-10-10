@@ -139,7 +139,7 @@ export default function HomePage() {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={active.key}
-                    className="absolute inset-0"
+                    className={`absolute inset-0 ${active.categories.length ? "bg-surface" : ""}`}
                     initial={{ opacity: 0, scale: 1.04 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
@@ -152,7 +152,7 @@ export default function HomePage() {
                       sizes="(max-width: 1024px) 100vw, 40vw"
                       className={
                         active.categories.length
-                          ? "bg-surface object-contain p-12"
+                          ? "object-contain p-12 mix-blend-multiply"
                           : "object-cover opacity-70"
                       }
                     />
