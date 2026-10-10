@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getProducts, getSiteData } from "@/lib/api";
 import { getGroup, productGroup } from "@/lib/catalog";
+import { JsonLd, breadcrumbLd, pageMetadata } from "@/lib/seo";
 import { GroupView } from "./group-view";
 
 type GroupPageProps = {
@@ -16,10 +17,14 @@ export async function generateMetadata({ params }: GroupPageProps) {
   const { group } = await params;
   const found = getGroup((await getSiteData()).groups, group);
 
-  return {
-    title: found ? found.title.ru : "Каталог",
-    description: found?.text.ru,
-  };
+  if (!found) return { title: "Каталог" };
+
+  return pageMetadata({
+    title: `${found.title.ru} — купить в Казахстане`,
+    description: `${found.text.ru} ${found.count ? `${found.count} позиций в каталоге, ` : ""}подбор по параметрам и поставка по Казахстану.`,
+    path: `/catalog/${found.key}`,
+    image: found.image,
+  });
 }
 
 export default async function GroupPage({ params }: GroupPageProps) {
@@ -32,5 +37,16 @@ export default async function GroupPage({ params }: GroupPageProps) {
 
   const products = (await getProducts()).filter((product) => productGroup(product) === found.key);
 
-  return <GroupView groupKey={found.key} products={products} />;
+  return (
+    <>
+      <JsonLd
+        data={breadcrumbLd([
+          ["Главная", "/"],
+          ["Каталог", "/catalog"],
+          [found.title.ru, `/catalog/${found.key}`],
+        ])}
+      />
+      <GroupView groupKey={found.key} products={products} />
+    </>
+  );
 }

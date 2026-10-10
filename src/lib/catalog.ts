@@ -1689,7 +1689,7 @@ export const groups: Group[] = [
   },
 ];
 
-export function getGroup(list: Group[], key: string) {
+export function getGroup<T extends Group>(list: T[], key: string): T | undefined {
   return list.find((group) => group.key === key);
 }
 

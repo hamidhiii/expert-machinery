@@ -343,3 +343,20 @@ export const getLeadContext = cache(async (product: Product): Promise<LeadContex
     productType: equipmentTypes?.find((type) => type.slug === productGroup(product))?.id,
   };
 });
+
+/**
+ * Last edit date per product slug, from the admin's sitemap feed. Its paths
+ * lack the group segment (/catalog/<slug> is a 404), so only dates are used.
+ */
+export const getProductDates = cache(() =>
+  withFallback<Record<string, string>>(
+    "sitemap-data",
+    async () => {
+      const data = await get<{ products: { path: string; lastmod: string }[] }>("sitemap-data/");
+      return Object.fromEntries(
+        data.products.map((item) => [item.path.split("/").filter(Boolean).pop() ?? "", item.lastmod]),
+      );
+    },
+    {},
+  ),
+);

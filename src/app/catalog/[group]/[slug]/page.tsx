@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import { getLeadContext, getProducts } from "@/lib/api";
-import { productGroup, relatedProducts } from "@/lib/catalog";
+import { getLeadContext, getProducts, getSiteData } from "@/lib/api";
+import { getGroup, productBrand, productGroup, productHref, relatedProducts, type Product } from "@/lib/catalog";
+import { JsonLd, breadcrumbLd, pageMetadata } from "@/lib/seo";
 import { ProductView } from "./product-view";
 
 type ProductPageProps = {
@@ -9,6 +10,19 @@ type ProductPageProps = {
 
 async function findProduct(slug: string) {
   return (await getProducts()).find((product) => product.slug === slug);
+}
+
+/**
+ * "ATA Shaft Mounted Gearbox — AOKMAN". Fleetguard titles already carry the
+ * brand, so they get the item type instead: "Fleetguard LF3349 — Масляный фильтр".
+ */
+function seoTitle(product: Product) {
+  const title = product.title.ru;
+  const brand = productBrand(product);
+  if (!title.toLowerCase().includes(brand.toLowerCase())) return `${title} — ${brand}`;
+
+  const kind = product.subtitle?.ru.split(/[,(]/)[0].trim();
+  return kind ? `${title} — ${kind}` : title;
 }
 
 export async function generateStaticParams() {
@@ -22,10 +36,16 @@ export async function generateMetadata({ params }: ProductPageProps) {
   const { slug } = await params;
   const product = await findProduct(slug);
 
-  return {
-    title: product ? product.title.ru : "Оборудование",
-    description: product?.summary.ru,
-  };
+  if (!product) return { title: "Оборудование" };
+
+  return pageMetadata({
+    title: seoTitle(product),
+    description:
+      product.summary.ru ||
+      `${product.title.ru}: подбор, поставка и консультация инженера Expert Machinery в Казахстане.`,
+    path: productHref(product),
+    image: product.image,
+  });
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -37,11 +57,25 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const productGroupInfo = getGroup((await getSiteData()).groups, productGroup(product));
+
   return (
-    <ProductView
-      product={product}
-      related={relatedProducts(product, products)}
-      lead={await getLeadContext(product)}
-    />
+    <>
+      <JsonLd
+        data={breadcrumbLd([
+          ["Главная", "/"],
+          ["Каталог", "/catalog"],
+          ...(productGroupInfo
+            ? [[productGroupInfo.title.ru, `/catalog/${productGroupInfo.key}`] as [string, string]]
+            : []),
+          [product.title.ru, productHref(product)],
+        ])}
+      />
+      <ProductView
+        product={product}
+        related={relatedProducts(product, products)}
+        lead={await getLeadContext(product)}
+      />
+    </>
   );
 }

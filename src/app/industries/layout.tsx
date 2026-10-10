@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Отрасли",
+export const metadata: Metadata = pageMetadata({
+  title: "Отрасли: приводы для горнодобычи, цемента, энергетики",
   description:
-    "Приводные решения EXPERT MACHINERY для горнодобычи, цемента, пищевой переработки, логистики, энергетики и водоканала.",
-};
+    "Приводные решения Expert Machinery для горнодобычи, цемента, пищевой переработки, логистики, энергетики и водоканала Казахстана.",
+  path: "/industries",
+});
 
 export default function IndustriesLayout({ children }: { children: React.ReactNode }) {
   return children;
