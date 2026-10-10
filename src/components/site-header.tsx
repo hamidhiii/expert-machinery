@@ -4,14 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowRight, Instagram, Menu, Phone, X } from "lucide-react";
-import { company, navItems } from "@/lib/catalog";
+import { navItems } from "@/lib/catalog";
 import { LogoLockup } from "@/components/logo";
 import { useRequestModal } from "@/components/request-modal";
 import { localeLabels, locales, useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 export function SiteHeader() {
   const { locale, setLocale, t } = useLanguage();
   const { open } = useRequestModal();
+  const { company } = useSiteData();
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 

@@ -2,20 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { ChevronDown, Search } from "lucide-react";
-import {
-  brands,
-  categories,
-  categoryLabels,
-  getGroup,
-  groupProducts,
-  productBrand,
-  products,
-  type Brand,
-  type CategoryKey,
-  type GroupKey,
-} from "@/lib/catalog";
+import { productBrand, type Product } from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
 import { pluralItems, useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 type SortKey = "default" | "az" | "za";
 
@@ -48,18 +38,24 @@ function FilterGroup({
   );
 }
 
-export function CatalogExplorer({ group }: { group?: GroupKey } = {}) {
+/** Filterable list of one group's items; only that group's sub-types are offered. */
+export function CatalogExplorer({
+  categories,
+  products: scope,
+}: {
+  categories: string[];
+  products: Product[];
+}) {
   const { locale, t, tr } = useLanguage();
+  const { categoryLabels } = useSiteData();
 
-  // Inside a group page only that group's items and sub-types are offered.
-  const scope = useMemo(() => (group ? groupProducts(group) : products), [group]);
-  const scopeCategories: CategoryKey[] = group
-    ? ["all", ...(getGroup(group)?.categories ?? [])]
-    : categories;
-  const countIn = (key: CategoryKey) =>
+  const scopeCategories = ["all", ...categories];
+  const brands = useMemo(() => [...new Set(scope.map(productBrand))], [scope]);
+  const countIn = (key: string) =>
     key === "all" ? scope.length : scope.filter((item) => item.category === key).length;
-  const [category, setCategory] = useState<CategoryKey>("all");
-  const [selectedBrands, setSelectedBrands] = useState<Brand[]>([]);
+  const label = (key: string) => (categoryLabels[key] ? tr(categoryLabels[key]) : key);
+  const [category, setCategory] = useState("all");
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("default");
 
@@ -94,7 +90,7 @@ export function CatalogExplorer({ group }: { group?: GroupKey } = {}) {
     });
   }, [scope, category, selectedBrands, query, sort, tr]);
 
-  function toggleBrand(brand: Brand) {
+  function toggleBrand(brand: string) {
     setSelectedBrands((prev) =>
       prev.includes(brand) ? prev.filter((item) => item !== brand) : [...prev, brand],
     );
@@ -126,7 +122,7 @@ export function CatalogExplorer({ group }: { group?: GroupKey } = {}) {
                   : "text-muted hover:bg-white hover:text-ink"
               }`}
             >
-              {tr(categoryLabels[key])}
+              {label(key)}
             </button>
           ))}
         </div>
@@ -152,7 +148,7 @@ export function CatalogExplorer({ group }: { group?: GroupKey } = {}) {
                       onChange={() => setCategory(key)}
                       className="h-3.5 w-3.5 accent-flame"
                     />
-                    {tr(categoryLabels[key])}
+                    {label(key)}
                   </span>
                   <span className="text-xs text-muted/60">{countIn(key)}</span>
                 </label>
@@ -160,9 +156,7 @@ export function CatalogExplorer({ group }: { group?: GroupKey } = {}) {
             </FilterGroup>
 
             <FilterGroup title={t("catalog.filter.brand")}>
-              {brands
-                .filter((brand) => scope.some((product) => productBrand(product) === brand))
-                .map((brand) => (
+              {brands.map((brand) => (
                 <label
                   key={brand}
                   className="flex cursor-pointer items-center justify-between gap-3 text-sm text-muted transition hover:text-ink"

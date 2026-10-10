@@ -3,13 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { categoryLabels, productHref, type Product } from "@/lib/catalog";
+import { productHref, requestSubject, type Product } from "@/lib/catalog";
 import { useRequestModal } from "@/components/request-modal";
 import { useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 export function ProductCard({ product }: { product: Product }) {
   const { t, tr } = useLanguage();
   const { open } = useRequestModal();
+  const category = useSiteData().categoryLabels[product.category];
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white transition hover:shadow-card">
@@ -21,18 +23,22 @@ export function ProductCard({ product }: { product: Product }) {
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 25vw"
           className="object-contain p-7 transition-transform duration-500 group-hover:scale-105"
         />
-        <span className="absolute left-4 top-4 rounded-md bg-ink/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
-          {tr(categoryLabels[product.category])}
-        </span>
+        {category ? (
+          <span className="absolute left-4 top-4 rounded-md bg-ink/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
+            {tr(category)}
+          </span>
+        ) : null}
         <span className="absolute -bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full bg-flame text-white shadow-card transition group-hover:bg-flame-dark">
           <ArrowUpRight className="h-5 w-5" />
         </span>
       </Link>
 
       <div className="flex flex-1 flex-col p-6 pt-7">
-        <p className="text-[11px] font-medium lowercase tracking-wide text-muted/80">
-          {product.code}
-        </p>
+        {product.code ? (
+          <p className="text-[11px] font-medium lowercase tracking-wide text-muted/80">
+            {product.code}
+          </p>
+        ) : null}
 
         <h3 className="mt-2 text-lg font-bold leading-snug tracking-display text-ink">
           <Link href={productHref(product)} className="transition hover:text-flame">
@@ -56,7 +62,7 @@ export function ProductCard({ product }: { product: Product }) {
           </Link>
           <button
             type="button"
-            onClick={() => open(`${product.code} — ${tr(product.title)}`)}
+            onClick={() => open(requestSubject(product, tr(product.title)))}
             className="text-sm font-medium text-muted transition hover:text-ink"
           >
             {t("common.request")}

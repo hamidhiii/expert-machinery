@@ -16,21 +16,68 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { dictionary, type Locale, type TranslationKey } from "@/lib/dictionary";
 import type { Localized } from "@/lib/i18n";
-import type { TranslationKey } from "@/lib/i18n";
 import { fleetguardProducts } from "@/lib/catalog-fleetguard";
+
+/**
+ * Built-in content. The live site reads everything from the admin API
+ * (src/lib/api.ts); these values are the fallback when the API is unreachable.
+ */
+
+/** Icons are referenced by lucide name so they can travel from the server (API `icon_name`). */
+const icons: Record<string, LucideIcon> = {
+  Activity,
+  Boxes,
+  Cog,
+  Droplets,
+  Factory,
+  Hammer,
+  Search,
+  Timer,
+  Gauge,
+  HardHat,
+  Recycle,
+  RotateCcw,
+  ShieldCheck,
+  Truck,
+  Wrench,
+  Zap,
+};
+
+export function iconFor(name: string | null | undefined): LucideIcon {
+  return (name && icons[name]) || Cog;
+}
+
+/** The same text in every locale, read from the UI dictionary. */
+function fromDictionary(key: TranslationKey): Localized {
+  const value = (locale: Locale) => dictionary[locale][key] as string;
+  return { ru: value("ru"), kk: value("kk"), en: value("en") };
+}
 
 // The site targets Kazakhstan only (.kz). Contact details confirmed by the client.
 // Instagram doesn't exist yet: per the client the link stays as a placeholder
 // until the account is created.
-export const company = {
+export type Company = {
+  name: string;
+  legalName: string;
+  address: Localized;
+  phone: string;
+  phoneHref: string;
+  whatsappHref: string;
+  instagramHref: string;
+  email: string;
+};
+
+export const company: Company = {
   name: "EXPERT MACHINERY",
   legalName: "TOO «EXPERT MACHINERY»",
   address: {
     ru: "г. Астана, район Есиль, ул. Достык, 20",
     kk: "Астана қ., Есіл ауданы, Достық к-сі, 20",
     en: "20 Dostyk St, Yesil district, Astana",
-  } satisfies Localized,
+  },
   phone: "+7 747 275 88 46",
   phoneHref: "tel:+77472758846",
   whatsappHref: "https://wa.me/77472758846",
@@ -42,11 +89,13 @@ export const company = {
  * Figures for the band under the hero — the client asked for company facts
  * instead of catalogue counters. The client approved these values as-is.
  */
-export const companyStats: { value: string; key: TranslationKey }[] = [
-  { value: "120+", key: "stats.projects" },
-  { value: "25", key: "stats.staff" },
-  { value: "8", key: "stats.years" },
-  { value: "24/7", key: "stats.support" },
+export type Stat = { value: string; label: Localized };
+
+export const companyStats: Stat[] = [
+  { value: "120+", label: fromDictionary("stats.projects") },
+  { value: "25", label: fromDictionary("stats.staff") },
+  { value: "8", label: fromDictionary("stats.years") },
+  { value: "24/7", label: fromDictionary("stats.support") },
 ];
 
 export const navItems: { href: string; key: TranslationKey }[] = [
@@ -106,10 +155,17 @@ export const categories: CategoryKey[] = [...categoryKeys];
 type Spec = { label: Localized; value: Localized };
 
 export type Product = {
+  /** API id; absent on built-in items. */
+  id?: number;
   slug: string;
   code: string;
   title: Localized;
-  category: CategoryKey;
+  /** A CategoryKey for built-in items; the admin can add new categories. */
+  category: string;
+  /** Group and manufacturer as sent by the API; derived for built-in items. */
+  group?: string;
+  brand?: string;
+  popular?: boolean;
   image: string;
   specs: Spec[];
   summary: Localized;
@@ -1277,10 +1333,18 @@ const pumpProducts: Product[] = [
 
 export const products: Product[] = [...gearboxProducts, ...pumpProducts, ...fleetguardProducts];
 
-export const industries = [
+export type Industry = {
+  slug: string;
+  icon: string;
+  image: string;
+  title: Localized;
+  text: Localized;
+};
+
+export const industries: Industry[] = [
   {
     slug: "mining",
-    icon: HardHat,
+    icon: "HardHat",
     image: "https://images.unsplash.com/photo-1516216628859-9bccecab13ca?w=1200&q=70",
     title: {
       ru: "Горнодобывающая промышленность",
@@ -1295,7 +1359,7 @@ export const industries = [
   },
   {
     slug: "cement",
-    icon: Factory,
+    icon: "Factory",
     image: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?w=1200&q=70",
     title: {
       ru: "Цемент и стройматериалы",
@@ -1310,7 +1374,7 @@ export const industries = [
   },
   {
     slug: "food",
-    icon: Recycle,
+    icon: "Recycle",
     image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=1200&q=70",
     title: { ru: "Пищевая переработка", kk: "Тамақ өнеркәсібі", en: "Food processing" },
     text: {
@@ -1321,7 +1385,7 @@ export const industries = [
   },
   {
     slug: "logistics",
-    icon: Truck,
+    icon: "Truck",
     image: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=1200&q=70",
     title: {
       ru: "Логистика и конвейеры",
@@ -1336,7 +1400,7 @@ export const industries = [
   },
   {
     slug: "energy",
-    icon: Zap,
+    icon: "Zap",
     image: "https://images.unsplash.com/photo-1487875961445-47a00398c267?w=1200&q=70",
     title: { ru: "Энергетика", kk: "Энергетика", en: "Energy" },
     text: {
@@ -1347,7 +1411,7 @@ export const industries = [
   },
   {
     slug: "water",
-    icon: Gauge,
+    icon: "Gauge",
     image: "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=1200&q=70",
     title: {
       ru: "Водоканал и насосные станции",
@@ -1362,10 +1426,6 @@ export const industries = [
   },
 ];
 
-export function getProduct(slug: string) {
-  return products.find((product) => product.slug === slug);
-}
-
 /** Photography used across marketing sections (industrial stock shots). */
 export const siteImages = {
   heroPlant: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?w=1600&q=70",
@@ -1376,69 +1436,36 @@ export const siteImages = {
   line: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=1600&q=70",
 };
 
-/** Series shown in the "most requested" block on the home page. */
-export const popularSlugs = [
-  "r-series-helical-gear-motor",
-  "k-series-helical-bevel-gear-motor",
-  "ata-shaft-mounted-gearbox",
-  "rv-nmrv-worm-gearbox",
-  "hb-industrial-gear-unit",
-  "pump-eco-snt",
-  "p-series-planetary-gearbox",
-  "yox-fluid-coupling",
-];
-
-export const popularProducts = popularSlugs
-  .map((slug) => products.find((product) => product.slug === slug))
-  .filter((product): product is Product => Boolean(product));
-
-export function countByCategory(category: CategoryKey) {
-  if (category === "all") return products.length;
-  return products.filter((product) => product.category === category).length;
-}
-
-/** Same category first, then the rest of the same group (a filter never suggests a gearbox). */
-export function relatedProducts(current: Product, limit = 4) {
-  const group = productGroup(current);
-  const others = products.filter((product) => product.slug !== current.slug);
-  const sameCategory = others.filter((product) => product.category === current.category);
-  const sameGroup = others.filter(
-    (product) => product.category !== current.category && productGroup(product) === group,
-  );
-  return [...sameCategory, ...sameGroup].slice(0, limit);
-}
-
-/** Manufacturer is derivable from the image host of each catalogue item. */
-export const brands = ["AOKMAN", "Standart Pompa", "YILMAZ", "Fleetguard"] as const;
-export type Brand = (typeof brands)[number];
-
-export function productBrand(product: Product): Brand {
+/** Manufacturer is derivable from the image host of each built-in item. */
+function imageBrand(product: Product): string {
   if (product.image.includes("standartpompa")) return "Standart Pompa";
   if (product.image.includes("yilmaz")) return "YILMAZ";
   if (product.image.includes("fleetguard")) return "Fleetguard";
   return "AOKMAN";
 }
 
+export function productBrand(product: Product): string {
+  return product.brand ?? imageBrand(product);
+}
+
 /** Full-bleed hero slider on the home page. */
-export const heroSlides: {
-  image: string;
-  titleKey: TranslationKey;
-  textKey: TranslationKey;
-}[] = [
+export type HeroSlide = { image: string; title: Localized; text: Localized };
+
+export const heroSlides: HeroSlide[] = [
   {
     image: siteImages.heroPlant,
-    titleKey: "home.slide1.title",
-    textKey: "home.slide1.text",
+    title: fromDictionary("home.slide1.title"),
+    text: fromDictionary("home.slide1.text"),
   },
   {
     image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=1800&q=70",
-    titleKey: "home.slide2.title",
-    textKey: "home.slide2.text",
+    title: fromDictionary("home.slide2.title"),
+    text: fromDictionary("home.slide2.text"),
   },
   {
     image: siteImages.service,
-    titleKey: "home.slide3.title",
-    textKey: "home.slide3.text",
+    title: fromDictionary("home.slide3.title"),
+    text: fromDictionary("home.slide3.text"),
   },
 ];
 
@@ -1447,9 +1474,11 @@ export const heroSlides: {
  * delivery time and sourcing of original parts replaced the drive-unit
  * configuration and project-supply items.
  */
-export const advantages = [
+export type Feature = { icon: string; title: Localized; text: Localized };
+
+export const advantages: Feature[] = [
   {
-    icon: Gauge,
+    icon: "Gauge",
     title: { ru: "Инженерный подбор", kk: "Инженерлік таңдау", en: "Engineering selection" },
     text: {
       ru: "Расчёт по моменту, мощности, режиму работы, температуре и циклам пуска — до того, как назвать цену.",
@@ -1458,7 +1487,7 @@ export const advantages = [
     },
   },
   {
-    icon: Timer,
+    icon: "Timer",
     title: { ru: "Короткие сроки поставки", kk: "Қысқа жеткізу мерзімі", en: "Short lead times" },
     text: {
       ru: "Держим складские позиции и заранее согласовываем срок изготовления, чтобы линия не стояла.",
@@ -1467,7 +1496,7 @@ export const advantages = [
     },
   },
   {
-    icon: Search,
+    icon: "Search",
     title: {
       ru: "Поиск оригинальных запчастей",
       kk: "Түпнұсқа қосалқы бөлшектерді табу",
@@ -1480,7 +1509,7 @@ export const advantages = [
     },
   },
   {
-    icon: Activity,
+    icon: "Activity",
     title: { ru: "Сервис и диагностика", kk: "Сервис және диагностика", en: "Service and diagnostics" },
     text: {
       ru: "Диагностика двигателей и приводов, дефектовка, рекомендации по маслу, монтажу и регламенту.",
@@ -1489,7 +1518,7 @@ export const advantages = [
     },
   },
   {
-    icon: Hammer,
+    icon: "Hammer",
     title: { ru: "Капитальный ремонт", kk: "Күрделі жөндеу", en: "Overhaul" },
     text: {
       ru: "Капитальный ремонт ДВС и моторов спецтехники с проверкой на стенде и гарантией на работы.",
@@ -1498,7 +1527,7 @@ export const advantages = [
     },
   },
   {
-    icon: ShieldCheck,
+    icon: "ShieldCheck",
     title: { ru: "Контроль поставки", kk: "Жеткізуді бақылау", en: "Delivery control" },
     text: {
       ru: "Проверка спецификации, фото-отчёты, маркировка, упаковка и подготовка документов.",
@@ -1513,9 +1542,9 @@ export const advantages = [
  * TODO (prototype): the client will send their own service presentation — check
  * the exact wording and add the works that are missing here.
  */
-export const services = [
+export const services: Feature[] = [
   {
-    icon: Hammer,
+    icon: "Hammer",
     title: {
       ru: "Капитальный ремонт ДВС",
       kk: "ІЖҚ күрделі жөндеу",
@@ -1528,7 +1557,7 @@ export const services = [
     },
   },
   {
-    icon: Cog,
+    icon: "Cog",
     title: {
       ru: "Ремонт моторов спецтехники",
       kk: "Арнайы техника қозғалтқыштарын жөндеу",
@@ -1541,7 +1570,7 @@ export const services = [
     },
   },
   {
-    icon: Droplets,
+    icon: "Droplets",
     title: { ru: "Замена масел и ТО", kk: "Май ауыстыру және ТҚ", en: "Oil change and maintenance" },
     text: {
       ru: "Подбор и замена масел, фильтров и расходников, регламентное обслуживание по наработке.",
@@ -1550,7 +1579,7 @@ export const services = [
     },
   },
   {
-    icon: Activity,
+    icon: "Activity",
     title: { ru: "Диагностика двигателей", kk: "Қозғалтқыш диагностикасы", en: "Engine diagnostics" },
     text: {
       ru: "Замер параметров, компьютерная диагностика и заключение о состоянии узла до начала ремонта.",
@@ -1559,7 +1588,7 @@ export const services = [
     },
   },
   {
-    icon: Wrench,
+    icon: "Wrench",
     title: { ru: "Инженерные услуги", kk: "Инженерлік қызметтер", en: "Engineering services" },
     text: {
       ru: "Подбор привода под нагрузку, комплектация узла, шеф-монтаж и консультации инженера.",
@@ -1568,7 +1597,7 @@ export const services = [
     },
   },
   {
-    icon: Truck,
+    icon: "Truck",
     title: { ru: "Поставка запчастей", kk: "Қосалқы бөлшек жеткізу", en: "Spare parts supply" },
     text: {
       ru: "Оригинальные запчасти и расходники под заказ, с проверкой по номеру и срокам поставки.",
@@ -1585,13 +1614,15 @@ export const services = [
 export const groupKeys = ["gear", "pumps", "couplings", "filters", "oils", "engines"] as const;
 export type GroupKey = (typeof groupKeys)[number];
 
-export const groups: {
-  key: GroupKey;
+export type Group = {
+  key: string;
   title: Localized;
   text: Localized;
   image: string;
-  categories: Exclude<CategoryKey, "all">[];
-}[] = [
+  categories: string[];
+};
+
+export const groups: Group[] = [
   {
     key: "gear",
     title: { ru: "Мотор-редукторы", kk: "Мотор-редукторлар", en: "Gear motors" },
@@ -1660,22 +1691,56 @@ export const groups: {
   },
 ];
 
-export function getGroup(key: string) {
-  return groups.find((group) => group.key === key);
+export function getGroup(list: Group[], key: string) {
+  return list.find((group) => group.key === key);
 }
 
-export function productGroup(product: Product): GroupKey {
-  return groups.find((group) => group.categories.includes(product.category as Exclude<CategoryKey, "all">))?.key ?? "gear";
+/** Group of a built-in item, from its category. */
+export function productGroup(product: Product): string {
+  return (
+    product.group ??
+    groups.find((group) => group.categories.includes(product.category))?.key ??
+    "gear"
+  );
+}
+
+/** Request subject prefilled in the form; some admin items have no code. */
+export function requestSubject(product: Product, title: string) {
+  return [product.code, title].filter(Boolean).join(" — ");
 }
 
 export function productHref(product: Product) {
   return `/catalog/${productGroup(product)}/${product.slug}`;
 }
 
-export function groupProducts(key: GroupKey) {
-  const group = getGroup(key);
-  if (!group) return [];
-  return products.filter((product) =>
-    group.categories.includes(product.category as Exclude<CategoryKey, "all">),
+/** Same category first, then the rest of the same group (a filter never suggests a gearbox). */
+export function relatedProducts(current: Product, pool: Product[], limit = 4) {
+  const group = productGroup(current);
+  const others = pool.filter((product) => product.slug !== current.slug);
+  const sameCategory = others.filter((product) => product.category === current.category);
+  const sameGroup = others.filter(
+    (product) => product.category !== current.category && productGroup(product) === group,
   );
+  return [...sameCategory, ...sameGroup].slice(0, limit);
 }
+
+/**
+ * Ids a request from a product page carries, so the admin sees which series,
+ * plant and equipment type the client asked about.
+ */
+export type LeadContext = { series?: number; brand?: number; productType?: number };
+
+/** Everything the layout hands to client pages; products travel per page. */
+export type SiteData = {
+  company: Company;
+  stats: Stat[];
+  heroSlides: HeroSlide[];
+  groups: (Group & { count: number })[];
+  categoryLabels: Record<string, Localized>;
+  industries: Industry[];
+  advantages: Feature[];
+  services: Feature[];
+  totalProducts: number;
+  /** Admin-edited UI copy, layered over the built-in dictionary. */
+  strings: Partial<Record<Locale, Record<string, string>>>;
+};

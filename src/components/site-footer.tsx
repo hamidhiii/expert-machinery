@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { ArrowRight, Instagram, MessageCircle } from "lucide-react";
-import { company, navItems } from "@/lib/catalog";
+import { navItems } from "@/lib/catalog";
 import { LogoLockup } from "@/components/logo";
 import { useRequestModal } from "@/components/request-modal";
 import { useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 export function SiteFooter() {
   const { t, tr } = useLanguage();
   const { open } = useRequestModal();
+  const { company } = useSiteData();
 
   return (
     <footer className="bg-ink text-white">

@@ -5,18 +5,18 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Check, Info, Phone } from "lucide-react";
 import {
-  categoryLabels,
-  company,
   getGroup,
   productBrand,
   productGroup,
-  relatedProducts,
+  requestSubject,
+  type LeadContext,
   type Product,
 } from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
 import { useRequestModal } from "@/components/request-modal";
 import { Breadcrumbs, ButtonLink, Eyebrow, Reveal, SectionHeading } from "@/components/ui";
 import { useLanguage, type TranslationKey } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 const whatToSendKey: Record<string, TranslationKey> = {
   filters: "product.whatToSend.filters",
@@ -38,12 +38,21 @@ function DetailBlock({ index, eyebrow, title, children }: {
   );
 }
 
-export function ProductView({ product }: { product: Product }) {
+export function ProductView({
+  product,
+  related,
+  lead,
+}: {
+  product: Product;
+  related: Product[];
+  lead: LeadContext;
+}) {
   const { t, tr } = useLanguage();
   const { open } = useRequestModal();
-  const related = relatedProducts(product);
-  const group = getGroup(productGroup(product))!;
-  const request = () => open(`${product.code} — ${tr(product.title)}`);
+  const { categoryLabels, company, groups } = useSiteData();
+  const group = getGroup(groups, productGroup(product))!;
+  const category = categoryLabels[product.category];
+  const request = () => open(requestSubject(product, tr(product.title)), lead);
 
   let index = 0;
   const next = () => ++index;
@@ -72,9 +81,11 @@ export function ProductView({ product }: { product: Product }) {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-contain p-12"
                 />
-                <span className="absolute left-6 top-6 rounded-md bg-ink/85 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-white">
-                  {tr(categoryLabels[product.category])}
-                </span>
+                {category ? (
+                  <span className="absolute left-6 top-6 rounded-md bg-ink/85 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+                    {tr(category)}
+                  </span>
+                ) : null}
               </div>
             </Reveal>
 
@@ -84,7 +95,9 @@ export function ProductView({ product }: { product: Product }) {
               {product.subtitle ? (
                 <p className="mt-4 text-base font-semibold text-ink/80">{tr(product.subtitle)}</p>
               ) : null}
-              <p className="mt-3 text-sm font-medium text-muted">{product.code}</p>
+              {product.code ? (
+                <p className="mt-3 text-sm font-medium text-muted">{product.code}</p>
+              ) : null}
               <p className="mt-6 text-[15px] leading-8 text-muted">{tr(product.summary)}</p>
 
               <dl className="mt-8 border-t border-line">

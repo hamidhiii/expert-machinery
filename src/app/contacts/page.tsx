@@ -4,11 +4,13 @@ import Link from "next/link";
 import { Clock, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { RequestForm } from "@/components/request-form";
 import { InnerHero, Reveal } from "@/components/ui";
-import { company, siteImages } from "@/lib/catalog";
+import { siteImages } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 export default function ContactsPage() {
   const { t, tr } = useLanguage();
+  const { company } = useSiteData();
 
   const cards = [
     { icon: Phone, label: t("contacts.phone"), value: company.phone, href: company.phoneHref },

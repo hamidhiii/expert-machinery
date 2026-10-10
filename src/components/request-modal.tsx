@@ -11,12 +11,14 @@ import {
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, MessageCircle, X } from "lucide-react";
-import { company } from "@/lib/catalog";
+import type { LeadContext } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 import { useRequestSubmit } from "@/lib/submit-request";
 
 type RequestModalContextValue = {
-  open: (subject?: string) => void;
+  /** `lead` ties the request to a catalogue series in the admin. */
+  open: (subject?: string, lead?: LeadContext) => void;
   close: () => void;
 };
 
@@ -35,13 +37,16 @@ const fieldClass =
 
 export function RequestModalProvider({ children }: { children: ReactNode }) {
   const { t } = useLanguage();
+  const { company } = useSiteData();
   const [isOpen, setIsOpen] = useState(false);
   const [subject, setSubject] = useState("");
+  const [lead, setLead] = useState<LeadContext>({});
   const { status, onSubmit, reset } = useRequestSubmit();
 
   const open = useCallback(
-    (nextSubject?: string) => {
+    (nextSubject?: string, nextLead?: LeadContext) => {
       setSubject(nextSubject ?? "");
+      setLead(nextLead ?? {});
       reset();
       setIsOpen(true);
     },
@@ -126,6 +131,11 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
                       aria-hidden
                       className="hidden"
                     />
+                    {lead.series ? <input type="hidden" name="series" value={lead.series} /> : null}
+                    {lead.brand ? <input type="hidden" name="brand" value={lead.brand} /> : null}
+                    {lead.productType ? (
+                      <input type="hidden" name="product_type" value={lead.productType} />
+                    ) : null}
                     <div className="grid gap-4 sm:grid-cols-2">
                       <label className="grid gap-2">
                         <span className="text-xs font-semibold text-ink/70">{t("form.name")}</span>

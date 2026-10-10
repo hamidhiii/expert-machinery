@@ -5,11 +5,13 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { CtaBand } from "@/components/cta-band";
 import { Eyebrow, InnerHero, Reveal, SectionHeading, StatsBand } from "@/components/ui";
-import { company, companyStats, siteImages } from "@/lib/catalog";
+import { siteImages } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 export default function AboutPage() {
   const { t, tr } = useLanguage();
+  const { company, stats } = useSiteData();
 
   const cards = [
     { title: t("about.card1.title"), text: t("about.card1.text") },
@@ -34,7 +36,7 @@ export default function AboutPage() {
         image={siteImages.meeting}
       />
 
-      <StatsBand stats={companyStats.map((stat) => ({ value: stat.value, label: t(stat.key) }))} />
+      <StatsBand stats={stats.map((stat) => ({ value: stat.value, label: tr(stat.label) }))} />
 
       <section className="bg-paper py-20 lg:py-24">
         <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">

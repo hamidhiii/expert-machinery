@@ -5,11 +5,13 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CtaBand } from "@/components/cta-band";
 import { InnerHero, Reveal } from "@/components/ui";
-import { groupProducts, groups, products, siteImages } from "@/lib/catalog";
+import { siteImages } from "@/lib/catalog";
 import { pluralItems, useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 export default function CatalogPage() {
   const { locale, t, tr } = useLanguage();
+  const { groups, totalProducts } = useSiteData();
 
   return (
     <>
@@ -19,14 +21,14 @@ export default function CatalogPage() {
         title={t("catalog.groups.title")}
         text={t("catalog.groups.text")}
         image={siteImages.line}
-        counter={`${products.length} / ${pluralItems(locale, products.length)}`}
+        counter={`${totalProducts} / ${pluralItems(locale, totalProducts)}`}
       />
 
       <section className="bg-paper py-16 lg:py-20">
         <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {groups.map((group, index) => {
-              const count = groupProducts(group.key).length;
+              const count = group.count;
               const empty = group.categories.length === 0;
 
               return (

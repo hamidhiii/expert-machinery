@@ -5,15 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import {
-  advantages,
-  companyStats,
-  groupProducts,
-  groups,
-  heroSlides,
-  industries,
-  type GroupKey,
-} from "@/lib/catalog";
 import { CtaBand } from "@/components/cta-band";
 import { useRequestModal } from "@/components/request-modal";
 import {
@@ -25,24 +16,27 @@ import {
   StatsBand,
 } from "@/components/ui";
 import { useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 export default function HomePage() {
   const { t, tr } = useLanguage();
   const { open } = useRequestModal();
   const [slide, setSlide] = useState(0);
-  const [activeGroup, setActiveGroup] = useState<GroupKey>("gear");
-  const active = groups.find((group) => group.key === activeGroup)!;
+  const { advantages, groups, heroSlides, industries, stats: companyStats } = useSiteData();
+  const [activeGroup, setActiveGroup] = useState(groups[0]?.key);
+  const active = groups.find((group) => group.key === activeGroup) ?? groups[0];
 
   useEffect(() => {
+    if (heroSlides.length < 2) return;
     const timer = window.setInterval(() => {
       setSlide((prev) => (prev + 1) % heroSlides.length);
     }, 7000);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [heroSlides.length]);
 
-  const stats = companyStats.map((stat) => ({ value: stat.value, label: t(stat.key) }));
+  const stats = companyStats.map((stat) => ({ value: stat.value, label: tr(stat.label) }));
 
-  const current = heroSlides[slide];
+  const current = heroSlides[slide] ?? heroSlides[0];
 
   return (
     <>
@@ -82,10 +76,10 @@ export default function HomePage() {
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               <h1 className="display mt-6 max-w-4xl text-[40px] text-white sm:text-6xl lg:text-[72px] 2xl:max-w-[52rem] 2xl:text-[88px]">
-                {t(current.titleKey)}
+                {tr(current.title)}
               </h1>
               <p className="mt-7 max-w-xl text-[15px] leading-8 text-white/70 2xl:max-w-2xl 2xl:text-base 2xl:leading-8">
-                {t(current.textKey)}
+                {tr(current.text)}
               </p>
             </motion.div>
           </AnimatePresence>
@@ -100,7 +94,7 @@ export default function HomePage() {
           <div className="mt-14 flex items-center gap-4">
             {heroSlides.map((item, index) => (
               <button
-                key={item.titleKey}
+                key={item.image + index}
                 type="button"
                 onClick={() => setSlide(index)}
                 aria-label={`${index + 1}`}
@@ -172,7 +166,7 @@ export default function HomePage() {
                 <div className="absolute inset-x-0 bottom-0 p-8">
                   <p className="eyebrow text-flame">
                     {active.categories.length
-                      ? `${groupProducts(active.key).length} ${t("home.categories.count")}`
+                      ? `${active.count} ${t("home.categories.count")}`
                       : t("catalog.group.soon")}
                   </p>
                   <p className="display mt-3 text-3xl text-white">{tr(active.title)}</p>
@@ -209,7 +203,7 @@ export default function HomePage() {
                     </span>
                   </span>
                   <span className="hidden text-xs font-semibold text-muted/60 sm:block">
-                    {group.categories.length ? groupProducts(group.key).length : "—"}
+                    {group.categories.length ? group.count : "—"}
                   </span>
                   <ArrowRight
                     className={`h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1 ${

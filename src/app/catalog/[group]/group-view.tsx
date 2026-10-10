@@ -4,15 +4,15 @@ import { CatalogExplorer } from "@/components/catalog-explorer";
 import { CtaBand } from "@/components/cta-band";
 import { ButtonLink, InnerHero } from "@/components/ui";
 import { useRequestModal } from "@/components/request-modal";
-import { getGroup, groupProducts, siteImages, type GroupKey } from "@/lib/catalog";
+import { getGroup, siteImages, type Product } from "@/lib/catalog";
 import { pluralItems, useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
-export function GroupView({ groupKey }: { groupKey: GroupKey }) {
+export function GroupView({ groupKey, products: items }: { groupKey: string; products: Product[] }) {
   const { locale, t, tr } = useLanguage();
   const { open } = useRequestModal();
 
-  const group = getGroup(groupKey)!;
-  const items = groupProducts(groupKey);
+  const group = getGroup(useSiteData().groups, groupKey)!;
   const empty = group.categories.length === 0;
 
   return (
@@ -46,7 +46,7 @@ export function GroupView({ groupKey }: { groupKey: GroupKey }) {
       ) : (
         <section className="bg-paper py-14 lg:py-16">
           <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 sm:px-6 lg:px-8 2xl:px-12">
-            <CatalogExplorer group={groupKey} />
+            <CatalogExplorer categories={group.categories} products={items} />
           </div>
         </section>
       )}

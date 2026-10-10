@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { MessageCircle, Phone } from "lucide-react";
-import { company } from "@/lib/catalog";
 import { ButtonLink, Eyebrow, Reveal } from "@/components/ui";
 import { useRequestModal } from "@/components/request-modal";
 import { useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 export function CtaBand() {
   const { t } = useLanguage();
   const { open } = useRequestModal();
+  const { company } = useSiteData();
 
   return (
     <section className="border-t border-line bg-paper">

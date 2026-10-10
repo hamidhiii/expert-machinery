@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { getSiteData } from "@/lib/api";
 import { LanguageProvider } from "@/lib/i18n";
+import { SiteDataProvider } from "@/lib/site-data";
 import { RequestModalProvider } from "@/components/request-modal";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -22,17 +24,21 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.svg" },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const data = await getSiteData();
+
   return (
     <html lang="ru">
       <body className="min-h-screen antialiased">
-        <LanguageProvider>
-          <RequestModalProvider>
-            <SiteHeader />
-            <main>{children}</main>
-            <SiteFooter />
-          </RequestModalProvider>
-        </LanguageProvider>
+        <SiteDataProvider data={data}>
+          <LanguageProvider strings={data.strings}>
+            <RequestModalProvider>
+              <SiteHeader />
+              <main>{children}</main>
+              <SiteFooter />
+            </RequestModalProvider>
+          </LanguageProvider>
+        </SiteDataProvider>
       </body>
     </html>
   );

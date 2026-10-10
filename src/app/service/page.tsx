@@ -4,12 +4,14 @@ import Image from "next/image";
 import { CtaBand } from "@/components/cta-band";
 import { ButtonLink, Eyebrow, InnerHero, Reveal, SectionHeading } from "@/components/ui";
 import { useRequestModal } from "@/components/request-modal";
-import { services, siteImages } from "@/lib/catalog";
+import { siteImages } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
+import { useSiteData } from "@/lib/site-data";
 
 export default function ServicePage() {
   const { t, tr } = useLanguage();
   const { open } = useRequestModal();
+  const { services } = useSiteData();
 
   const steps = [
     { title: t("home.process.step1.title"), text: t("home.process.step1.text") },
