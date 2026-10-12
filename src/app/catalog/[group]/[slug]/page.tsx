@@ -33,10 +33,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProductPageProps) {
-  const { slug } = await params;
+  const { group, slug } = await params;
   const product = await findProduct(slug);
 
-  if (!product) return { title: "Оборудование" };
+  // Unknown URL: the 404 page's own title, not a generic one streamed over it.
+  if (!product || productGroup(product) !== group) notFound();
 
   return pageMetadata({
     title: seoTitle(product),

@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: GroupPageProps) {
   const { group } = await params;
   const found = getGroup((await getSiteData()).groups, group);
 
-  if (!found) return { title: "Каталог" };
+  if (!found) notFound();
 
   return pageMetadata({
     title: `${found.title.ru} — купить в Казахстане`,

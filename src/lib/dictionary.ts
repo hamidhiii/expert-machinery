@@ -214,6 +214,11 @@ export const dictionary = {
     "form.error.name": "Укажите имя буквами, без цифр",
     "form.error.phone": "Введите номер полностью, например +7 700 000 00 00",
     "form.error.email": "Проверьте e-mail, например name@company.com",
+    "notFound.eyebrow": "Ошибка 404",
+    "notFound.title": "Такой страницы нет",
+    "notFound.text": "Возможно, ссылка устарела или в адресе опечатка. Найдите нужное в каталоге или напишите нам — подберём оборудование по параметрам.",
+    "notFound.home": "На главную",
+    "notFound.groups": "Разделы каталога",
 
     "footer.about":
       "Поставка промышленных редукторов, мотор-редукторов, насосов, муфт и приводных решений для предприятий Казахстана.",
@@ -430,6 +435,11 @@ export const dictionary = {
     "form.error.name": "Атыңызды цифрсыз, әріптермен жазыңыз",
     "form.error.phone": "Нөмірді толық енгізіңіз, мысалы +7 700 000 00 00",
     "form.error.email": "E-mail-ды тексеріңіз, мысалы name@company.com",
+    "notFound.eyebrow": "404 қатесі",
+    "notFound.title": "Мұндай бет жоқ",
+    "notFound.text": "Сілтеме ескірген немесе мекенжайда қате болуы мүмкін. Қажеттісін каталогтан табыңыз немесе бізге жазыңыз — жабдықты параметрлер бойынша таңдап береміз.",
+    "notFound.home": "Басты бетке",
+    "notFound.groups": "Каталог бөлімдері",
 
     "footer.about":
       "Қазақстан кәсіпорындарына өнеркәсіптік редукторлар, мотор-редукторлар, сорғылар, муфталар мен жетек шешімдерін жеткізу.",
@@ -643,6 +653,11 @@ export const dictionary = {
     "form.error.name": "Enter your name in letters, without digits",
     "form.error.phone": "Enter the full number, e.g. +7 700 000 00 00",
     "form.error.email": "Check the e-mail, e.g. name@company.com",
+    "notFound.eyebrow": "Error 404",
+    "notFound.title": "This page doesn't exist",
+    "notFound.text": "The link may be outdated or the address mistyped. Find what you need in the catalog or message us — we will select equipment to your parameters.",
+    "notFound.home": "Home page",
+    "notFound.groups": "Catalog sections",
 
     "footer.about":
       "Supply of industrial gearboxes, gear motors, pumps, couplings and drive solutions for plants in Kazakhstan.",
