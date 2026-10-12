@@ -103,6 +103,8 @@ export function CatalogExplorer({
         <label className="relative w-full lg:max-w-sm">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
           <input
+            type="search"
+            maxLength={100}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={t("catalog.search")}

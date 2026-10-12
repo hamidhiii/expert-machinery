@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 import { API_URL } from "@/lib/api";
 import { company } from "@/lib/catalog";
+import { formatPhone, isValidPhone } from "@/lib/phone";
 
 export const runtime = "nodejs";
 
@@ -49,6 +50,11 @@ export async function POST(request: Request) {
   if (!data.name || !data.phone) {
     return NextResponse.json({ error: "missing_fields" }, { status: 400 });
   }
+  // Same rules as the form fields, for requests that skip the browser checks.
+  if (!isValidPhone(data.phone) || /\d/.test(data.name) || !/\p{L}/u.test(data.name)) {
+    return NextResponse.json({ error: "invalid_fields" }, { status: 400 });
+  }
+  data.phone = formatPhone(data.phone);
 
   const ids: Record<string, number> = {};
   for (const field of ID_FIELDS) {

@@ -4,6 +4,13 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { useRequestSubmit } from "@/lib/submit-request";
 import { AttachmentField } from "@/components/attachment-field";
+import {
+  CompanyInput,
+  EmailInput,
+  MESSAGE_MAX_LENGTH,
+  NameInput,
+  PhoneInput,
+} from "@/components/form-fields";
 
 const fieldClass =
   "h-12 w-full rounded-lg border border-line bg-paper/50 px-4 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white";
@@ -38,19 +45,19 @@ export function RequestForm({ defaultType = "" }: { defaultType?: string }) {
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="grid gap-2">
             <span className="text-xs font-semibold text-ink/70">{t("form.name")}</span>
-            <input required name="name" placeholder={t("form.name")} className={fieldClass} />
+            <NameInput placeholder={t("form.name")} className={fieldClass} />
           </label>
           <label className="grid gap-2">
-            <span className="text-xs font-semibold text-ink/70">{t("form.phone")}</span>
-            <input required name="phone" placeholder="+7 700 000 00 00" className={fieldClass} />
+            <span className="text-xs font-semibold text-ink/70">{t("contacts.phone")}</span>
+            <PhoneInput className={fieldClass} />
           </label>
           <label className="grid gap-2">
             <span className="text-xs font-semibold text-ink/70">{t("form.company")}</span>
-            <input name="company" placeholder={t("form.company")} className={fieldClass} />
+            <CompanyInput placeholder={t("form.company")} className={fieldClass} />
           </label>
           <label className="grid gap-2">
             <span className="text-xs font-semibold text-ink/70">{t("form.email")}</span>
-            <input type="email" name="email" placeholder="name@company.com" className={fieldClass} />
+            <EmailInput className={fieldClass} />
           </label>
         </div>
 
@@ -59,6 +66,7 @@ export function RequestForm({ defaultType = "" }: { defaultType?: string }) {
           <textarea
             name="message"
             rows={4}
+            maxLength={MESSAGE_MAX_LENGTH}
             defaultValue={defaultType}
             placeholder={t("form.details")}
             className="w-full rounded-lg border border-line bg-paper/50 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white"

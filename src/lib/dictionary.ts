@@ -210,6 +210,10 @@ export const dictionary = {
     "form.file": "Фото шильдика или файл",
     "form.fileHint": "JPG, PNG, HEIC или PDF, до 10 МБ",
     "form.fileTooBig": "Файл больше 10 МБ — сожмите его или пришлите в WhatsApp.",
+    "form.error.required": "Заполните это поле",
+    "form.error.name": "Укажите имя буквами, без цифр",
+    "form.error.phone": "Введите номер полностью, например +7 700 000 00 00",
+    "form.error.email": "Проверьте e-mail, например name@company.com",
 
     "footer.about":
       "Поставка промышленных редукторов, мотор-редукторов, насосов, муфт и приводных решений для предприятий Казахстана.",
@@ -422,6 +426,10 @@ export const dictionary = {
     "form.file": "Шильдик фотосы немесе файл",
     "form.fileHint": "JPG, PNG, HEIC немесе PDF, 10 МБ-қа дейін",
     "form.fileTooBig": "Файл 10 МБ-тан үлкен — оны сығыңыз немесе WhatsApp-қа жіберіңіз.",
+    "form.error.required": "Бұл өрісті толтырыңыз",
+    "form.error.name": "Атыңызды цифрсыз, әріптермен жазыңыз",
+    "form.error.phone": "Нөмірді толық енгізіңіз, мысалы +7 700 000 00 00",
+    "form.error.email": "E-mail-ды тексеріңіз, мысалы name@company.com",
 
     "footer.about":
       "Қазақстан кәсіпорындарына өнеркәсіптік редукторлар, мотор-редукторлар, сорғылар, муфталар мен жетек шешімдерін жеткізу.",
@@ -631,6 +639,10 @@ export const dictionary = {
     "form.file": "Nameplate photo or file",
     "form.fileHint": "JPG, PNG, HEIC or PDF, up to 10 MB",
     "form.fileTooBig": "The file is larger than 10 MB — compress it or send it via WhatsApp.",
+    "form.error.required": "Please fill in this field",
+    "form.error.name": "Enter your name in letters, without digits",
+    "form.error.phone": "Enter the full number, e.g. +7 700 000 00 00",
+    "form.error.email": "Check the e-mail, e.g. name@company.com",
 
     "footer.about":
       "Supply of industrial gearboxes, gear motors, pumps, couplings and drive solutions for plants in Kazakhstan.",
