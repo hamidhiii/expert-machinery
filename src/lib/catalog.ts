@@ -99,10 +99,10 @@ export const companyStats: Stat[] = [
 ];
 
 export const navItems: { href: string; key: TranslationKey }[] = [
+  { href: "/about", key: "nav.about" },
   { href: "/catalog", key: "nav.catalog" },
   { href: "/industries", key: "nav.industries" },
   { href: "/service", key: "nav.service" },
-  { href: "/about", key: "nav.about" },
   { href: "/contacts", key: "nav.contacts" },
 ];
 
