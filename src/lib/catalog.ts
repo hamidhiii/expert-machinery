@@ -1647,11 +1647,12 @@ export const pageBanners: Record<string, string> = {
 
 /**
  * And for second photos (page-texts.secondary_image). The service "Process"
- * photo is a full-resolution 4:5 crop: the admin's 1600×1067 copy looked soft
- * once cut to the portrait frame.
+ * photo is an engineer setting up an electric actuator (Unsplash, free licence),
+ * cut to 4:5 from a 2400×3600 original so it stays sharp; the admin's
+ * 1600×1067 copy looked soft once cropped to the portrait frame.
  */
 export const pageSecondaryBanners: Record<string, string> = {
-  service: "/banners/service-drawings.jpg",
+  service: "/banners/service-actuator.jpg",
 };
 
 export const groups: Group[] = [
