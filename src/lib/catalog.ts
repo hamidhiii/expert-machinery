@@ -1627,11 +1627,21 @@ export type Group = {
   categories: string[];
 };
 
-/** Hero photos chosen by the client, used until one is uploaded in the admin. */
+/**
+ * Hero photos the client picked for the site. They win over the admin's banner
+ * field, which was filled with copies of the old stock photos; remove an entry
+ * here once the right photo is uploaded in the admin.
+ */
 export const groupBanners: Record<string, string> = {
   gear: "/banners/gear.jpg",
   pumps: "/banners/pumps.jpg",
-  filters: "/banners/filters.jpg",
+  filters: "/banners/filters-warehouse.jpg",
+  oils: "/banners/oils.jpg",
+};
+
+/** Same for page heroes (page-texts.image in the admin). */
+export const pageBanners: Record<string, string> = {
+  catalog: "/banners/catalog-workshop.jpg",
 };
 
 export const groups: Group[] = [

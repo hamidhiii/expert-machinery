@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CtaBand } from "@/components/cta-band";
+import { pageBanners } from "@/lib/catalog";
 import { InnerHero, Reveal } from "@/components/ui";
 import { pluralItems, useLanguage } from "@/lib/i18n";
 import { useSiteData } from "@/lib/site-data";
@@ -19,7 +20,7 @@ export default function CatalogPage() {
         eyebrow={`Catalog / ${new Date().getFullYear()}`}
         title={t("catalog.groups.title")}
         text={t("catalog.groups.text")}
-        image={pageImages.catalog?.image ?? "/banners/catalog-workshop.jpg"}
+        image={pageImages.catalog?.image ?? pageBanners.catalog}
         counter={`${totalProducts} / ${pluralItems(locale, totalProducts)}`}
       />
 

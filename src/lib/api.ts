@@ -6,6 +6,7 @@ import {
   companyStats as fallbackStats,
   groupBanners,
   groups as fallbackGroups,
+  pageBanners,
   heroSlides as fallbackHeroSlides,
   industries as fallbackIndustries,
   productBrand,
@@ -332,7 +333,10 @@ export const getSiteData = cache(async (): Promise<SiteData> => {
         Object.fromEntries(
           (await get<ApiPageText[]>("page-texts/")).map((row) => [
             row.page,
-            { image: uploaded(row.image), secondary: uploaded(row.secondary_image) },
+            {
+              image: pageBanners[row.page] ?? uploaded(row.image),
+              secondary: uploaded(row.secondary_image),
+            },
           ]),
         ),
       {},
@@ -346,7 +350,7 @@ export const getSiteData = cache(async (): Promise<SiteData> => {
         text: loc(row, "description"),
         image:
           row.image ?? fallbackGroups.find((group) => group.key === row.slug)?.image ?? "",
-        banner: uploaded(row.banner) ?? groupBanners[row.slug],
+        banner: groupBanners[row.slug] ?? uploaded(row.banner),
         categories: row.categories,
       }))
     : fallbackGroups.map((group) => ({ ...group, banner: groupBanners[group.key] }));
