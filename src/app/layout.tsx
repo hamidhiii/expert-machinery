@@ -74,20 +74,26 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   );
 }
 
-/** Who the site belongs to — powers the brand panel and contact details in search. */
+/**
+ * Who the site belongs to. LocalBusiness (a kind of Organization) adds hours and
+ * a sales contact for local results; WebSite name/alternateName is what Google
+ * shows as the site name above each result.
+ */
 function organizationLd(company: Company) {
   const organization = `${SITE_URL}/#organization`;
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Organization",
+        "@type": "LocalBusiness",
         "@id": organization,
         name: "Expert Machinery",
         legalName: company.legalName,
-        alternateName: ["EXPERT MACHINERY", "Эксперт Машинери"],
+        alternateName: ["EXPERT MACHINERY", "Эксперт Машинери", "Expert Machinery Казахстан"],
+        description,
         url: SITE_URL,
         logo: `${SITE_URL}/expert-machinery-logo.jpg`,
+        image: `${SITE_URL}/opengraph-image`,
         email: company.email,
         telephone: company.phone,
         address: {
@@ -96,6 +102,21 @@ function organizationLd(company: Company) {
           addressLocality: "Астана",
           addressCountry: "KZ",
         },
+        // Mon–Sat 09:00–18:00, as confirmed by the client.
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          opens: "09:00",
+          closes: "18:00",
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          telephone: company.phone,
+          email: company.email,
+          areaServed: "KZ",
+          availableLanguage: ["Russian", "Kazakh", "English"],
+        },
         areaServed: { "@type": "Country", name: "Kazakhstan" },
         sameAs: [company.instagramHref],
       },
@@ -103,7 +124,8 @@ function organizationLd(company: Company) {
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
         url: SITE_URL,
-        name: SITE_NAME,
+        name: "Expert Machinery",
+        alternateName: ["Expert Machinery Казахстан", "expertmachinery.kz"],
         inLanguage: "ru",
         publisher: { "@id": organization },
       },

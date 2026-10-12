@@ -11,7 +11,7 @@ import { useSiteData } from "@/lib/site-data";
 export function SiteFooter() {
   const { t, tr } = useLanguage();
   const { open } = useRequestModal();
-  const { company } = useSiteData();
+  const { company, groups } = useSiteData();
 
   return (
     <footer className="bg-ink text-white">
@@ -59,6 +59,19 @@ export function SiteFooter() {
           </button>
         </div>
       </div>
+
+      {/* Every catalogue group one click from any page (also helps crawlers). */}
+      <nav
+        aria-label={t("nav.catalog")}
+        className="mx-auto flex max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] flex-wrap gap-x-6 gap-y-2 px-4 pb-10 text-sm text-white/50 sm:px-6 lg:px-8 2xl:px-12"
+      >
+        <span className="eyebrow text-white/40">{t("nav.catalog")}</span>
+        {groups.map((group) => (
+          <Link key={group.key} href={`/catalog/${group.key}`} className="transition hover:text-flame">
+            {tr(group.title)}
+          </Link>
+        ))}
+      </nav>
 
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] flex-col gap-2 px-4 py-6 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8 2xl:px-12">

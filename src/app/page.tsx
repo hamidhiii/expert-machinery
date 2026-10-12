@@ -53,7 +53,7 @@ export default function HomePage() {
           >
             <Image
               src={current.image}
-              alt=""
+              alt={tr(current.title)}
               fill
               priority
               sizes="100vw"
@@ -65,7 +65,9 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/30" aria-hidden />
 
         <div className="relative mx-auto w-full max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 py-20 sm:px-6 lg:px-8 2xl:px-12">
-          <Eyebrow>{t("home.hero.badge")}</Eyebrow>
+          {/* The page's one H1 carries the brand (the rotating slide titles are H2s):
+              brand queries match on it. Styled as the eyebrow it replaces. */}
+          <h1 className="eyebrow text-flame">Expert Machinery · {t("home.hero.badge")}</h1>
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -75,9 +77,9 @@ export default function HomePage() {
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
-              <h1 className="display mt-6 max-w-4xl text-[40px] text-white sm:text-6xl lg:text-[72px] 2xl:max-w-[52rem] 2xl:text-[88px]">
+              <h2 className="display mt-6 max-w-4xl text-[40px] text-white sm:text-6xl lg:text-[72px] 2xl:max-w-[52rem] 2xl:text-[88px]">
                 {tr(current.title)}
-              </h1>
+              </h2>
               <p className="mt-7 max-w-xl text-[15px] leading-8 text-white/70 2xl:max-w-2xl 2xl:text-base 2xl:leading-8">
                 {tr(current.text)}
               </p>
@@ -151,7 +153,7 @@ export default function HomePage() {
                     >
                       <Image
                         src={group.image}
-                        alt={isActive ? tr(group.title) : ""}
+                        alt={tr(group.title)}
                         fill
                         sizes="(max-width: 1024px) 100vw, 40vw"
                         className={

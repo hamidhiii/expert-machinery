@@ -40,9 +40,13 @@ export async function generateMetadata({ params }: ProductPageProps) {
 
   return pageMetadata({
     title: seoTitle(product),
-    description:
-      product.summary.ru ||
-      `${product.title.ru}: подбор, поставка и консультация инженера Expert Machinery в Казахстане.`,
+    // Short supplier blurbs get the local offer appended; snippet() trims to 160.
+    description: [
+      product.summary.ru,
+      "Поставка по Казахстану, подбор инженером.",
+    ]
+      .filter(Boolean)
+      .join(" "),
     path: productHref(product),
     image: product.image,
   });

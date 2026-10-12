@@ -35,6 +35,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...products.map((product) => ({
       url: `${SITE_URL}${productHref(product)}`,
       lastModified: dates[product.slug],
+      // Image sitemap entry: parts are often looked up by code in Google Images.
+      images: product.image ? [product.image] : undefined,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
