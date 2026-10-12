@@ -1637,6 +1637,7 @@ export const groupBanners: Record<string, string> = {
   pumps: "/banners/pumps.jpg",
   filters: "/banners/filters-warehouse.jpg",
   oils: "/banners/oils.jpg",
+  compressors: "/banners/compressors-screw.jpg",
 };
 
 /** Same for page heroes (page-texts.image in the admin). */
