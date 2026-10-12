@@ -1629,6 +1629,8 @@ export type Group = {
 
 /** Hero photos chosen by the client, used until one is uploaded in the admin. */
 export const groupBanners: Record<string, string> = {
+  gear: "/banners/gear.jpg",
+  pumps: "/banners/pumps.jpg",
   filters: "/banners/filters.jpg",
 };
 

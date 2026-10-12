@@ -19,9 +19,7 @@ export default function CatalogPage() {
         eyebrow={`Catalog / ${new Date().getFullYear()}`}
         title={t("catalog.groups.title")}
         text={t("catalog.groups.text")}
-        image={pageImages.catalog?.image ?? "/banners/catalog.jpg"}
-        // The built-in banner is a light studio shot; an admin upload keeps the dark hero.
-        tone={pageImages.catalog?.image ? "dark" : "light"}
+        image={pageImages.catalog?.image ?? "/banners/catalog-workshop.jpg"}
         counter={`${totalProducts} / ${pluralItems(locale, totalProducts)}`}
       />
 
