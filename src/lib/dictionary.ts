@@ -207,6 +207,9 @@ export const dictionary = {
     "form.success": "Заявка принята. Инженер свяжется с вами в ближайшее время.",
     "form.sending": "Отправляем…",
     "form.error": "Не удалось отправить заявку. Напишите нам в WhatsApp или позвоните — ответим сразу.",
+    "form.file": "Фото шильдика или файл",
+    "form.fileHint": "JPG, PNG, HEIC или PDF, до 10 МБ",
+    "form.fileTooBig": "Файл больше 10 МБ — сожмите его или пришлите в WhatsApp.",
 
     "footer.about":
       "Поставка промышленных редукторов, мотор-редукторов, насосов, муфт и приводных решений для предприятий Казахстана.",
@@ -416,6 +419,9 @@ export const dictionary = {
     "form.success": "Өтінім қабылданды. Инженер жақын арада хабарласады.",
     "form.sending": "Жіберілуде…",
     "form.error": "Өтінімді жіберу мүмкін болмады. WhatsApp-қа жазыңыз немесе қоңырау шалыңыз — бірден жауап береміз.",
+    "form.file": "Шильдик фотосы немесе файл",
+    "form.fileHint": "JPG, PNG, HEIC немесе PDF, 10 МБ-қа дейін",
+    "form.fileTooBig": "Файл 10 МБ-тан үлкен — оны сығыңыз немесе WhatsApp-қа жіберіңіз.",
 
     "footer.about":
       "Қазақстан кәсіпорындарына өнеркәсіптік редукторлар, мотор-редукторлар, сорғылар, муфталар мен жетек шешімдерін жеткізу.",
@@ -622,6 +628,9 @@ export const dictionary = {
     "form.success": "Request received. An engineer will contact you shortly.",
     "form.sending": "Sending…",
     "form.error": "We could not send your request. Message us on WhatsApp or call — we will reply right away.",
+    "form.file": "Nameplate photo or file",
+    "form.fileHint": "JPG, PNG, HEIC or PDF, up to 10 MB",
+    "form.fileTooBig": "The file is larger than 10 MB — compress it or send it via WhatsApp.",
 
     "footer.about":
       "Supply of industrial gearboxes, gear motors, pumps, couplings and drive solutions for plants in Kazakhstan.",

@@ -3,6 +3,7 @@
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { useRequestSubmit } from "@/lib/submit-request";
+import { AttachmentField } from "@/components/attachment-field";
 
 const fieldClass =
   "h-12 w-full rounded-lg border border-line bg-paper/50 px-4 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white";
@@ -63,6 +64,8 @@ export function RequestForm({ defaultType = "" }: { defaultType?: string }) {
             className="w-full rounded-lg border border-line bg-paper/50 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white"
           />
         </label>
+
+        <AttachmentField />
       </div>
 
       <button

@@ -11,7 +11,7 @@ import { useSiteData } from "@/lib/site-data";
 export default function ServicePage() {
   const { t, tr } = useLanguage();
   const { open } = useRequestModal();
-  const { services } = useSiteData();
+  const { services, pageImages } = useSiteData();
 
   const steps = [
     { title: t("home.process.step1.title"), text: t("home.process.step1.text") },
@@ -27,7 +27,7 @@ export default function ServicePage() {
         eyebrow="Service / engineering"
         title={t("service.hero.title")}
         text={t("service.hero.text")}
-        image={siteImages.service}
+        image={pageImages.service?.image ?? siteImages.service}
         action={<ButtonLink onClick={() => open()}>{t("common.request")}</ButtonLink>}
       />
 
@@ -75,7 +75,7 @@ export default function ServicePage() {
           <Reveal delay={0.1}>
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
               <Image
-                src={siteImages.drawings}
+                src={pageImages.service?.secondary ?? siteImages.drawings}
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"

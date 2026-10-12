@@ -66,6 +66,8 @@ export type Company = {
   whatsappHref: string;
   instagramHref: string;
   email: string;
+  /** From the admin; the contacts.hoursValue UI string is the fallback. */
+  workingHours?: Localized;
 };
 
 export const company: Company = {
@@ -164,6 +166,8 @@ export type Product = {
   group?: string;
   brand?: string;
   popular?: boolean;
+  /** Admin ids a request from this item's page carries. */
+  lead?: LeadContext;
   image: string;
   specs: Spec[];
   summary: Localized;
@@ -1616,8 +1620,16 @@ export type Group = {
   key: string;
   title: Localized;
   text: Localized;
+  /** Cut-out product shot for tiles. */
   image: string;
+  /** Wide photo for the group page hero. */
+  banner?: string;
   categories: string[];
+};
+
+/** Hero photos chosen by the client, used until one is uploaded in the admin. */
+export const groupBanners: Record<string, string> = {
+  filters: "/banners/filters.jpg",
 };
 
 export const groups: Group[] = [
@@ -1739,6 +1751,8 @@ export type SiteData = {
   advantages: Feature[];
   services: Feature[];
   totalProducts: number;
+  /** Hero (and secondary) photo per page key, when uploaded in the admin. */
+  pageImages: Record<string, { image?: string; secondary?: string }>;
   /** Admin-edited UI copy, layered over the built-in dictionary. */
   strings: Partial<Record<Locale, Record<string, string>>>;
 };

@@ -42,7 +42,7 @@ export function SiteFooter() {
               {company.email}
             </Link>
             <p className="mt-2 text-sm text-white/50">{tr(company.address)}</p>
-            <p className="text-sm text-white/50">{t("contacts.hoursValue")}</p>
+            <p className="text-sm text-white/50">{company.workingHours ? tr(company.workingHours) : t("contacts.hoursValue")}</p>
           </div>
         </div>
 

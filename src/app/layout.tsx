@@ -10,7 +10,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { JsonLd, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 const description =
-  "Поставка промышленных редукторов, мотор-редукторов, насосов, муфт, фильтров и масел для предприятий Казахстана. Инженерный подбор по параметрам и замена импортных аналогов.";
+  "Поставка промышленных редукторов, мотор-редукторов, насосов, муфт, компрессоров, фильтров и масел для предприятий Казахстана. Инженерный подбор по параметрам и замена импортных аналогов.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     "AOKMAN",
     "Yilmaz",
     "Standart Pompa",
+    "компрессоры Denair",
   ],
   applicationName: SITE_NAME,
   alternates: { canonical: "/" },

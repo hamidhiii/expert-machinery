@@ -4,6 +4,7 @@ import {
   categoryLabels as fallbackCategoryLabels,
   company as fallbackCompany,
   companyStats as fallbackStats,
+  groupBanners,
   groups as fallbackGroups,
   heroSlides as fallbackHeroSlides,
   industries as fallbackIndustries,
@@ -16,26 +17,28 @@ import {
   type Group,
   type HeroSlide,
   type Industry,
-  type LeadContext,
   type Product,
   type SiteData,
   type Stat,
 } from "@/lib/catalog";
+import { API_URL } from "@/lib/api-url";
 import type { Localized } from "@/lib/i18n";
+
+export { API_URL };
 
 /**
  * Admin API (Django REST, schema at /swagger). Everything is public GET except
- * POST /leads/. Responses are cached by Next and refreshed every REVALIDATE
- * seconds, so admin edits reach the site within a few minutes without a deploy.
+ * POST /leads/. Responses are cached by Next under the API_TAG tag: the admin
+ * calls /api/revalidate on save, and REVALIDATE seconds is the safety net.
  */
-export const API_URL = (process.env.API_URL ?? "https://api.expertmachinery.kz").replace(/\/$/, "");
+export const API_TAG = "api";
 
 const REVALIDATE = 300;
 
 async function get<T>(path: string): Promise<T> {
   const response = await fetch(`${API_URL}/api/v1/${path}`, {
     headers: { Accept: "application/json" },
-    next: { revalidate: REVALIDATE },
+    next: { revalidate: REVALIDATE, tags: [API_TAG] },
   });
   if (!response.ok) {
     throw new Error(`GET ${path} → ${response.status}`);
@@ -66,6 +69,9 @@ type ApiCompany = {
   email: string;
   instagram_url: string;
   whatsapp_url: string;
+  working_hours: string;
+  working_hours_en: string;
+  working_hours_kk: string;
 };
 
 type ApiProduct = Row & {
@@ -76,6 +82,9 @@ type ApiProduct = Row & {
   group: string;
   brand: string;
   is_popular: boolean;
+  series_id: number | null;
+  brand_id: number | null;
+  equipment_type_id: number | null;
   main_image: string | null;
   params: Row[];
   cross_refs: Row[];
@@ -85,23 +94,29 @@ type ApiProduct = Row & {
   approvals: Row[];
 };
 
-type ApiProductDetail = ApiProduct & {
-  series: { id: number } | null;
-};
-
 type ApiEquipmentType = Row & {
   id: number;
   slug: string;
   image: string | null;
+  banner: string | null;
   categories: string[];
   order: number;
 };
 
-type ApiBrand = { id: number; name: string };
+type ApiPageText = { page: string; image: string | null; secondary_image: string | null };
 
 type Page<T> = { count: number; next: string | null; results: T[] };
 
 /* ---------------------------------------------------------------- mapping */
+
+/**
+ * Only photos uploaded to the admin count. Its image fields were seeded with
+ * this site's old Unsplash stock links; those must not override the photos
+ * chosen since (e.g. the filters banner).
+ */
+function uploaded(url: string | null | undefined): string | undefined {
+  return url?.startsWith(`${API_URL}/media/`) ? url : undefined;
+}
 
 function text(row: Row, field: string): string {
   const value = row[field];
@@ -139,6 +154,11 @@ function mapProduct(row: ApiProduct): Product {
     group: row.group,
     brand: row.brand,
     popular: row.is_popular,
+    lead: {
+      series: row.series_id ?? undefined,
+      brand: row.brand_id ?? undefined,
+      productType: row.equipment_type_id ?? undefined,
+    },
     image: row.main_image ?? "",
     specs: row.params.map((spec) => ({ label: loc(spec, "label"), value: loc(spec, "value") })),
     summary: loc(row, "short_description"),
@@ -175,6 +195,13 @@ function mapCompany(row: ApiCompany): Company {
     whatsappHref: row.whatsapp_url || fallbackCompany.whatsappHref,
     instagramHref: row.instagram_url || fallbackCompany.instagramHref,
     email: row.email || fallbackCompany.email,
+    workingHours: row.working_hours
+      ? {
+          ru: row.working_hours,
+          en: row.working_hours_en || row.working_hours,
+          kk: row.working_hours_kk || undefined,
+        }
+      : undefined,
   };
 }
 
@@ -199,10 +226,12 @@ export const getProducts = cache(() =>
 );
 
 const getEquipmentTypes = cache(() =>
-  withFallback("equipment-types", () => get<ApiEquipmentType[]>("equipment-types/"), null),
+  withFallback<ApiEquipmentType[] | null>(
+    "equipment-types",
+    () => get<ApiEquipmentType[]>("equipment-types/"),
+    null,
+  ),
 );
-
-const getBrands = cache(() => withFallback("brands", () => get<ApiBrand[]>("brands/"), null));
 
 export const getSiteData = cache(async (): Promise<SiteData> => {
   const [
@@ -215,6 +244,7 @@ export const getSiteData = cache(async (): Promise<SiteData> => {
     industries,
     features,
     strings,
+    pageImages,
   ] = await Promise.all([
     getProducts(),
     getEquipmentTypes(),
@@ -296,6 +326,17 @@ export const getSiteData = cache(async (): Promise<SiteData> => {
       },
       {},
     ),
+    withFallback<SiteData["pageImages"]>(
+      "page-texts",
+      async () =>
+        Object.fromEntries(
+          (await get<ApiPageText[]>("page-texts/")).map((row) => [
+            row.page,
+            { image: uploaded(row.image), secondary: uploaded(row.secondary_image) },
+          ]),
+        ),
+      {},
+    ),
   ]);
 
   const groups: Group[] = equipmentTypes
@@ -305,9 +346,10 @@ export const getSiteData = cache(async (): Promise<SiteData> => {
         text: loc(row, "description"),
         image:
           row.image ?? fallbackGroups.find((group) => group.key === row.slug)?.image ?? "",
+        banner: uploaded(row.banner) ?? groupBanners[row.slug],
         categories: row.categories,
       }))
-    : fallbackGroups;
+    : fallbackGroups.map((group) => ({ ...group, banner: groupBanners[group.key] }));
 
   return {
     company,
@@ -323,24 +365,7 @@ export const getSiteData = cache(async (): Promise<SiteData> => {
     services: features.services,
     totalProducts: products.length,
     strings,
-  };
-});
-
-export const getLeadContext = cache(async (product: Product): Promise<LeadContext> => {
-  const [detail, equipmentTypes, brands] = await Promise.all([
-    withFallback(
-      `products/${product.slug}`,
-      () => get<ApiProductDetail>(`products/${encodeURIComponent(product.slug)}/`),
-      null,
-    ),
-    getEquipmentTypes(),
-    getBrands(),
-  ]);
-
-  return {
-    series: detail?.series?.id,
-    brand: brands?.find((brand) => brand.name === productBrand(product))?.id,
-    productType: equipmentTypes?.find((type) => type.slug === productGroup(product))?.id,
+    pageImages,
   };
 });
 

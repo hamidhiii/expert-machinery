@@ -11,7 +11,7 @@ import { useSiteData } from "@/lib/site-data";
 
 export default function AboutPage() {
   const { t, tr } = useLanguage();
-  const { company, stats } = useSiteData();
+  const { company, stats, pageImages } = useSiteData();
 
   const cards = [
     { title: t("about.card1.title"), text: t("about.card1.text") },
@@ -33,7 +33,7 @@ export default function AboutPage() {
         eyebrow={`About ${company.name}`}
         title={t("about.hero.title")}
         text={t("about.hero.text")}
-        image={siteImages.meeting}
+        image={pageImages.about?.image ?? siteImages.meeting}
       />
 
       <StatsBand stats={stats.map((stat) => ({ value: stat.value, label: tr(stat.label) }))} />

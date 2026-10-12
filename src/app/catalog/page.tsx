@@ -11,7 +11,7 @@ import { useSiteData } from "@/lib/site-data";
 
 export default function CatalogPage() {
   const { locale, t, tr } = useLanguage();
-  const { groups, totalProducts } = useSiteData();
+  const { groups, totalProducts, pageImages } = useSiteData();
 
   return (
     <>
@@ -20,7 +20,7 @@ export default function CatalogPage() {
         eyebrow={`Catalog / ${new Date().getFullYear()}`}
         title={t("catalog.groups.title")}
         text={t("catalog.groups.text")}
-        image={siteImages.line}
+        image={pageImages.catalog?.image ?? siteImages.line}
         counter={`${totalProducts} / ${pluralItems(locale, totalProducts)}`}
       />
 

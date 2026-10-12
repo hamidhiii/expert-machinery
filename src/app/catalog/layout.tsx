@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   ...pageMetadata({
     title,
     description:
-      "Каталог Expert Machinery: мотор-редукторы, насосы, гидромуфты, фильтры и масла Fleetguard с подбором по параметрам и поставкой по Казахстану.",
+      "Каталог Expert Machinery: мотор-редукторы, насосы, гидромуфты, компрессоры Denair, фильтры и масла Fleetguard с подбором по параметрам и поставкой по Казахстану.",
     path: "/catalog",
   }),
   // A plain string here would stop the root "%s | brand" template reaching groups and products.

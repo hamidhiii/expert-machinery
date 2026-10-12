@@ -9,7 +9,7 @@ import { useSiteData } from "@/lib/site-data";
 
 export default function IndustriesPage() {
   const { t, tr } = useLanguage();
-  const { industries } = useSiteData();
+  const { industries, pageImages } = useSiteData();
 
   return (
     <>
@@ -18,7 +18,7 @@ export default function IndustriesPage() {
         eyebrow="Industries"
         title={t("industries.hero.title")}
         text={t("industries.hero.text")}
-        image={siteImages.heroPlant}
+        image={pageImages.industries?.image ?? siteImages.heroPlant}
       />
 
       <section className="bg-paper py-20 lg:py-24">

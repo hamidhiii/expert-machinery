@@ -14,6 +14,7 @@ import { CheckCircle2, MessageCircle, X } from "lucide-react";
 import type { LeadContext } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
 import { useSiteData } from "@/lib/site-data";
+import { AttachmentField } from "@/components/attachment-field";
 import { useRequestSubmit } from "@/lib/submit-request";
 
 type RequestModalContextValue = {
@@ -170,6 +171,8 @@ export function RequestModalProvider({ children }: { children: ReactNode }) {
                         className="w-full rounded-lg border border-line bg-paper/60 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-flame focus:bg-white"
                       />
                     </label>
+
+                    <AttachmentField />
 
                     <button
                       type="submit"

@@ -10,7 +10,7 @@ import { useSiteData } from "@/lib/site-data";
 
 export default function ContactsPage() {
   const { t, tr } = useLanguage();
-  const { company } = useSiteData();
+  const { company, pageImages } = useSiteData();
 
   const cards = [
     { icon: Phone, label: t("contacts.phone"), value: company.phone, href: company.phoneHref },
@@ -29,7 +29,12 @@ export default function ContactsPage() {
     },
     { icon: Mail, label: t("contacts.email"), value: company.email, href: `mailto:${company.email}` },
     { icon: MapPin, label: t("contacts.address"), value: tr(company.address), href: undefined },
-    { icon: Clock, label: t("contacts.hours"), value: t("contacts.hoursValue"), href: undefined },
+    {
+      icon: Clock,
+      label: t("contacts.hours"),
+      value: company.workingHours ? tr(company.workingHours) : t("contacts.hoursValue"),
+      href: undefined,
+    },
   ];
 
   return (
@@ -39,7 +44,7 @@ export default function ContactsPage() {
         eyebrow={`Contact / ${company.name}`}
         title={t("contacts.hero.title")}
         text={t("contacts.hero.text")}
-        image={siteImages.meeting}
+        image={pageImages.contacts?.image ?? siteImages.meeting}
       />
 
       <section className="bg-paper py-16 lg:py-20">

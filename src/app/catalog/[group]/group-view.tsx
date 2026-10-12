@@ -26,7 +26,7 @@ export function GroupView({ groupKey, products: items }: { groupKey: string; pro
         eyebrow={t("nav.catalog")}
         title={tr(group.title)}
         text={tr(group.text)}
-        image={empty ? group.image : siteImages.line}
+        image={group.banner ?? (empty ? group.image : siteImages.line)}
         counter={empty ? undefined : `${items.length} / ${pluralItems(locale, items.length)}`}
         action={
           empty ? <ButtonLink onClick={() => open(tr(group.title))}>{t("common.request")}</ButtonLink> : undefined

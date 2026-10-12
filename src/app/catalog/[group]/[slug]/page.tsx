@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getLeadContext, getProducts, getSiteData } from "@/lib/api";
+import { getProducts, getSiteData } from "@/lib/api";
 import { getGroup, productBrand, productGroup, productHref, relatedProducts, type Product } from "@/lib/catalog";
 import { JsonLd, breadcrumbLd, pageMetadata } from "@/lib/seo";
 import { ProductView } from "./product-view";
@@ -74,7 +74,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <ProductView
         product={product}
         related={relatedProducts(product, products)}
-        lead={await getLeadContext(product)}
+        lead={product.lead ?? {}}
       />
     </>
   );
