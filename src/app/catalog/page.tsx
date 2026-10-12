@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CtaBand } from "@/components/cta-band";
 import { InnerHero, Reveal } from "@/components/ui";
-import { siteImages } from "@/lib/catalog";
 import { pluralItems, useLanguage } from "@/lib/i18n";
 import { useSiteData } from "@/lib/site-data";
 
@@ -20,7 +19,9 @@ export default function CatalogPage() {
         eyebrow={`Catalog / ${new Date().getFullYear()}`}
         title={t("catalog.groups.title")}
         text={t("catalog.groups.text")}
-        image={pageImages.catalog?.image ?? siteImages.line}
+        image={pageImages.catalog?.image ?? "/banners/catalog.jpg"}
+        // The built-in banner is a light studio shot; an admin upload keeps the dark hero.
+        tone={pageImages.catalog?.image ? "dark" : "light"}
         counter={`${totalProducts} / ${pluralItems(locale, totalProducts)}`}
       />
 

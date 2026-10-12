@@ -25,6 +25,8 @@ const config: Config = {
         flame: "#F0562A",
         "flame-dark": "#D2431B",
         "flame-soft": "#FDEDE6",
+        // Backdrop of the studio banner photos (public/banners/catalog.jpg).
+        studio: "#F5F6F0",
       },
       fontFamily: {
         sans: ["var(--font-sans)"],

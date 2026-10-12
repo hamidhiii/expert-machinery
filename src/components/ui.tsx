@@ -198,6 +198,7 @@ export function InnerHero({
   image,
   action,
   counter,
+  tone = "dark",
 }: {
   breadcrumbs: { label: string; href?: string }[];
   eyebrow: string;
@@ -206,36 +207,77 @@ export function InnerHero({
   image: string;
   action?: ReactNode;
   counter?: string;
+  /**
+   * "light" is for studio shots that keep a plain light panel on the left for
+   * the copy (e.g. the catalogue banner): the photo is shown whole on the
+   * right over a matching background, with dark text and no scrim.
+   */
+  tone?: "dark" | "light";
 }) {
-  return (
-    <section className="relative isolate flex min-h-[340px] items-end overflow-hidden bg-ink sm:min-h-[440px] sm:items-center md:min-h-[500px] lg:min-h-[560px] 2xl:min-h-[660px]">
-      <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
+  const light = tone === "light";
 
-      {/* Mobile: content sits at the bottom, so the scrim is bottom-weighted. */}
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 to-ink/10 sm:hidden"
-        aria-hidden
+  return (
+    <section
+      className={`relative isolate flex min-h-[340px] items-end overflow-hidden sm:min-h-[440px] sm:items-center md:min-h-[500px] lg:min-h-[560px] 2xl:min-h-[660px] ${
+        light ? "bg-studio" : "bg-ink"
+      }`}
+    >
+      <Image
+        src={image}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className={light ? "object-contain object-right-bottom" : "object-cover"}
       />
-      {/* sm and up: content is vertically centered on the left, so the scrim runs left to right. */}
-      <div
-        className="absolute inset-0 hidden bg-gradient-to-r from-ink via-ink/85 to-ink/25 sm:block"
-        aria-hidden
-      />
+
+      {light ? (
+        /* Mobile only: the copy overlaps the photo at the bottom. */
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-studio via-studio/80 to-transparent sm:hidden"
+          aria-hidden
+        />
+      ) : (
+        <>
+          {/* Mobile: content sits at the bottom, so the scrim is bottom-weighted. */}
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 to-ink/10 sm:hidden"
+            aria-hidden
+          />
+          {/* sm and up: content is vertically centered on the left, so the scrim runs left to right. */}
+          <div
+            className="absolute inset-0 hidden bg-gradient-to-r from-ink via-ink/85 to-ink/25 sm:block"
+            aria-hidden
+          />
+        </>
+      )}
 
       <div className="relative mx-auto w-full max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1800px] px-4 pb-7 pt-16 sm:px-6 sm:py-16 md:py-20 lg:px-8 2xl:px-12 lg:py-24">
-        <Breadcrumbs items={breadcrumbs} light />
+        <Breadcrumbs items={breadcrumbs} light={!light} />
 
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="display mt-3 max-w-xl text-[28px] text-white sm:mt-5 sm:text-4xl md:text-5xl lg:text-[56px] 2xl:max-w-2xl 2xl:text-[68px]">
+        <h1
+          className={`display mt-3 max-w-xl text-[28px] sm:mt-5 sm:text-4xl md:text-5xl lg:text-[56px] 2xl:max-w-2xl 2xl:text-[68px] ${
+            light ? "text-ink sm:max-w-[45%]" : "text-white"
+          }`}
+        >
           {title}
         </h1>
-        <p className="mt-3 max-w-lg text-sm leading-7 text-white/70 sm:mt-6 sm:text-[15px] sm:leading-8 2xl:max-w-xl 2xl:text-base">
+        <p
+          className={`mt-3 max-w-lg text-sm leading-7 sm:mt-6 sm:text-[15px] sm:leading-8 2xl:max-w-xl 2xl:text-base ${
+            light ? "text-muted sm:max-w-[45%]" : "text-white/70"
+          }`}
+        >
           {text}
         </p>
         {action ? <div className="mt-5 flex flex-wrap gap-3 sm:mt-8">{action}</div> : null}
 
         {counter ? (
-          <p className="mt-5 text-xs font-semibold text-white/50 sm:mt-10 sm:text-right">
+          <p
+            className={`mt-5 text-xs font-semibold sm:mt-10 ${
+              light ? "text-muted" : "text-white/50 sm:text-right"
+            }`}
+          >
             {counter}
           </p>
         ) : null}
