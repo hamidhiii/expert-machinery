@@ -4,7 +4,7 @@ import Image from "next/image";
 import { CtaBand } from "@/components/cta-band";
 import { ButtonLink, Eyebrow, InnerHero, Reveal, SectionHeading } from "@/components/ui";
 import { useRequestModal } from "@/components/request-modal";
-import { siteImages } from "@/lib/catalog";
+import { pageSecondaryBanners, siteImages } from "@/lib/catalog";
 import { useLanguage } from "@/lib/i18n";
 import { useSiteData } from "@/lib/site-data";
 
@@ -75,7 +75,7 @@ export default function ServicePage() {
           <Reveal delay={0.1}>
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
               <Image
-                src={pageImages.service?.secondary ?? siteImages.drawings}
+                src={pageImages.service?.secondary ?? pageSecondaryBanners.service}
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"

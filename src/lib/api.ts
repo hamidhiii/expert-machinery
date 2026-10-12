@@ -7,6 +7,7 @@ import {
   groupBanners,
   groups as fallbackGroups,
   pageBanners,
+  pageSecondaryBanners,
   heroSlides as fallbackHeroSlides,
   industries as fallbackIndustries,
   productBrand,
@@ -335,7 +336,7 @@ export const getSiteData = cache(async (): Promise<SiteData> => {
             row.page,
             {
               image: pageBanners[row.page] ?? uploaded(row.image),
-              secondary: uploaded(row.secondary_image),
+              secondary: pageSecondaryBanners[row.page] ?? uploaded(row.secondary_image),
             },
           ]),
         ),

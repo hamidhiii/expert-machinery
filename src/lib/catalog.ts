@@ -1645,6 +1645,15 @@ export const pageBanners: Record<string, string> = {
   catalog: "/banners/catalog-workshop.jpg",
 };
 
+/**
+ * And for second photos (page-texts.secondary_image). The service "Process"
+ * photo is a full-resolution 4:5 crop: the admin's 1600×1067 copy looked soft
+ * once cut to the portrait frame.
+ */
+export const pageSecondaryBanners: Record<string, string> = {
+  service: "/banners/service-drawings.jpg",
+};
+
 export const groups: Group[] = [
   {
     key: "gear",
